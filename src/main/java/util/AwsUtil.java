@@ -5,6 +5,9 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
@@ -129,13 +132,25 @@ public class AwsUtil {
 
         Table table = dynamoDB.getTable(tableName);
 
+        Index index = table.getIndex("StaffIndex");
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("testerStaffId = :staff_id")
+                .withValueMap(new ValueMap()
+                        .withString(":staff_id",testerName));
+
+        ItemCollection<QueryOutcome> items = index.query(spec);
+        Iterator<Item> iter = items.iterator();
+        while (iter.hasNext()) {
+            System.out.println(iter.next().toJSONPretty());
+        }
+
 
 //        Item item = table.getItem("Id", 101);
 
-        Item item = table.getItem("testerStaffId", testerName);
-        System.out.println(item.toJSONPretty());
-
-        DeleteItemOutcome outcome = table.deleteItem("testerStaffId", testerName);
+//        Item item = table.getItem("testerStaffId", testerName);
+//        System.out.println(item.toJSONPretty());
+//
+//        DeleteItemOutcome outcome = table.deleteItem("testerStaffId", testerName);
     }
 
 }
