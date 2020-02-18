@@ -132,7 +132,10 @@ public class AwsUtil {
 
 //        Item item = table.getItem("Id", 101);
 
-        DeleteItemOutcome outcome = table.deleteItem("testerStaffId", "CVS Tester1");
+        Item item = table.getItem("testerStaffId", testerName);
+        System.out.println(item.toJSONPretty());
+
+        DeleteItemOutcome outcome = table.deleteItem("testerStaffId", testerName);
     }
 
 }
