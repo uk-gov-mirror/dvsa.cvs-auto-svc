@@ -47,6 +47,6 @@ public class InsertTestResultsInDynamo {
     @Title("CVSB-12181 - Delete entries fro activities table in DynamoDB using Java AWS sdk")
     @Test
     public void testDeleteActivities() {
-        testResultsSteps.deleteActivitiesForUser("CVS Tester1")
+        testResultsSteps.deleteActivitiesForUser("CVS Tester1");
     }
 }
