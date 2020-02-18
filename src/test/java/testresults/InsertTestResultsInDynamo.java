@@ -42,4 +42,11 @@ public class InsertTestResultsInDynamo {
         String alteredJson = GenericData.applyJsonAlterations(json, alterations);
         testResultsSteps.insertRecordInDynamo(alteredJson, "test-results");
     }
+
+    @WithTag("In_Test")
+    @Title("CVSB-12181 - Delete entries fro activities table in DynamoDB using Java AWS sdk")
+    @Test
+    public void testDeleteActivities() {
+        testResultsSteps.deleteActivitiesForUser("CVS Tester1")
+    }
 }

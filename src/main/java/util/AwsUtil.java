@@ -103,4 +103,36 @@ public class AwsUtil {
         }
     }
 
+    public static void deleteActivitiesForUser(String testerName) {
+        System.out.println(testerName);
+        System.out.println("Trying to delete some items");
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-activities";
+
+        Table table = dynamoDB.getTable(tableName);
+
+
+//        Item item = table.getItem("Id", 101);
+
+        DeleteItemOutcome outcome = table.deleteItem("testerName", "CVS Tester1");
+    }
+
 }
