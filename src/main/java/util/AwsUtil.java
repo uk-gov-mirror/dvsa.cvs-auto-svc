@@ -139,9 +139,10 @@ public class AwsUtil {
         ItemCollection<QueryOutcome> items = index.query(spec);
         Iterator<Item> iter = items.iterator();
         while (iter.hasNext()) {
-            System.out.println("Delete item:\n" + iter.next().toJSONPretty());
-            String id  = GenericData.extractStringValueFromJsonString(iter.next().toJSON(), "id");
+            String id  = GenericData.extractStringValueFromJsonString(iter.next().toJSON(), "$.id");
             System.out.println(id);
+            System.out.println("Delete item:\n" + iter.next().toJSONPretty());
+
 //            DeleteItemOutcome outcome = table.deleteItem("id", id);
         }
 
