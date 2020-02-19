@@ -6,7 +6,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
-import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -14,6 +13,7 @@ import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenServiceClientBuilder;
 import com.amazonaws.services.securitytoken.model.AssumeRoleRequest;
 import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
+import com.jayway.jsonpath.JsonPath;
 import data.GenericData;
 import exceptions.AutomationException;
 
@@ -138,7 +138,7 @@ public class AwsUtil {
 
         ItemCollection<QueryOutcome> items = index.query(spec);
         for (Item item : items) {
-            String id = GenericData.extractStringValueFromJsonString(item.toJSON(), "$.id");
+            String id = JsonPath.read(item.toJSON(), "$.id");
             System.out.println("Delete item:\n" + item.toJSONPretty());
 
             DeleteItemOutcome outcome = table.deleteItem("id", id);
