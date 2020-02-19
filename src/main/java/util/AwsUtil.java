@@ -107,8 +107,6 @@ public class AwsUtil {
     }
 
     public static void deleteActivitiesForUser(String testerName) {
-        System.out.println(testerName);
-        System.out.println("Trying to delete some items");
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
                 AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
@@ -141,7 +139,10 @@ public class AwsUtil {
         ItemCollection<QueryOutcome> items = index.query(spec);
         Iterator<Item> iter = items.iterator();
         while (iter.hasNext()) {
-            System.out.println(iter.next().toJSONPretty());
+            System.out.println("Delete item:\n" + iter.next().toJSONPretty());
+            String id  = GenericData.extractStringValueFromJsonString(iter.next().toJSON(), "id");
+            System.out.println(id);
+//            DeleteItemOutcome outcome = table.deleteItem("id", id);
         }
 
 
