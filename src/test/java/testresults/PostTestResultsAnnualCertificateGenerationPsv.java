@@ -4,6 +4,7 @@ import data.GenericData;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Title;
+import net.thucydides.core.annotations.WithTag;
 import net.thucydides.junit.annotations.TestData;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
@@ -148,6 +149,7 @@ public class PostTestResultsAnnualCertificateGenerationPsv {
         this.testCode = testCode;
     }
 
+    @WithTag("In_Test")
     @Title("CVSB-8798 - Annual certificate is generate for all Psv tests ")
     @Test
     public void testResults_Annual_Certificate_Generation_Psv() {
