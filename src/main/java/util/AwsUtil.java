@@ -137,11 +137,14 @@ public class AwsUtil {
                         .withString(":staff_id",testerName));
 
         ItemCollection<QueryOutcome> items = index.query(spec);
+        System.out.println("Number of matches: " + items.getAccumulatedItemCount() + "\n");
         Iterator<Item> iter = items.iterator();
         while (iter.hasNext()) {
-            String id  = GenericData.extractStringValueFromJsonString(iter.next().toJSON(), "$.id");
+            Item item = iter.next();
+            String json = item.toJSON();
+            String id  = GenericData.extractStringValueFromJsonString(json, "$.id");
             System.out.println(id);
-            System.out.println("Delete item:\n" + iter.next().toJSONPretty());
+            System.out.println("Delete item:\n" + item.toJSONPretty());
 
 //            DeleteItemOutcome outcome = table.deleteItem("id", id);
         }
