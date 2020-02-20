@@ -44,6 +44,8 @@ public class AwsUtil {
         AWSSecurityTokenService stsClient =
                 AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
 
+        System.out.println(System.getProperty("AWS_ROLE"));
+
         AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
                 .withRoleArn(System.getProperty("AWS_ROLE"))
                 .withDurationSeconds(3600)
@@ -63,7 +65,7 @@ public class AwsUtil {
 
         AmazonS3 s3Client = new AmazonS3Client(temporaryCredentials);
 
-        System.out.println("Waiting on file " + key + "to be created... on bucket: " + bucketName);
+        System.out.println("Waiting on file " + key + " to be created... on bucket: " + bucketName);
 
         for(int i = 0; i < 15 ; i++) {
             try {
