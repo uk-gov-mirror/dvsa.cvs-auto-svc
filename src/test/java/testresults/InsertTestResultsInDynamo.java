@@ -43,10 +43,10 @@ public class InsertTestResultsInDynamo {
         testResultsSteps.insertRecordInDynamo(alteredJson, "test-results");
     }
 
-    @Ignore("This is just an example of how to read json data from external file and insert it in a specific table using AWS SDK")
+    @WithTag("In_test")
     @Title("CVSB-12181 - Delete entries fro activities table in DynamoDB using Java AWS sdk")
     @Test
     public void testDeleteActivities() {
-        testResultsSteps.deleteActivitiesForUser("132");
+        testResultsSteps.deleteActivitiesForUser("a53ae740-eac4-4eb6-99ef-42afb63ce819");
     }
 }
