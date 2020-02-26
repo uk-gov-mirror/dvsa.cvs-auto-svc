@@ -904,6 +904,7 @@ public class PostTestResultsExpiryDateLogicPsv {
                 alterationInsertTestExpiryDate,
                 alterationInsertCreatedAt,
                 alterationInsertTestTypeEndTimestamp,
+                alterationInsertTestCode,
                 alterationInsertTestEndTimestamp
         ));
 
