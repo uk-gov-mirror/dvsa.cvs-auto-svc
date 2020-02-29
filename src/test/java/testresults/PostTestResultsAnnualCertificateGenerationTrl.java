@@ -262,8 +262,7 @@ public class PostTestResultsAnnualCertificateGenerationTrl {
         this.testResult = testResult;
         this.testCode = testCode;
     }
-
-    @WithTag("In_Test")
+    
     @Title("CVSB-8798 - Annual certificate is generate for all Trl tests ")
     @Test
     public void testResults_Annual_Certificate_Generation_Trl() {
