@@ -658,4 +658,9 @@ public class TestResultsSteps {
     public void deleteActivitiesForUser(String user) {
         AwsUtil.deleteActivitiesForUser(user);
     }
+
+    @Step
+    public void addEmailForTestStation(String emailAddress, String testStationId) {
+        AwsUtil.addEmailForTestStation(emailAddress, testStationId);
+    }
 }
