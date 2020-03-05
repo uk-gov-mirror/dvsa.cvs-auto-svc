@@ -68,6 +68,7 @@ public class PostTestResultsPreservationExpiryDateHgv_5862 {
         isAnnualWithCertificate = annualWithCertificate;
     }
 
+    @Ignore
     @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - HGV - Today is more than 2 months before previous expiryDate (Early for test)")
     @Test
@@ -210,6 +211,7 @@ public class PostTestResultsPreservationExpiryDateHgv_5862 {
 
     }
 
+    @Ignore
     @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - HGV - Today is within one month before previous expiryDate")
     @Test
@@ -352,6 +354,7 @@ public class PostTestResultsPreservationExpiryDateHgv_5862 {
 
     }
 
+    @Ignore
     @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - HGV - Today is within the month of previous expiryDate")
     @Test
@@ -494,6 +497,7 @@ public class PostTestResultsPreservationExpiryDateHgv_5862 {
 
     }
 
+    @Ignore
     @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - HGV - Today is after the previous expiryDate")
     @Test
@@ -636,6 +640,7 @@ public class PostTestResultsPreservationExpiryDateHgv_5862 {
 
     }
 
+    @Ignore
     @WithTag("expiry_dates")
     @Title("CVSB-8684 - TC1 - AC1 - HGV Annual test WITH PREVIOUS Expiry Date - Previous testExpiryDate = two months ahead (EARLY FOR TEST)")
     @Test
