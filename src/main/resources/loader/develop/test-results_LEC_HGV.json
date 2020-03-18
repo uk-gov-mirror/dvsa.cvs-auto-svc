@@ -2,6 +2,7 @@
   "countryOfRegistration": "gb",
   "euVehicleCategory": "n2",
   "noOfAxles": 2,
+  "numberOfWheelsDriven": 4,
   "odometerReading": 5555,
   "odometerReadingUnits": "kilometres",
   "preparerId": "bl5545",
@@ -24,6 +25,8 @@
       "certificateNumber": null,
       "defects": [
       ],
+      "customDefects": [],
+      "secondaryCertificateNumber": "123456",
       "emissionStandard": "0.10 g/kWh Euro 3 PM",
       "fuelType": "diesel",
       "modType": {
