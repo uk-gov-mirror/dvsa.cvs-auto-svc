@@ -367,8 +367,7 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSecretAccessKey(),
                         assumeResult.getCredentials().getSessionToken());
 
-        AWSLogs logsClient = new AWSLogsClient(temporaryCredentials);
-
+        AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( "test-results-cvsb-8684"  );
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
