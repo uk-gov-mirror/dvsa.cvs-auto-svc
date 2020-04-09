@@ -1,6 +1,8 @@
 package util;
 
+import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.*;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
@@ -8,6 +10,9 @@ import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.logs.AWSLogs;
+import com.amazonaws.services.logs.AWSLogsClientBuilder;
+import com.amazonaws.services.logs.model.*;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -18,6 +23,8 @@ import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
 import com.jayway.jsonpath.JsonPath;
 import data.GenericData;
 import exceptions.AutomationException;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.*;
 
@@ -83,6 +90,9 @@ public class AwsUtil {
         return false;
     }
 
+    /**
+     * @deprecated  replaced by #insertJsonInTable(java.lang.String, java.lang.String, java.lang.String)()
+     */
     @Deprecated
     public static void insertJsonInTable(String json, String tableName) {
         Regions clientRegion = Regions.EU_WEST_1;
@@ -107,8 +117,6 @@ public class AwsUtil {
 
         Table table = dynamoDB.getTable("cvs-" + System.getProperty("BRANCH") + "-" + tableName);
         String vin = GenericData.getValueFromJsonPath(json, "$.vin");
-
-
 
         try {
             Item item = Item.fromJSON(json);
@@ -329,6 +337,40 @@ public class AwsUtil {
         catch (Exception e) {
             System.err.println("Unable to update item: primaryKeyValue");
             System.err.println(e.getMessage());
+        }
+    }
+
+    public static void checkLogs() {
+
+        ClientConfiguration clientConfig = new ClientConfiguration();
+
+        AWSLogsClientBuilder builder = AWSLogsClientBuilder.standard();
+
+        DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
+        System.out.println("Current time (timestamp): " + currentTimestamp);
+        System.out.println("Current time (getMillis): " + currentTimestamp.minusMinutes(2).getMillis());
+
+        AWSLogs logsClient = builder.withCredentials( new AWSStaticCredentialsProvider( new ProfileCredentialsProvider().getCredentials() ) )
+                .withRegion( Regions.EU_WEST_1 )
+                .withClientConfiguration( clientConfig ).build();
+
+        DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( "test-results-cvsb-8684"  );
+        DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
+
+        for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
+        {
+            GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
+                    .withStartTime(currentTimestamp.minusMinutes(2).getMillis())
+                    .withEndTime(currentTimestamp.getMillis())
+                    .withLogGroupName( "test-results-cvsb-8684" )
+                    .withLogStreamName( logStream.getLogStreamName() );
+
+            GetLogEventsResult result = logsClient.getLogEvents( getLogEventsRequest );
+
+            result.getEvents().forEach( outputLogEvent -> {
+                System.out.println( outputLogEvent.getMessage() );
+            } );
+
         }
     }
 }

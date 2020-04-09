@@ -744,4 +744,10 @@ public class TestResultsSteps {
         System.out.println("Verifying that " + path + " ends with value " + expectedValue);
         response.then().body(path, endsWith(expectedValue));
     }
+
+    @Step
+    public void checkLogWasCreated() {
+            AwsUtil.checkLogs();
+    }
+
 }
