@@ -746,8 +746,8 @@ public class TestResultsSteps {
     }
 
     @Step
-    public void checkLogWasCreated() {
-            AwsUtil.checkLogs();
+    public void checkLogWasCreated(String logGroup) {
+            AwsUtil.checkLogs(logGroup);
     }
 
 }

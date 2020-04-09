@@ -341,7 +341,7 @@ public class AwsUtil {
         }
     }
 
-    public static void checkLogs() {
+    public static void checkLogs(String logGroup) {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         System.out.println("Current time (timestamp): " + currentTimestamp);
@@ -368,7 +368,7 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSessionToken());
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
-        DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( "test-results-cvsb-8684"  );
+        DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( logGroup  );
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
         for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
@@ -376,7 +376,7 @@ public class AwsUtil {
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
                     .withStartTime(currentTimestamp.minusMinutes(2).getMillis())
                     .withEndTime(currentTimestamp.getMillis())
-                    .withLogGroupName( "test-results-cvsb-8684" )
+                    .withLogGroupName( logGroup )
                     .withLogStreamName( logStream.getLogStreamName() );
 
             GetLogEventsResult result = logsClient.getLogEvents( getLogEventsRequest );
