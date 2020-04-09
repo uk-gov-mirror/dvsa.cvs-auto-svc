@@ -11,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.logs.AWSLogs;
+import com.amazonaws.services.logs.AWSLogsClient;
 import com.amazonaws.services.logs.AWSLogsClientBuilder;
 import com.amazonaws.services.logs.model.*;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
@@ -342,17 +343,31 @@ public class AwsUtil {
 
     public static void checkLogs() {
 
-        ClientConfiguration clientConfig = new ClientConfiguration();
-
-        AWSLogsClientBuilder builder = AWSLogsClientBuilder.standard();
-
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         System.out.println("Current time (timestamp): " + currentTimestamp);
         System.out.println("Current time (getMillis): " + currentTimestamp.minusMinutes(2).getMillis());
 
-        AWSLogs logsClient = builder.withCredentials( new AWSStaticCredentialsProvider( new ProfileCredentialsProvider().getCredentials() ) )
-                .withRegion( Regions.EU_WEST_1 )
-                .withClientConfiguration( clientConfig ).build();
+
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+
+        System.out.println(System.getProperty("AWS_ROLE"));
+
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(UUID.randomUUID().toString());
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+
+        AWSLogs logsClient = new AWSLogsClient(temporaryCredentials);
 
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( "test-results-cvsb-8684"  );
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
