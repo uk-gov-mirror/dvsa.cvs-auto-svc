@@ -50,10 +50,10 @@ public class TestResultsClient {
             saveUtils();
             response = callGetTestResults(systemNumber);
         }
-
+        // waiting 5 seconds for the data to be processed
         if (response.getStatusCode() == 404){
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
