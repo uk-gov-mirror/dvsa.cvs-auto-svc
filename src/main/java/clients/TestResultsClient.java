@@ -51,6 +51,15 @@ public class TestResultsClient {
             response = callGetTestResults(systemNumber);
         }
 
+        if (response.getStatusCode() == 404){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            response = callGetTestResults(systemNumber);
+        }
+
         return response;
 
     }
