@@ -32,7 +32,7 @@
       "certificateNumber": "222222",
       "testTypeStartTimestamp": "2019-12-17T14:01:49.715Z",
       "testTypeEndTimestamp": "2019-12-17T14:02:18.491Z",
-      "testExpiryDate": "2019-12-17",
+      "testExpiryDate": "2020-12-17",
       "testResult": "pass",
       "prohibitionIssued": false,
       "reasonForAbandoning": null,
