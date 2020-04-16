@@ -97,7 +97,7 @@ public class PostTestResultsIntegrationAdr {
         //POST a test-result for the newly created TRL vehicle (use an ADR test - pass)
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_first_test_trl.json","$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_integration_trl_10773.json","$");
 
         // Create alteration to add one more tech record to in the request body
         JsonPathAlteration postAlterationVin = new JsonPathAlteration("$.vin", randomVin,"","REPLACE");
