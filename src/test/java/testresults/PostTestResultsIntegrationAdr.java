@@ -68,7 +68,7 @@ public class PostTestResultsIntegrationAdr {
         //create a new TRL vehicle in the tech-record
 
         // read post request body from file
-        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_trl_mandatory_fields.json","$");
+        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_trl_all_fields.json","$");
 
         // create alteration to change Vin in the request body with the random generated Vin
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin,"","REPLACE");
@@ -97,7 +97,7 @@ public class PostTestResultsIntegrationAdr {
         //POST a test-result for the newly created TRL vehicle (use an ADR test - pass)
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_ADR_TRL.json","$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_first_test_trl.json","$");
 
         // Create alteration to add one more tech record to in the request body
         JsonPathAlteration postAlterationVin = new JsonPathAlteration("$.vin", randomVin,"","REPLACE");
