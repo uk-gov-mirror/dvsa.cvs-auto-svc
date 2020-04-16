@@ -97,30 +97,30 @@ public class PostTestResultsIntegrationAdr {
         //POST a test-result for the newly created TRL vehicle (use an ADR test - pass)
 
         // Read the base test result JSON.
-//        String testResultRecord = GenericData.readJsonValueFromFile("test-results_ADR_TRL.json","$");
-//
-//        // Create alteration to add one more tech record to in the request body
-//        JsonPathAlteration postAlterationVin = new JsonPathAlteration("$.vin", randomVin,"","REPLACE");
-//        JsonPathAlteration postAlterationTestResultId = new JsonPathAlteration("$.testResultId", testResultId,"","REPLACE");
-//        JsonPathAlteration postAlterationTestTypeId = new JsonPathAlteration("$.testTypes[0].testTypeId", testTypeId,"","REPLACE");
-//        JsonPathAlteration postAlterationName = new JsonPathAlteration("$.testTypes[0].name", name,"","REPLACE");
-//        JsonPathAlteration postAlterationTestTypeName = new JsonPathAlteration("$.testTypes[0].testTypeName", testTypeName,"","REPLACE");
-//        JsonPathAlteration postAlterationTestResult = new JsonPathAlteration("$.testTypes[0].testResult", testResult,"","REPLACE");
-//
-//        // Collate the list of alterations.
-//        List<JsonPathAlteration> alterationsOnPost = new ArrayList<>(Arrays.asList(
-//                postAlterationVin,
-//                postAlterationTestResultId,
-//                postAlterationTestTypeId,
-//                postAlterationName,
-//                postAlterationTestTypeName,
-//                postAlterationTestResult
-//        ));
-//
-//        // Post the results, together with any alterations, and verify that they are handled correctly.
-//        testResultsSteps.postVehicleTestResultsWithAlterations(testResultRecord, alterationsOnPost);
-//        testResultsSteps.statusCodeShouldBe(201);
-//        testResultsSteps.validateData("Test records created");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_ADR_TRL.json","$");
+
+        // Create alteration to add one more tech record to in the request body
+        JsonPathAlteration postAlterationVin = new JsonPathAlteration("$.vin", randomVin,"","REPLACE");
+        JsonPathAlteration postAlterationTestResultId = new JsonPathAlteration("$.testResultId", testResultId,"","REPLACE");
+        JsonPathAlteration postAlterationTestTypeId = new JsonPathAlteration("$.testTypes[0].testTypeId", testTypeId,"","REPLACE");
+        JsonPathAlteration postAlterationName = new JsonPathAlteration("$.testTypes[0].name", name,"","REPLACE");
+        JsonPathAlteration postAlterationTestTypeName = new JsonPathAlteration("$.testTypes[0].testTypeName", testTypeName,"","REPLACE");
+        JsonPathAlteration postAlterationTestResult = new JsonPathAlteration("$.testTypes[0].testResult", testResult,"","REPLACE");
+
+        // Collate the list of alterations.
+        List<JsonPathAlteration> alterationsOnPost = new ArrayList<>(Arrays.asList(
+                postAlterationVin,
+                postAlterationTestResultId,
+                postAlterationTestTypeId,
+                postAlterationName,
+                postAlterationTestTypeName,
+                postAlterationTestResult
+        ));
+
+        // Post the results, together with any alterations, and verify that they are handled correctly.
+        testResultsSteps.postVehicleTestResultsWithAlterations(testResultRecord, alterationsOnPost);
+        testResultsSteps.statusCodeShouldBe(201);
+        testResultsSteps.validateData("Test records created");
     }
 
 }
