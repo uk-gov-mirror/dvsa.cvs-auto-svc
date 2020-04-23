@@ -37,7 +37,7 @@
       "testExpiryDate": "2020-12-17",
       "testResult": "pass",
       "prohibitionIssued": false,
-      "reasonForAbandoning": null,
+      "reasonForAbandoning": "test_purposes",
       "additionalCommentsForAbandon": null,
       "additionalNotesRecorded": null,
       "defects": [],

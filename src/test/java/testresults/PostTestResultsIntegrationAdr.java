@@ -32,8 +32,8 @@ public class PostTestResultsIntegrationAdr {
         return Arrays.asList(new Object[][]{
 //                {"50", "Technical test", "ADR test", "pass"},
 //                {"59", "Retest", "Paid ADR retest", "prs"},
-                {"60", "Retest", "Free ADR retest", "fail"},
-//                {"60", "Retest", "Free ADR retest", "abandoned"},
+//                {"60", "Retest", "Free ADR retest", "fail"},
+                {"60", "Retest", "Free ADR retest", "abandoned"},
         });
     }
 
