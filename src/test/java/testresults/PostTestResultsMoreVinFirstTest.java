@@ -28,7 +28,7 @@ public class PostTestResultsMoreVinFirstTest {
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
-
+    @WithTag("In_Test")
     @Title("CVSB-12445 - TC - AC1 - VSA submits First test = FAIL - HGV")
     @Test
     public void testResultsFirstTestHgvFail() {
@@ -118,15 +118,15 @@ public class PostTestResultsMoreVinFirstTest {
         vehicleTechnicalRecordsSteps.getVehicleTechnicalRecordsByStatus(randomVin, VehicleTechnicalRecordStatus.ALL);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("$.size()", 2);
-        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("$[0].techRecord.size()", 1);
-        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("$[1].techRecord.size()", 1);
+        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].techRecord.size()", 1);
+        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[1].techRecord.size()", 1);
 
         vehicleTechnicalRecordsSteps.valueForFieldInTechRecordShouldBe(systemNumberOne, randomVin, 0, "statusCode", "provisional");
         vehicleTechnicalRecordsSteps.valueForFieldInAnyTechRecordShouldBe(systemNumberTwo, randomVin, "statusCode", "provisional");
 
     }
 
-
+    @WithTag("In_Test")
     @Title("CVSB-12445 - TC - AC1 - VSA submits First test = PASS - HGV")
     @Test
     public void testResultsFirstTestHgvPass() {
@@ -223,7 +223,7 @@ public class PostTestResultsMoreVinFirstTest {
 
     }
 
-
+    @WithTag("In_Test")
     @Title("CVSB-12445 - TC - AC1 - VSA submits First test = FAIL - TRL")
     @Test
     public void testResultsFirstTestTrlFail() {
@@ -236,7 +236,7 @@ public class PostTestResultsMoreVinFirstTest {
         //generate random Vrm
         String randomVrm = (RandomStringUtils.randomAlphabetic(1) + RandomStringUtils.randomNumeric(2) + RandomStringUtils.randomAlphabetic(3)).toUpperCase();
         // read post request body from file
-        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_trl_mandatory_fields.json","$");
+        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_trl_all_fields.json","$");
         // create alteration to change systemNumber in the request body with the random generated Vin
         JsonPathAlteration alterationVSystemNumberOne = new JsonPathAlteration("$.systemNumber", randomSystemNumberOne,"","REPLACE");
         JsonPathAlteration alterationVSystemNumberTwo = new JsonPathAlteration("$.systemNumber", randomSystemNumberTwo,"","REPLACE");
@@ -313,15 +313,15 @@ public class PostTestResultsMoreVinFirstTest {
         vehicleTechnicalRecordsSteps.getVehicleTechnicalRecordsByStatus(randomVin, VehicleTechnicalRecordStatus.ALL);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("$.size()", 2);
-        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("$[0].techRecord.size()", 1);
-        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("$[1].techRecord.size()", 1);
+        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].techRecord.size()", 1);
+        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[1].techRecord.size()", 1);
 
         vehicleTechnicalRecordsSteps.valueForFieldInTechRecordShouldBe(systemNumberOne, randomVin, 0, "statusCode", "provisional");
         vehicleTechnicalRecordsSteps.valueForFieldInAnyTechRecordShouldBe(systemNumberTwo, randomVin, "statusCode", "provisional");
 
     }
 
-
+    @WithTag("In_Test")
     @Title("CVSB-12445 - TC - AC1 - VSA submits First test = PASS - TRL")
     @Test
     public void testResultsFirstTestTrlPass() {
@@ -334,7 +334,7 @@ public class PostTestResultsMoreVinFirstTest {
         //generate random Vrm
         String randomVrm = (RandomStringUtils.randomAlphabetic(1) + RandomStringUtils.randomNumeric(2) + RandomStringUtils.randomAlphabetic(3)).toUpperCase();
         // read post request body from file
-        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_trl_mandatory_fields.json","$");
+        String postRequestBody = GenericData.readJsonValueFromFile("technical-records_trl_all_fields.json","$");
         // create alteration to change systemNumber in the request body with the random generated Vin
         JsonPathAlteration alterationVSystemNumberOne = new JsonPathAlteration("$.systemNumber", randomSystemNumberOne,"","REPLACE");
         JsonPathAlteration alterationVSystemNumberTwo = new JsonPathAlteration("$.systemNumber", randomSystemNumberTwo,"","REPLACE");
