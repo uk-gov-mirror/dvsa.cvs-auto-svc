@@ -22,7 +22,7 @@ public class PostTestResultsCloudWatchLogs {
     @Steps
     TestResultsSteps testResultsSteps;
 
-    @Ignore
+    @WithTag("In_Test")
     @Title("TESTING THE CLOUDWATCH LOGGING")
     @Test
     public void testResults_CloudWatch_Logs_HGV() {

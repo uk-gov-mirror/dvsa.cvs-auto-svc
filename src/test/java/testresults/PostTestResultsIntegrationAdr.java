@@ -16,7 +16,6 @@ import util.JsonPathAlteration;
 
 import java.util.*;
 
-@WithTag("In_Test")
 @RunWith(SerenityParameterizedRunner.class)
 public class PostTestResultsIntegrationAdr {
 
@@ -49,6 +48,7 @@ public class PostTestResultsIntegrationAdr {
     private String testTypeName;
     private String testResult;
 
+    @Ignore
     @WithTag("In_Test")
     @Title("CVSB-8798 / CVSB-3952 - As a VSA I want to be able to generate the ADR certificate so that I can receive it via email - TRL")
     @Test
