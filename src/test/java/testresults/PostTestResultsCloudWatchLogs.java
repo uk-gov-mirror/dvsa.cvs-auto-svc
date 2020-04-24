@@ -22,9 +22,9 @@ public class PostTestResultsCloudWatchLogs {
     @Steps
     TestResultsSteps testResultsSteps;
 
-    @Ignore
-    @Title("TESTING THE CLOUDWATCH LOGGING")
+    @WithTag("In_Test")
     @Test
+    @Title("TESTING THE CLOUDWATCH LOGGING")
     public void testResults_CloudWatch_Logs_HGV() {
 
         // Read the base test result JSON.
