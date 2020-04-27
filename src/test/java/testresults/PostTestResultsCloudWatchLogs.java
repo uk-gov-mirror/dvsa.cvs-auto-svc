@@ -49,7 +49,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.statusCodeShouldBe(201);
         testResultsSteps.validateData("Test records created");
 
-        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-dispatcher-cvsb-10773");
+//        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-dispatcher-cvsb-10773");
         testResultsSteps.checkLogWasCreated("/aws/lambda/edh-marshaller-cvsb-10773");
 //        testResultsSteps.checkLogWasCreated("test-results-cvsb-10773");
 

@@ -371,9 +371,11 @@ public class AwsUtil {
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( logGroup  );
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
-        for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
-        {
+        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+//        for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
+//        {
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
+                    .withLimit(50)
                     .withStartTime(currentTimestamp.minusMinutes(2).getMillis())
                     .withEndTime(currentTimestamp.getMillis())
                     .withLogGroupName( logGroup )
@@ -385,6 +387,6 @@ public class AwsUtil {
                 System.out.println( outputLogEvent.getMessage() );
             } );
 
-        }
+//        }
     }
 }
