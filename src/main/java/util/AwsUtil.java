@@ -369,7 +369,7 @@ public class AwsUtil {
 
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                 .withLogGroupName( logGroup  )
-                .withDescending(true)
+                .withOrderBy("LastEventTime")
                 .withLimit(1);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
