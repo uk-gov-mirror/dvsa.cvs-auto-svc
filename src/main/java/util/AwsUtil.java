@@ -371,7 +371,7 @@ public class AwsUtil {
                 .withLogGroupName( logGroup  )
                 .withOrderBy("LastEventTime")
                 .withDescending(true);
-                .withLimit(1);
+//                .withLimit(1);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
         LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
