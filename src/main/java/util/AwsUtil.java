@@ -5,6 +5,7 @@ import com.amazonaws.auth.*;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchClient;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
@@ -373,6 +374,8 @@ public class AwsUtil {
 
         for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
         {
+            System.out.println("############# inside logstream ##############");
+            System.out.println("$$$$$$$$$$$"+ logStream.getLogStreamName() +"$$$$$$$$$$$");
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
                     .withLimit(50)
                     .withStartTime(currentTimestamp.minusMinutes(20).getMillis())
