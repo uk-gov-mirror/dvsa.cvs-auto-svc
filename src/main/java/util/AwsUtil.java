@@ -371,19 +371,26 @@ public class AwsUtil {
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( logGroup  );
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
 //        for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
 //        {
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
                     .withLimit(50)
-                    .withStartTime(currentTimestamp.minusMinutes(2).getMillis())
+                    .withStartTime(currentTimestamp.minusMinutes(20).getMillis())
                     .withEndTime(currentTimestamp.getMillis())
                     .withLogGroupName( logGroup )
-                    .withLogStreamName( logStream.getLogStreamName() );
+                    .withLogStreamName( "2020/04/27/[$LATEST]31ce711ed0a040cfa1a73bf952450870" );
 
             GetLogEventsResult result = logsClient.getLogEvents( getLogEventsRequest );
 
             result.getEvents().forEach( outputLogEvent -> {
+                System.out.println("****************************************************");
                 System.out.println( outputLogEvent.getMessage() );
             } );
 
