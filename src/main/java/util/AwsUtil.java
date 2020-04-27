@@ -370,14 +370,14 @@ public class AwsUtil {
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                 .withLogGroupName( logGroup  )
 //                .withDescending(true)
-                .withLimit(20);
+                .withLimit(1);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
-//        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
-//        System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
+        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+        System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
 
-        for ( LogStream logStream : describeLogStreamsResult.getLogStreams())
-        {
+//        for ( LogStream logStream : describeLogStreamsResult.getLogStreams())
+//        {
             System.out.println("############# inside logstream ##############");
             System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
 
@@ -399,7 +399,7 @@ public class AwsUtil {
 //                System.out.println( outputLogEvent.getMessage() );
 //            } );
 
-        }
+//        }
     }
 
 
