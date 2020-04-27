@@ -375,7 +375,7 @@ public class AwsUtil {
         {
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
                     .withLimit(50)
-                    .withStartTime(currentTimestamp.minusMinutes(2).getMillis())
+                    .withStartTime(currentTimestamp.minusMinutes(20).getMillis())
                     .withEndTime(currentTimestamp.getMillis())
                     .withLogGroupName( logGroup )
                     .withLogStreamName( logStream.getLogStreamName() );
