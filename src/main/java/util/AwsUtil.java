@@ -374,7 +374,7 @@ public class AwsUtil {
                 .withLogStreamNamePrefix(currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
-        for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
+        for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
         {
             System.out.println("############# inside logstream ##############");
             System.out.println("$$$$$$$$$$$"+ logStream.getLogStreamName() +"$$$$$$$$$$$");
