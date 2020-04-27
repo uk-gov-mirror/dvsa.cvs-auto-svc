@@ -371,31 +371,40 @@ public class AwsUtil {
         System.out.println("prefix: " + currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
+
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                 .withLogGroupName( logGroup  )
                 .withDescending(true)
-                .withLimit(10);
+                .withLimit(1);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
-        for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
-        {
-            System.out.println("############# inside logstream ##############");
-            System.out.println("$$$$$$$$$$$"+ logStream.getLogStreamName() +"$$$$$$$$$$$");
+        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+        System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
+
+//        for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
+//        {
+//            System.out.println("############# inside logstream ##############");
+//            System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
+
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
-                    .withLimit(50)
-                    .withStartTime(currentTimestamp.minusMinutes(20).getMillis())
-                    .withEndTime(currentTimestamp.getMillis())
+                    .withStartTime(currentTimestamp.minusMinutes(1).getMillis())
+                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
                     .withLogGroupName( logGroup )
                     .withLogStreamName( logStream.getLogStreamName() );
 
             GetLogEventsResult result = logsClient.getLogEvents( getLogEventsRequest );
+        System.out.println("++++++++++++ Log Event Results Size: " + result.getEvents().size());
 
-            result.getEvents().forEach( outputLogEvent -> {
-                System.out.println("*****************************");
-                System.out.println( outputLogEvent.getMessage() );
-            } );
-
+        for(OutputLogEvent event:result.getEvents()){
+            System.out.println("*****************************");
+            System.out.println( "# event: " + event.getMessage() );
         }
+//            result.getEvents().forEach( outputLogEvent -> {
+//                System.out.println("*****************************");
+//                System.out.println( outputLogEvent.getMessage() );
+//            } );
+
+//        }
     }
 
 
