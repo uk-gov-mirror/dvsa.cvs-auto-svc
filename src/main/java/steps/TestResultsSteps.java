@@ -8,6 +8,7 @@ import data.GenericData;
 import io.restassured.response.Response;
 import model.testresults.*;
 import net.thucydides.core.annotations.Step;
+import org.joda.time.DateTime;
 import org.openqa.selenium.WebDriver;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -746,8 +747,8 @@ public class TestResultsSteps {
     }
 
     @Step
-    public void checkLogWasCreated(String logGroup) {
-            AwsUtil.checkLogs(logGroup);
+    public void checkLogWasCreated(String logGroup, DateTime timeStamp) {
+            AwsUtil.checkLogs(logGroup, timeStamp);
     }
 
 }

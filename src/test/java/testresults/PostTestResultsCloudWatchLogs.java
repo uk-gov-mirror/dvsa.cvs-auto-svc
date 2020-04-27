@@ -5,6 +5,8 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Title;
 import net.thucydides.core.annotations.WithTag;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +39,7 @@ public class PostTestResultsCloudWatchLogs {
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
         JsonPathAlteration alterationTestResultId = new JsonPathAlteration("$.testResultId", randomTestResultId, "", "REPLACE");
+        DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
 
         // Collate the list of alterations.
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
@@ -50,7 +53,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.validateData("Test records created");
 
 //        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-dispatcher-cvsb-10773");
-        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-marshaller-cvsb-10773");
+        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-marshaller-cvsb-10773", currentTimestamp);
 //        testResultsSteps.checkLogWasCreated("test-results-cvsb-10773");
 
 //        // Retrieve the created record, and verify that the fields are present.

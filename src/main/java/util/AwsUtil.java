@@ -342,9 +342,9 @@ public class AwsUtil {
         }
     }
 
-    public static void checkLogs(String logGroup) {
+    public static void checkLogs(String logGroup, DateTime timeStamp) {
 
-        DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
+        DateTime currentTimestamp = timeStamp;
         System.out.println("Current time (timestamp): " + currentTimestamp);
         System.out.println("Current time (getMillis): " + currentTimestamp.minusMinutes(2).getMillis());
 
@@ -368,7 +368,7 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSecretAccessKey(),
                         assumeResult.getCredentials().getSessionToken());
 
-        System.out.println("prefix: " + currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
+//        System.out.println("prefix: " + currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
 
@@ -387,7 +387,7 @@ public class AwsUtil {
 //            System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
 
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
-                    .withStartTime(currentTimestamp.minusMinutes(1).getMillis())
+                    .withStartTime(currentTimestamp.getMillis())
                     .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
                     .withLogGroupName( logGroup )
                     .withLogStreamName( logStream.getLogStreamName() );
