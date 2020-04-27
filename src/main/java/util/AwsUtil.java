@@ -389,30 +389,30 @@ public class AwsUtil {
 
             GetLogEventsResult result = logsClient.getLogEvents( request );
 
-//            result.getEvents().forEach( outputLogEvent -> {
-//                System.out.println("*****************************");
-//                System.out.println( outputLogEvent.getMessage() );
-//            } );
+            result.getEvents().forEach( outputLogEvent -> {
+                System.out.println("*****************************");
+                System.out.println( outputLogEvent.getMessage() );
+            } );
 
-        String nextToken = null;
-        do {
-            if (nextToken != null) {
-                result = result.withNextForwardToken(nextToken);
-//                        withNextToken(nextToken);
-            }
-            GetLogEventsResult response = logsClient.getLogEvents(request);
-
-            for (OutputLogEvent outputLogEvent : response.getEvents()) {
-                System.out.println(outputLogEvent.getMessage());
-                nextToken = response.getNextForwardToken();
-            }
-    // check if token is the same
-			if (result.getNextForwardToken().equals(nextToken)) {
-        break;
-    }
-    // save new token
-    nextToken = response.getNextForwardToken();
-} while (true);
+//        String nextToken = null;
+//        do {
+//            if (nextToken != null) {
+//                result = result.withNextForwardToken(nextToken);
+////                        withNextToken(nextToken);
+//            }
+//            GetLogEventsResult response = logsClient.getLogEvents(request);
+//
+//            for (OutputLogEvent outputLogEvent : response.getEvents()) {
+//                System.out.println(outputLogEvent.getMessage());
+//                nextToken = response.getNextForwardToken();
+//            }
+//    // check if token is the same
+//			if (result.getNextForwardToken().equals(nextToken)) {
+//        break;
+//    }
+//    // save new token
+//    nextToken = response.getNextForwardToken();
+//} while (true);
 }
 
 }
