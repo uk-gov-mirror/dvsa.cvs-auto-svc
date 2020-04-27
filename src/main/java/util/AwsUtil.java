@@ -369,7 +369,9 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSessionToken());
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
-        DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest().withLogGroupName( logGroup  );
+        DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
+                .withLogGroupName( logGroup  )
+                .withLogStreamNamePrefix(currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
         for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
