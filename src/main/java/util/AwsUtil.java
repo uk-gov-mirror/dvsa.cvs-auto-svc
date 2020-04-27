@@ -345,9 +345,6 @@ public class AwsUtil {
     public static void checkLogs(String logGroup, DateTime timeStamp) {
 
         DateTime currentTimestamp = timeStamp;
-        System.out.println("Current time (timestamp): " + currentTimestamp);
-        System.out.println("Current time (getMillis): " + currentTimestamp.minusMinutes(2).getMillis());
-
 
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -368,23 +365,21 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSecretAccessKey(),
                         assumeResult.getCredentials().getSessionToken());
 
-//        System.out.println("prefix: " + currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
-
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
 
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                 .withLogGroupName( logGroup  )
                 .withDescending(true)
-                .withLimit(1);
+                .withLimit(20);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
-        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
-        System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
+//        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+//        System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
 
-//        for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
-//        {
-//            System.out.println("############# inside logstream ##############");
-//            System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
+        for ( LogStream logStream : describeLogStreamsResult.getLogStreams())
+        {
+            System.out.println("############# inside logstream ##############");
+            System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
 
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
                     .withStartTime(currentTimestamp.getMillis())
@@ -404,7 +399,7 @@ public class AwsUtil {
 //                System.out.println( outputLogEvent.getMessage() );
 //            } );
 
-//        }
+        }
     }
 
 
