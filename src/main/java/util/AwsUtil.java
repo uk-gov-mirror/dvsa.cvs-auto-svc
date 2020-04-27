@@ -373,27 +373,46 @@ public class AwsUtil {
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                 .withLogGroupName( logGroup  )
-                .withDescending(true);
+                .withDescending(true)
+                .withLimit(1);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
+        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
 
-        for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
-        {
-            System.out.println("############# inside logstream ##############");
             System.out.println("$$$$$$$$$$$"+ logStream.getLogStreamName() +"$$$$$$$$$$$");
-            GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
+
+            GetLogEventsRequest request = new GetLogEventsRequest()
                     .withLimit(50)
                     .withStartTime(currentTimestamp.minusMinutes(20).getMillis())
                     .withEndTime(currentTimestamp.getMillis())
                     .withLogGroupName( logGroup )
                     .withLogStreamName( logStream.getLogStreamName() );
 
-            GetLogEventsResult result = logsClient.getLogEvents( getLogEventsRequest );
+            GetLogEventsResult result = logsClient.getLogEvents( request );
 
-            result.getEvents().forEach( outputLogEvent -> {
-                System.out.println("*****************************");
-                System.out.println( outputLogEvent.getMessage() );
-            } );
+//            result.getEvents().forEach( outputLogEvent -> {
+//                System.out.println("*****************************");
+//                System.out.println( outputLogEvent.getMessage() );
+//            } );
 
-        }
+        String nextToken = null;
+        do {
+            if (nextToken != null) {
+                result = result.withNextForwardToken(nextToken);
+//                        withNextToken(nextToken);
+            }
+            GetLogEventsResult response = logsClient.getLogEvents(request);
+
+            for (OutputLogEvent outputLogEvent : response.getEvents()) {
+                System.out.println(outputLogEvent.getMessage());
+                nextToken = response.getNextForwardToken();
+            }
+    // check if token is the same
+			if (result.getNextForwardToken().equals(nextToken)) {
+        break;
     }
+    // save new token
+    nextToken = response.getNextForwardToken();
+} while (true);
+}
+
 }
