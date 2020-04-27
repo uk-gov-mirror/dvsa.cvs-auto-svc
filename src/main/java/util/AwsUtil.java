@@ -382,8 +382,8 @@ public class AwsUtil {
             System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
 
             GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
-                    .withStartTime(currentTimestamp.getMillis())
-                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
+//                    .withStartTime(currentTimestamp.getMillis())
+//                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
                     .withLogGroupName( logGroup )
                     .withLogStreamName( logStream.getLogStreamName() );
 
