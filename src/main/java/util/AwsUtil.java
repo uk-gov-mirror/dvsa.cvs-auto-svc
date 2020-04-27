@@ -368,13 +368,15 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSecretAccessKey(),
                         assumeResult.getCredentials().getSessionToken());
 
+        System.out.println("prefix: " + currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
+
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
         DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                 .withLogGroupName( logGroup  )
-                .withLogStreamNamePrefix(currentTimestamp.toDateTime().toString("YYYY/MM/DD"));
+                .withDescending(true);
         DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
 
-        for ( LogStream logStream : describeLogStreamsResult.getLogStreams() )
+        for ( LogStream logStream : describeLogStreamsResult.getLogStreams().subList(0,10) )
         {
             System.out.println("############# inside logstream ##############");
             System.out.println("$$$$$$$$$$$"+ logStream.getLogStreamName() +"$$$$$$$$$$$");
