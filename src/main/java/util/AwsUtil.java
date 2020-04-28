@@ -209,6 +209,7 @@ public class AwsUtil {
     }
 
     public static void deleteTestResultId(String testResultId) {
+        System.out.println("deleting the test-result: " + testResultId);
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
                 AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
@@ -244,6 +245,7 @@ public class AwsUtil {
             System.out.println("Delete item:\n" + item.toJSONPretty());
 
             DeleteItemOutcome outcome = table.deleteItem("vin", vin);
+            System.out.println("Outcome: "+outcome.getItem().toJSONPretty());
         }
     }
 
