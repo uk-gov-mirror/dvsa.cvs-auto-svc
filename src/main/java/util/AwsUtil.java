@@ -365,35 +365,47 @@ public class AwsUtil {
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
 
-        DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
-                .withLogGroupName( logGroup  )
-                .withOrderBy("LastEventTime")
-                .withDescending(true)
-                .withLimit(1);
-        DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams( describeLogStreamsRequest );
+        outerLoop:
+        {
+            for (int times = 0; times < 15; times++) {
 
-        LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
-        System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
+                System.out.println("... " + times + " ...");
+                DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
+                        .withLogGroupName(logGroup)
+                        .withOrderBy("LastEventTime")
+                        .withDescending(true)
+                        .withLimit(1);
+                DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
 
-            System.out.println("############# inside logstream ##############");
-            System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
+                LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+//            System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
+//
+//            System.out.println("############# inside logstream ##############");
+//            System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
 
-            GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
+                GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
 //                    .withStartTime(currentTimestamp.getMillis())
 //                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
-                    .withLogGroupName( logGroup )
-                    .withLogStreamName( logStream.getLogStreamName() );
+                        .withLogGroupName(logGroup)
+                        .withLogStreamName(logStream.getLogStreamName());
 
-            GetLogEventsResult result = logsClient.getLogEvents( getLogEventsRequest );
-        System.out.println("++++++++++++ Log Event Results Size: " + result.getEvents().size());
+                GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
+                System.out.println("++++++++++++ Log Event Results Size: " + result.getEvents().size());
 
-        for(OutputLogEvent event:result.getEvents()){
-            System.out.println("*****************************");
-            System.out.println( "# event: " + event.getMessage() );
-            if(event.getMessage().contains(systemNo)){
-                System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+                for (OutputLogEvent event : result.getEvents()) {
+//                System.out.println("*****************************");
+//                System.out.println("# event: " + event.getMessage());
+                    if (event.getMessage().contains(systemNo)) {
+                        System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+                        break outerLoop;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-
         }
 //            result.getEvents().forEach( outputLogEvent -> {
 //                System.out.println("*****************************");
