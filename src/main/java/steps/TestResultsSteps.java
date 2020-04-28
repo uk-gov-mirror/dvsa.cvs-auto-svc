@@ -748,11 +748,13 @@ public class TestResultsSteps {
 
     @Step
     public void checkAwsDispatcherLogContains(String key, String value) {
-        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-dispatcher", key, value)).isTrue();
+        String keyValuePair = key+": { S: '" + value + "' }";
+        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-dispatcher", keyValuePair)).isTrue();
     }
 
     @Step
     public void checkAwsMarshallerLogContains(String key, String value) {
-        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-marshaller", key, value)).isTrue();
+        String keyValuePair = "\""+key+"\"" + ":{\"S\":\"" + value + "\"}";
+        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-marshaller", keyValuePair)).isTrue();
     }
 }
