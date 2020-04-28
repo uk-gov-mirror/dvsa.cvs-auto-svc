@@ -234,10 +234,24 @@ public class AwsUtil {
 
         Table table = dynamoDB.getTable(tableName);
 
-        DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey("testResultId", testResultId);
-            System.out.println("Delete item:\n" + spec);
-            DeleteItemOutcome outcome = table.deleteItem(spec);
-            System.out.println("Outcome: "+outcome.getItem().toJSONPretty());
+        Index index = table.getIndex("TesterStaffIdIndex");
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("testResultId = :testResult_id")
+                .withValueMap(new ValueMap()
+                        .withString(":testResult_id",testResultId));
+
+        ItemCollection<QueryOutcome> items = index.query(spec);
+        for (Item item : items) {
+            String vin = JsonPath.read(item.toJSON(), "$.vin");
+            System.out.println("Delete item:\n" + item.toJSONPretty());
+
+            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
+        }
+
+//        DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey("testResultId", testResultId);
+//            System.out.println("Delete item:\n" + spec);
+//            DeleteItemOutcome outcome = table.deleteItem(spec);
+//            System.out.println("Outcome: "+outcome.getItem().toJSONPretty());
     }
 
     public static String getNextSystemNumberInSequence() {
