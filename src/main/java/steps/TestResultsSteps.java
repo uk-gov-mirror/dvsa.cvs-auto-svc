@@ -747,8 +747,8 @@ public class TestResultsSteps {
     }
 
     @Step
-    public void checkLogWasCreated(String logGroup, DateTime timeStamp) {
-            AwsUtil.checkLogs(logGroup, timeStamp);
+    public void checkLogWasCreated(String logGroup, String string) {
+            AwsUtil.checkLogsFor(logGroup, string);
     }
 
 }

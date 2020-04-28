@@ -342,9 +342,7 @@ public class AwsUtil {
         }
     }
 
-    public static void checkLogs(String logGroup, DateTime timeStamp) {
-
-        DateTime currentTimestamp = timeStamp;
+    public static void checkLogsFor(String logGroup, String systemNo) {
 
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -377,8 +375,6 @@ public class AwsUtil {
         LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
         System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
 
-//        for ( LogStream logStream : describeLogStreamsResult.getLogStreams())
-//        {
             System.out.println("############# inside logstream ##############");
             System.out.println("$$$$$$$$$$$   "+ logStream.getLogStreamName() +"   $$$$$$$$$$$");
 
@@ -394,6 +390,10 @@ public class AwsUtil {
         for(OutputLogEvent event:result.getEvents()){
             System.out.println("*****************************");
             System.out.println( "# event: " + event.getMessage() );
+            if(event.getMessage().contains(systemNo)){
+                System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+            }
+
         }
 //            result.getEvents().forEach( outputLogEvent -> {
 //                System.out.println("*****************************");
