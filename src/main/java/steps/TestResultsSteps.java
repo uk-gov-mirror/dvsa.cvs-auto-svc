@@ -760,7 +760,7 @@ public class TestResultsSteps {
 
     @Step
     public void checkAwsDispatcherLogStatusCodeForSystemNumber(String systemNumber, int httpCode) {
-        String keyValuePair1 = "\"systemNumber\":{\"S\":\"" + systemNumber + "\"}";
+        String keyValuePair1 = "\"systemNumber\":\"" + systemNumber + "\"";
         String keyValuePair2 = "statusCode: " + httpCode;
         assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2)).isTrue();
     }
