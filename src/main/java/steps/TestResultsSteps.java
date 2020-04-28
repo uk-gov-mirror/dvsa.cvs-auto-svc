@@ -764,4 +764,8 @@ public class TestResultsSteps {
         String keyValuePair2 = "statusCode: " + httpCode;
         assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2)).isTrue();
     }
+
+    public void cleanUpTestResultsOfTestTypeId(String testResultId) {
+        AwsUtil.deleteTestResultId(testResultId);
+    }
 }

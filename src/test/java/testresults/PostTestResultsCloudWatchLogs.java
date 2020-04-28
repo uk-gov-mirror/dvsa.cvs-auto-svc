@@ -23,10 +23,9 @@ public class PostTestResultsCloudWatchLogs {
     @Steps
     TestResultsSteps testResultsSteps;
 
-    @WithTag("In_Test")
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING")
-    public void testResults_CloudWatch_Logs_HGV() {
+    @Title("TESTING THE CLOUDWATCH LOGGING - AC1 - http status code: 202")
+    public void testResults_CloudWatch_Logs_TRL_202() {
 
         // Read the base test result JSON.
         String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
@@ -57,49 +56,44 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 403);
-
-//        testResultsSteps.checkLogWasCreated("test-results-cvsb-10773");
-
-//        // Retrieve the created record, and verify that the fields are present.
-//        testResultsSteps.getTestResults(randomSystemNumber);
-//        testResultsSteps.statusCodeShouldBe(200);
-//
-//        // Verify TestNumber/CertificateNumber field have the same value
-//        testResultsSteps.valueForFieldInPathShouldBe("[0].testTypes[0].certificateNumber", testResultsSteps.getTestNumber());
     }
 
-//    @Title("CVSB-7675 - TC2 - AC1 - ROADWORTHINESS certificate number generated (TRL) - PASS")
-//    @Test
-//    public void testResults_Roadworthiness_TRL_Pass_Certificate_Number() {
-//
-//        // Read the base test result JSON.
-//        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_trl_pass_7675.json", "$");
-//
-//        // Create alteration to add one more tech record to in the request body
-//        String randomSystemNumber = GenericData.generateRandomSystemNumber();
-//        String randomVin = GenericData.generateRandomVin();
-//        String randomTestResultId = UUID.randomUUID().toString();
-//        JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
-//        JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
-//        JsonPathAlteration alterationTestResultId = new JsonPathAlteration("$.testResultId", randomTestResultId, "", "REPLACE");
-//
-//        // Collate the list of alterations.
-//        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
-//                alterationVin,
-//                alterationSystemNumber,
-//                alterationTestResultId));
-//
-//        // Post the results, together with any alterations, and verify that they are accepted.
+    @WithTag("In_Test")
+    @Test
+    @Title("TESTING THE CLOUDWATCH LOGGING - AC1 - http status code: 400")
+    public void testResults_CloudWatch_Logs_TRL_400() {
+
+        // Read the base test result JSON.
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+
+        // Create alteration to add one more tech record to in the request body
+        String randomSystemNumber = GenericData.generateRandomSystemNumber();
+        String randomVin = GenericData.generateRandomVin();
+        String randomTestResultId = "e4404400-7e57-c0de-e400-e4404c0de400";
+        JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
+        JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
+        JsonPathAlteration alterationTestResultId = new JsonPathAlteration("$.testResultId", randomTestResultId, "", "REPLACE");
+        DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
+
+        // Collate the list of alterations.
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
+                alterationVin,
+                alterationSystemNumber,
+                alterationTestResultId));
+
+        // Post the results, together with any alterations, and verify that they are accepted.
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
 //        testResultsSteps.postVehicleTestResultsWithAlterations(testResultRecord, alterations);
 //        testResultsSteps.statusCodeShouldBe(201);
 //        testResultsSteps.validateData("Test records created");
 //
-//        // Retrieve the created record, and verify that the fields are present.
-//        testResultsSteps.getTestResults(randomSystemNumber);
-//        testResultsSteps.statusCodeShouldBe(200);
 //
-//        // Verify TestNumber/CertificateNumber are  test field values match the expected values.
-//        testResultsSteps.valueForFieldInPathShouldBe("[0].testTypes[0].certificateNumber", testResultsSteps.getTestNumber());
-//    }
+//        testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
+//        testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
+//        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
+//        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
+//        testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 404);
+
+    }
 
 }

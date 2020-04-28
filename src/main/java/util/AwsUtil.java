@@ -208,6 +208,45 @@ public class AwsUtil {
         }
     }
 
+    public static void deleteTestResultId(String testResultId) {
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-test-results";
+
+        Table table = dynamoDB.getTable(tableName);
+
+        Index index = table.getIndex("TesterStaffIdIndex");
+        QuerySpec spec = new QuerySpec()
+                .withKeyConditionExpression("testerStaffId = :test_result_id")
+                .withValueMap(new ValueMap()
+                        .withString(":test_result_id",testResultId));
+
+        ItemCollection<QueryOutcome> items = index.query(spec);
+        for (Item item : items) {
+            String vin = JsonPath.read(item.toJSON(), "$.vin");
+            System.out.println("Delete item:\n" + item.toJSONPretty());
+
+            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
+        }
+    }
+
     public static String getNextSystemNumberInSequence() {
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -402,7 +441,6 @@ public class AwsUtil {
 
     }
 
-
     public static boolean checkDispatcherLogsForData(String ...keyValuePairs) {
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -471,4 +509,6 @@ public class AwsUtil {
         return false;
 
     }
+
+
 }
