@@ -444,8 +444,8 @@ public class AwsUtil {
                     .withLogStreamName(logStream.getLogStreamName());
 
             GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
-            eventLoop:
-                for (OutputLogEvent event : result.getEvents()) {
+
+            eventLoop:for (OutputLogEvent event : result.getEvents()) {
                     System.out.println("----------------------------------------------------------------------");
                     System.out.println("# event: " + event.getMessage());
                     System.out.println("Looking for: " + keyValuePairs[0] + " and " + keyValuePairs[1]);
@@ -453,7 +453,7 @@ public class AwsUtil {
                     for (String keyValuePair : keyValuePairs) {
                         System.out.println("searching inside event for: " + keyValuePair);
                         if (!event.getMessage().contains(keyValuePair)) {
-                            break eventLoop;
+                            continue eventLoop;
                         }
                     }
                         System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
