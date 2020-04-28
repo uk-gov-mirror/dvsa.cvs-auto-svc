@@ -757,4 +757,11 @@ public class TestResultsSteps {
         String keyValuePair = key+": { S: '" + value + "' }";
         assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-marshaller", keyValuePair)).isTrue();
     }
+
+    @Step
+    public void checkAwsDispatcherLogStatusCodeForSystemNumber(String systemNumber, int httpCode) {
+        String keyValuePair1 = "\"systemNumber\":{\"S\":\"" + systemNumber + "\"}";
+        String keyValuePair2 = "\"statusCode\":{\"S\":\"" + httpCode + "\"}";
+        assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2)).isTrue();
+    }
 }

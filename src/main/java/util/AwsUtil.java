@@ -23,6 +23,7 @@ import data.GenericData;
 import exceptions.AutomationException;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class AwsUtil {
 
@@ -398,13 +399,70 @@ public class AwsUtil {
             }
 
         return false;
-//            result.getEvents().forEach( outputLogEvent -> {
-//                System.out.println("*****************************");
-//                System.out.println( outputLogEvent.getMessage() );
-//            } );
 
-//        }
     }
 
 
+    public static boolean checkDispatcherLogsForData(String ...keyValuePairs) {
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+
+        System.out.println(System.getProperty("AWS_ROLE"));
+
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(UUID.randomUUID().toString());
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+
+        AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
+        String logGroup = "/aws/lambda/edh-dispatcher-"+System.getProperty("BRANCH");
+
+        for (int times = 0; times < 15; times++) {
+
+            System.out.println("... " + times + " ...");
+            DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
+                    .withLogGroupName(logGroup)
+                    .withOrderBy("LastEventTime")
+                    .withDescending(true)
+                    .withLimit(1);
+            DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
+
+            LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+            GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
+//                    .withStartTime(currentTimestamp.getMillis())
+//                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
+                    .withLogGroupName(logGroup)
+                    .withLogStreamName(logStream.getLogStreamName());
+
+            GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
+            for (OutputLogEvent event : result.getEvents()) {
+                System.out.println("----------------------------------------------------------------------");
+                System.out.println("# event: " + event.getMessage());
+
+                System.out.println("Looking for: " + keyValuePairs);
+                if (Stream.of(keyValuePairs).allMatch(event.getMessage()::contains)) {
+                    System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+                    System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
+                    return true;
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+
+    }
 }
