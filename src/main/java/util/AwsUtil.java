@@ -448,7 +448,7 @@ public class AwsUtil {
             {
                 for (OutputLogEvent event : result.getEvents()) {
                     System.out.println("----------------------------------------------------------------------");
-//                    System.out.println("# event: " + event.getMessage());
+                    System.out.println("# event: " + event.getMessage());
                     System.out.println("Looking for: " + keyValuePairs[0] + " and " + keyValuePairs[1]);
 
                     for (String keyValuePair : keyValuePairs) {
