@@ -336,7 +336,7 @@ public class AwsUtil {
         }
     }
 
-    public static boolean checkLogsFor(String logGroup, String systemNo) {
+    public static boolean checkLogsFor(String log, String key, String value) {
 
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -358,6 +358,7 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSessionToken());
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
+        String logGroup = log +"-"+System.getProperty("BRANCH");
 
             for (int times = 0; times < 15; times++) {
 
@@ -380,7 +381,9 @@ public class AwsUtil {
                 for (OutputLogEvent event : result.getEvents()) {
                 System.out.println("*****************************");
                 System.out.println("# event: " + event.getMessage());
-                    if (event.getMessage().contains(systemNo)) {
+                String keyValuePair = "\""+key+"\""+":{\"S\":\""+"\""+value+"\"}";
+
+                    if (event.getMessage().contains(keyValuePair)) {
                         System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
                         System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
                         return true;

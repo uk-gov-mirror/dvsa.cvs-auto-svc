@@ -747,8 +747,12 @@ public class TestResultsSteps {
     }
 
     @Step
-    public void checkLogWasCreated(String logGroup, String string) {
-        assertThat(AwsUtil.checkLogsFor(logGroup, string)).isTrue();
+    public void checkAwsDispatcherLogContains(String key, String value) {
+        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-dispatcher", key, value)).isTrue();
     }
 
+    @Step
+    public void checkAwsMarshallerLogContains(String key, String value) {
+        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-marshaller", key, value)).isTrue();
+    }
 }

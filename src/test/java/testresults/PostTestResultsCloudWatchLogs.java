@@ -7,7 +7,6 @@ import net.thucydides.core.annotations.Title;
 import net.thucydides.core.annotations.WithTag;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import steps.TestResultsSteps;
@@ -53,8 +52,11 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.validateData("Test records created");
 
 
-        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-marshaller-cvsb-10773", randomSystemNumber);
-        testResultsSteps.checkLogWasCreated("/aws/lambda/edh-dispatcher-cvsb-10773", randomSystemNumber);
+        testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
+        testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
+        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
+        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
+
 //        testResultsSteps.checkLogWasCreated("test-results-cvsb-10773");
 
 //        // Retrieve the created record, and verify that the fields are present.
