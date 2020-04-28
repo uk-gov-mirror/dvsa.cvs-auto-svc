@@ -378,8 +378,8 @@ public class AwsUtil {
 
                 GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
                 for (OutputLogEvent event : result.getEvents()) {
-//                System.out.println("*****************************");
-//                System.out.println("# event: " + event.getMessage());
+                System.out.println("*****************************");
+                System.out.println("# event: " + event.getMessage());
                     if (event.getMessage().contains(systemNo)) {
                         System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
                         System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
