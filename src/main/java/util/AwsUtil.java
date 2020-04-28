@@ -444,15 +444,22 @@ public class AwsUtil {
                     .withLogStreamName(logStream.getLogStreamName());
 
             GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
-            for (OutputLogEvent event : result.getEvents()) {
-                System.out.println("----------------------------------------------------------------------");
-                System.out.println("# event: " + event.getMessage());
+            event:
+            {
+                for (OutputLogEvent event : result.getEvents()) {
+                    System.out.println("----------------------------------------------------------------------");
+//                    System.out.println("# event: " + event.getMessage());
+                    System.out.println("Looking for: " + keyValuePairs[0] + " and " + keyValuePairs[1]);
 
-                System.out.println("Looking for: " + keyValuePairs);
-                if (Stream.of(keyValuePairs).allMatch(event.getMessage()::contains)) {
-                    System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
-                    System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
-                    return true;
+                    for (String keyValuePair : keyValuePairs) {
+                        System.out.println("searching inside event for: " + keyValuePair);
+                        if (!event.getMessage().contains(keyValuePair)) {
+                            break event;
+                        }
+                    }
+                        System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+                        System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
+                        return true;
                 }
             }
             try {
