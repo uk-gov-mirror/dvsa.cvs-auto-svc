@@ -5,6 +5,7 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.*;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
@@ -233,20 +234,10 @@ public class AwsUtil {
 
         Table table = dynamoDB.getTable(tableName);
 
-        Index index = table.getIndex("TesterStaffIdIndex");
-        QuerySpec spec = new QuerySpec()
-                .withKeyConditionExpression("testerStaffId = :test_result_id")
-                .withValueMap(new ValueMap()
-                        .withString(":test_result_id",testResultId));
-
-        ItemCollection<QueryOutcome> items = index.query(spec);
-        for (Item item : items) {
-            String vin = JsonPath.read(item.toJSON(), "$.vin");
-            System.out.println("Delete item:\n" + item.toJSONPretty());
-
-            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
+        DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey("testResultId", testResultId);
+            System.out.println("Delete item:\n" + spec);
+            DeleteItemOutcome outcome = table.deleteItem(spec);
             System.out.println("Outcome: "+outcome.getItem().toJSONPretty());
-        }
     }
 
     public static String getNextSystemNumberInSequence() {
