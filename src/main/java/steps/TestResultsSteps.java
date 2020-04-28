@@ -748,7 +748,7 @@ public class TestResultsSteps {
 
     @Step
     public void checkLogWasCreated(String logGroup, String string) {
-            AwsUtil.checkLogsFor(logGroup, string);
+        assertThat(AwsUtil.checkLogsFor(logGroup, string)).isTrue();
     }
 
 }

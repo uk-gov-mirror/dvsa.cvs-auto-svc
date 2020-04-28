@@ -1,11 +1,8 @@
 package util;
 
-import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.*;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchClient;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
@@ -13,7 +10,6 @@ import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.logs.AWSLogs;
 import com.amazonaws.services.logs.AWSLogsClient;
-import com.amazonaws.services.logs.AWSLogsClientBuilder;
 import com.amazonaws.services.logs.model.*;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.s3.AmazonS3;
@@ -25,8 +21,6 @@ import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
 import com.jayway.jsonpath.JsonPath;
 import data.GenericData;
 import exceptions.AutomationException;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import java.util.*;
 
@@ -342,7 +336,7 @@ public class AwsUtil {
         }
     }
 
-    public static void checkLogsFor(String logGroup, String systemNo) {
+    public static boolean checkLogsFor(String logGroup, String systemNo) {
 
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -365,8 +359,6 @@ public class AwsUtil {
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
 
-        outerLoop:
-        {
             for (int times = 0; times < 15; times++) {
 
                 System.out.println("... " + times + " ...");
@@ -378,11 +370,6 @@ public class AwsUtil {
                 DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
 
                 LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
-//            System.out.println("@@@@@@@@@@@@@@@ logStream: " + logStream.getLogStreamName());
-//
-//            System.out.println("############# inside logstream ##############");
-//            System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
-
                 GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
 //                    .withStartTime(currentTimestamp.getMillis())
 //                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
@@ -390,23 +377,23 @@ public class AwsUtil {
                         .withLogStreamName(logStream.getLogStreamName());
 
                 GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
-                System.out.println("++++++++++++ Log Event Results Size: " + result.getEvents().size());
-
                 for (OutputLogEvent event : result.getEvents()) {
 //                System.out.println("*****************************");
 //                System.out.println("# event: " + event.getMessage());
                     if (event.getMessage().contains(systemNo)) {
                         System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
-                        break outerLoop;
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
+                        return true;
                     }
                 }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+
+        return false;
 //            result.getEvents().forEach( outputLogEvent -> {
 //                System.out.println("*****************************");
 //                System.out.println( outputLogEvent.getMessage() );
