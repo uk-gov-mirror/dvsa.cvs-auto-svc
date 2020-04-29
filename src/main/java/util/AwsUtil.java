@@ -249,10 +249,12 @@ public class AwsUtil {
         Table table = dynamoDB.getTable(tableName);
 
         for(Map<String, AttributeValue> item : result.getItems()){
+            System.out.println("item.size: " + item.size());
             System.out.println("item.values: " + item.values());
-            System.out.println("item.get(vin): " + item.get("vin"));
-            System.out.println("item.get(S): " + item.get("S"));
-            DeleteItemOutcome outcome = table.deleteItem("vin",item.get("vin").getS());
+            System.out.println("item.get(vin).getS(): " + item.get("vin").getS());
+            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                    .withPrimaryKey("vin", item.get("vin").getS(), "testResultId", testResultId);
+            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
             System.out.println("deleted item: " + outcome.getItem().toJSONPretty());
         }
 
