@@ -29,11 +29,11 @@ public class InsertActivitiesCloudWatchLogs {
 
 
     @WithTag("In_Test")
-    @Title("CVSB- / CVSB- - AC7 ")
+    @Title("CVSB-10767 CVS to EDH (Open Site Visits) - AC1 - http status code 202")
     @Test
     public void insertActivity() {
         // read post request body from file
-        String postRequestBody = GenericData.readJsonValueFromFile("activities.json","$");
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_10767.json","$");
         // generate random ID
         String randomId = UUID.randomUUID().toString();
         // generate random TesterStaffId
