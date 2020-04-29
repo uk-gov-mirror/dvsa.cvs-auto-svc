@@ -1,6 +1,6 @@
 package util;
 
-import com.amazonaws.auth.*;
+import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
@@ -8,9 +8,11 @@ import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
-import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
-import com.amazonaws.services.dynamodbv2.model.*;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.logs.AWSLogs;
 import com.amazonaws.services.logs.AWSLogsClient;
 import com.amazonaws.services.logs.model.*;
@@ -25,7 +27,6 @@ import data.GenericData;
 import exceptions.AutomationException;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class AwsUtil {
 
@@ -155,8 +156,6 @@ public class AwsUtil {
         Table table = dynamoDB.getTable("cvs-" + System.getProperty("BRANCH") + "-" + tableName);
         String valueForPrimaryKey = GenericData.getValueFromJsonPath(json, "$." + primaryKey);
 
-
-
         try {
             Item item = Item.fromJSON(json);
             System.out.println("Adding a new item...");
@@ -257,26 +256,6 @@ public class AwsUtil {
             DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
         }
 
-//
-//
-//        Index index = table.getIndex("TesterStaffIdIndex");
-//        QuerySpec spec = new QuerySpec()
-//                .withKeyConditionExpression("testerStaffId = :staff_id")
-//                .withValueMap(new ValueMap()
-//                        .withString(":testResult_id",testResultId));
-//
-//        ItemCollection<QueryOutcome> items = index.query(spec);
-//        for (Item item : items) {
-//            String vin = JsonPath.read(item.toJSON(), "$.vin");
-//            System.out.println("Delete item:\n" + item.toJSONPretty());
-//
-//            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
-//        }
-//
-//        DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey("testResultId", testResultId);
-//            System.out.println("Delete item:\n" + spec);
-//            DeleteItemOutcome outcome = table.deleteItem(spec);
-//            System.out.println("Outcome: "+outcome.getItem().toJSONPretty());
     }
 
     public static String getNextSystemNumberInSequence() {
@@ -542,5 +521,46 @@ public class AwsUtil {
 
     }
 
+
+    public static void insertActivity(String jsonBody) {
+
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-activities";
+
+        Table table = dynamoDB.getTable(tableName);
+
+        String vin = GenericData.getValueFromJsonPath(jsonBody, "$.vin");
+
+        try {
+            Item item = Item.fromJSON(jsonBody);
+            System.out.println("Adding a new item...");
+            PutItemOutcome outcome = table
+                    .putItem(item);
+            System.out.println("PutItem succeeded:\n" + item.toJSONPretty());
+
+        }
+        catch (Exception e) {
+            System.err.println("Unable to add item with vin: " + vin);
+            System.err.println(e);
+        }
+    }
 
 }

@@ -203,7 +203,13 @@ public class ActivitiesSteps {
                 startTime);
     }
 
+    @Step
     public void postActivitiesParentIdWithAlterations(String requestBody, List<JsonPathAlteration> alterations) {
         this.response = activitiesClient.postActivitiesWithAlterations(requestBody, alterations);
+    }
+
+    @Step
+    public void insertActivityWithAlterations(String requestBody, List<JsonPathAlteration> alterations) {
+        activitiesClient.insertActivityWithAlterations(requestBody, alterations);
     }
 }

@@ -252,7 +252,7 @@ public class PostTestResultsCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
+
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC3 - http status code: 500")
     public void testResults_CloudWatch_Logs_HGV_500() {

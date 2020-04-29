@@ -12,6 +12,7 @@ import model.activities.Activities;
 import model.activities.ActivitiesGet;
 import model.activities.ActivitiesPost;
 import model.activities.ActivitiesPut;
+import util.AwsUtil;
 import util.BasePathFilter;
 import util.JsonPathAlteration;
 
@@ -271,5 +272,10 @@ public class ActivitiesClient {
                 .post("/activities");
 
         return response;
+    }
+
+    public void insertActivityWithAlterations(String body, List<JsonPathAlteration> alterations) {
+        String alteredBody = GenericData.applyJsonAlterations(body, alterations);
+        AwsUtil.insertActivity(alteredBody);
     }
 }
