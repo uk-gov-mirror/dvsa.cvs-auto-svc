@@ -24,11 +24,11 @@ public class PostTestResultsCloudWatchLogs {
     TestResultsSteps testResultsSteps;
 
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC1 - http status code: 202")
-    public void testResults_CloudWatch_Logs_TRL_202() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC1 - http status code: 202")
+    public void testResults_CloudWatch_Logs_HGV_202() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
@@ -50,7 +50,6 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.statusCodeShouldBe(201);
         testResultsSteps.validateData("Test records created");
 
-
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
@@ -60,11 +59,11 @@ public class PostTestResultsCloudWatchLogs {
 
 
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC2 - http status code: 400")
-    public void testResults_CloudWatch_Logs_TRL_400() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 400")
+    public void testResults_CloudWatch_Logs_HGV_400() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
@@ -99,11 +98,11 @@ public class PostTestResultsCloudWatchLogs {
 
 
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC2 - http status code: 401")
-    public void testResults_CloudWatch_Logs_TRL_401() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 401")
+    public void testResults_CloudWatch_Logs_HGV_401() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
@@ -138,11 +137,11 @@ public class PostTestResultsCloudWatchLogs {
 
 
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC2 - http status code: 403")
-    public void testResults_CloudWatch_Logs_TRL_403() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 403")
+    public void testResults_CloudWatch_Logs_HGV_403() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
@@ -177,11 +176,11 @@ public class PostTestResultsCloudWatchLogs {
 
 
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC2 - http status code: 404")
-    public void testResults_CloudWatch_Logs_TRL_404() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 404")
+    public void testResults_CloudWatch_Logs_HGV_404() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
@@ -216,11 +215,11 @@ public class PostTestResultsCloudWatchLogs {
 
 
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC3 - http status code: 429")
-    public void testResults_CloudWatch_Logs_TRL_429() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC3 - http status code: 429")
+    public void testResults_CloudWatch_Logs_HGV_429() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
@@ -255,11 +254,11 @@ public class PostTestResultsCloudWatchLogs {
 
     @WithTag("In_Test")
     @Test
-    @Title("TESTING THE CLOUDWATCH LOGGING - AC3 - http status code: 500")
-    public void testResults_CloudWatch_Logs_TRL_500() {
+    @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC3 - http status code: 500")
+    public void testResults_CloudWatch_Logs_HGV_500() {
 
         // Read the base test result JSON.
-        String testResultRecord = GenericData.readJsonValueFromFile("test-results_roadworthiness_hgv_pass_7675.json", "$");
+        String testResultRecord = GenericData.readJsonValueFromFile("test-results_cloud_watch_logs_hgv_pass_10773.json", "$");
 
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
