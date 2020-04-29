@@ -239,7 +239,7 @@ public class AwsUtil {
         ScanRequest scanRequest = new ScanRequest()
                 .withTableName(tableName)
                 .withFilterExpression("testResultId = :result_id")
-                .withProjectionExpression("vin")
+                .withProjectionExpression("vin, testResultId")
                 .withExpressionAttributeValues(expressionAttributeValues);
         ScanResult result = client.scan(scanRequest);
         System.out.println("result.toString: " + result.toString());
@@ -252,16 +252,7 @@ public class AwsUtil {
             System.out.println("item.values: " + item.values());
             System.out.println("item.get(vin): " + item.get("vin"));
             System.out.println("item.get(S): " + item.get("S"));
-
-            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                    .withPrimaryKey("vin", item.get("S"))
-                    .withConditionExpression("#field = :result_id")
-                    .withNameMap(new NameMap()
-                    .with("#field", "testResultId"))
-                    .withValueMap(new ValueMap()
-                    .with(":result_id", testResultId))
-                    .withReturnValues(ReturnValue.ALL_OLD);
-            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
+            DeleteItemOutcome outcome = table.deleteItem("vin",item.get("vin").getS());
             System.out.println("deleted item: " + outcome.getItem().toJSONPretty());
         }
 
