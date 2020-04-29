@@ -8,6 +8,7 @@ import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ReturnValue;
@@ -591,7 +592,13 @@ public class AwsUtil {
 
             System.out.println("deleting item with id: " + id + " ....");
             DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                    .withPrimaryKey("Id", id);
+                    .withPrimaryKey("id", id);
+//                    .withConditionExpression("#ip = :val")
+//                    .withNameMap(new NameMap()
+//                            .with("#ip", "InProduction"))
+//                    .withValueMap(new ValueMap()
+//                            .withBoolean(":val", false))
+//                    .withReturnValues(ReturnValue.ALL_OLD);
             DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
 
             System.out.println("Printing item that was deleted...");
