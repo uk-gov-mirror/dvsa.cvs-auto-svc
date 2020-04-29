@@ -563,4 +563,45 @@ public class AwsUtil {
         }
     }
 
+    public static void deleteActivityById(String id) {
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-activities";
+
+        Table table = dynamoDB.getTable(tableName);
+
+        try {
+
+            System.out.println("deleting item with id: " + id + " ....");
+            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                    .withPrimaryKey("Id", id);
+            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
+
+            System.out.println("Printing item that was deleted...");
+            System.out.println(outcome.getItem().toJSONPretty());
+
+        }
+        catch (Exception e) {
+            System.err.println("Error deleting item in " + tableName);
+            System.err.println(e.getMessage());
+        }
+
+    }
 }

@@ -65,8 +65,9 @@ public class InsertActivitiesCloudWatchLogs {
                 alterationTesterStaffId));
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-
-        activitiesSteps.getActivities("visit", null, null, startTimeGet, endTimeGet);
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        activitiesSteps.statusCodeShouldBe(200);
+        activitiesSteps.deleteActivity(randomId);
 
     }
 

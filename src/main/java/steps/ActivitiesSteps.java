@@ -212,4 +212,9 @@ public class ActivitiesSteps {
     public void insertActivityWithAlterations(String requestBody, List<JsonPathAlteration> alterations) {
         activitiesClient.insertActivityWithAlterations(requestBody, alterations);
     }
+
+    @Step
+    public void deleteActivity(String id) {
+        activitiesClient.deleteActivity(id);
+    }
 }

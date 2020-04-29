@@ -278,4 +278,8 @@ public class ActivitiesClient {
         String alteredBody = GenericData.applyJsonAlterations(body, alterations);
         AwsUtil.insertActivity(alteredBody);
     }
+
+    public void deleteActivity(String id) {
+        AwsUtil.deleteActivityById(id);
+    }
 }
