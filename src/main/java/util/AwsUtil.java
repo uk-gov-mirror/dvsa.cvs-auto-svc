@@ -547,7 +547,7 @@ public class AwsUtil {
 
         Table table = dynamoDB.getTable(tableName);
 
-        String vin = GenericData.getValueFromJsonPath(jsonBody, "$.vin");
+        String id = GenericData.getValueFromJsonPath(jsonBody, "$.id");
 
         try {
             Item item = Item.fromJSON(jsonBody);
@@ -558,7 +558,7 @@ public class AwsUtil {
 
         }
         catch (Exception e) {
-            System.err.println("Unable to add item with vin: " + vin);
+            System.err.println("Unable to add item with id: " + id);
             System.err.println(e);
         }
     }
