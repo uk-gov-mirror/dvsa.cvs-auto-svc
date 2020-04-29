@@ -242,14 +242,19 @@ public class AwsUtil {
                 .withProjectionExpression("vin")
                 .withExpressionAttributeValues(expressionAttributeValues);
         ScanResult result = client.scan(scanRequest);
+        System.out.println("result.toString: " + result.toString());
+        System.out.println("result.getCount: " + result.getCount());
+        System.out.println("result.getItems:" + result.getItems());
 
         Table table = dynamoDB.getTable(tableName);
 
         for(Map<String, AttributeValue> item : result.getItems()){
-            System.out.println("scanned item is: " + item.values());
-            System.out.println("vin: " + item.get(0).getS());
+            System.out.println("item.values: " + item.values());
+            System.out.println("item.get(vin): " + item.get("vin"));
+            System.out.println("item.get(S): " + item.get("S"));
+
             DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                    .withPrimaryKey("vin", item.get(0).getS())
+                    .withPrimaryKey("vin", item.get("S"))
                     .withConditionExpression("#field = :result_id")
                     .withNameMap(new NameMap()
                     .with("#field", "testResultId"))
