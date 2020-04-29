@@ -9,10 +9,10 @@ import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.*;
 import com.amazonaws.services.logs.AWSLogs;
 import com.amazonaws.services.logs.AWSLogsClient;
 import com.amazonaws.services.logs.model.*;
-import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.securitytoken.AWSSecurityTokenService;
@@ -232,21 +232,35 @@ public class AwsUtil {
         DynamoDB dynamoDB = new DynamoDB(client);
         String tableName = "cvs-" + System.getProperty("BRANCH") + "-test-results";
 
-        Table table = dynamoDB.getTable(tableName);
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
+        expressionAttributeValues.put(":result_id", new AttributeValue().withS(testResultId));
 
-        Index index = table.getIndex("TesterStaffIdIndex");
-        QuerySpec spec = new QuerySpec()
-                .withKeyConditionExpression("testResultId = :testResult_id")
-                .withValueMap(new ValueMap()
-                        .withString(":testResult_id",testResultId));
-
-        ItemCollection<QueryOutcome> items = index.query(spec);
-        for (Item item : items) {
-            String vin = JsonPath.read(item.toJSON(), "$.vin");
-            System.out.println("Delete item:\n" + item.toJSONPretty());
-
-            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
+        ScanRequest scanRequest = new ScanRequest()
+                .withTableName(tableName)
+                .withFilterExpression("testResultId = :result_id")
+                .withProjectionExpression("vin")
+                .withExpressionAttributeValues(expressionAttributeValues);
+        ScanResult result = client.scan(scanRequest);
+        for(Map<String, AttributeValue> item : result.getItems()){
+            System.out.println("scanned item is: " + item.values());
         }
+
+//
+//        Table table = dynamoDB.getTable(tableName);
+//
+//        Index index = table.getIndex("TesterStaffIdIndex");
+//        QuerySpec spec = new QuerySpec()
+//                .withKeyConditionExpression("testerStaffId = :staff_id")
+//                .withValueMap(new ValueMap()
+//                        .withString(":testResult_id",testResultId));
+//
+//        ItemCollection<QueryOutcome> items = index.query(spec);
+//        for (Item item : items) {
+//            String vin = JsonPath.read(item.toJSON(), "$.vin");
+//            System.out.println("Delete item:\n" + item.toJSONPretty());
+//
+//            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
+//        }
 
 //        DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey("testResultId", testResultId);
 //            System.out.println("Delete item:\n" + spec);
