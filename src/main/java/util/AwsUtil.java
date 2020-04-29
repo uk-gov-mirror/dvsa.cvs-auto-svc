@@ -247,8 +247,9 @@ public class AwsUtil {
 
         for(Map<String, AttributeValue> item : result.getItems()){
             System.out.println("scanned item is: " + item.values());
+            System.out.println("vin: " + item.get(0).getS());
             DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                    .withPrimaryKey("vin", item.get("S"))
+                    .withPrimaryKey("vin", item.get(0).getS())
                     .withConditionExpression("#field = :result_id")
                     .withNameMap(new NameMap()
                     .with("#field", "testResultId"))
