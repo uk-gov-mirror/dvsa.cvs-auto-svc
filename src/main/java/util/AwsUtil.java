@@ -255,7 +255,6 @@ public class AwsUtil {
             DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
                     .withPrimaryKey("vin", item.get("vin").getS(), "testResultId", testResultId);
             DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
-            System.out.println("deleted item: " + outcome.getItem().toJSONPretty());
         }
 
 //

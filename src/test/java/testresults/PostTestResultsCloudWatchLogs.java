@@ -69,7 +69,7 @@ public class PostTestResultsCloudWatchLogs {
         // Create alteration to add one more tech record to in the request body
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
         String randomVin = GenericData.generateRandomVin();
-        String randomTestResultId = "e4404400-7e57-c0de-e400-e4404c0de400";
+        String randomTestResultId = "e4404401-7e57-c0de-e401-e4404c0de401";
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
         JsonPathAlteration alterationTestResultId = new JsonPathAlteration("$.testResultId", randomTestResultId, "", "REPLACE");
