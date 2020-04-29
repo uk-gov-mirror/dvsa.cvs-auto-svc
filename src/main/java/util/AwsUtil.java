@@ -8,6 +8,7 @@ import com.amazonaws.services.dynamodbv2.document.*;
 import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.dynamodbv2.model.*;
 import com.amazonaws.services.logs.AWSLogs;
@@ -241,12 +242,24 @@ public class AwsUtil {
                 .withProjectionExpression("vin")
                 .withExpressionAttributeValues(expressionAttributeValues);
         ScanResult result = client.scan(scanRequest);
+
+        Table table = dynamoDB.getTable(tableName);
+
         for(Map<String, AttributeValue> item : result.getItems()){
             System.out.println("scanned item is: " + item.values());
+            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                    .withPrimaryKey("vin", item.get("S"))
+                    .withConditionExpression("#field = :result_id")
+                    .withNameMap(new NameMap()
+                    .with("#field", "testResultId"))
+                    .withValueMap(new ValueMap()
+                    .with(":result_id", testResultId))
+                    .withReturnValues(ReturnValue.ALL_OLD);
+            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
+            System.out.println("deleted item: " + outcome.getItem().toJSONPretty());
         }
 
 //
-//        Table table = dynamoDB.getTable(tableName);
 //
 //        Index index = table.getIndex("TesterStaffIdIndex");
 //        QuerySpec spec = new QuerySpec()
@@ -261,7 +274,7 @@ public class AwsUtil {
 //
 //            DeleteItemOutcome outcome = table.deleteItem("vin", vin);
 //        }
-
+//
 //        DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey("testResultId", testResultId);
 //            System.out.println("Delete item:\n" + spec);
 //            DeleteItemOutcome outcome = table.deleteItem(spec);
