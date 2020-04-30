@@ -26,7 +26,7 @@ public class PutActivitiesCloudWatchLogs {
     ActivitiesSteps activitiesSteps;
 
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 202")
     @Test
     public void insertPutActivityVisitHttpCode202() {
@@ -73,7 +73,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 400")
     @Test
     public void insertPutActivityVisitHttpCode400() {
@@ -122,7 +122,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 401")
     @Test
     public void insertPutActivityVisitHttpCode401() {
@@ -171,7 +171,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 403")
     @Test
     public void insertPutActivityVisitHttpCode403() {
@@ -219,7 +219,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(randomId);
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 404")
     @Test
     public void insertPutActivityVisitHttpCode404() {
@@ -267,7 +267,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(randomId);
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 429")
     @Test
     public void insertPutActivityVisitHttpCode429() {
@@ -316,7 +316,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 500")
     @Test
     public void insertPutActivityVisitHttpCode500() {
