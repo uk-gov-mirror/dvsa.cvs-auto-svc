@@ -26,7 +26,7 @@ public class PutActivitiesCloudWatchLogs {
     ActivitiesSteps activitiesSteps;
 
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 202")
     @Test
     public void insertPutActivityVisitHttpCode202() {
@@ -64,8 +64,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 202
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 202);
         // delete the test data from the data table
@@ -73,7 +71,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 400")
     @Test
     public void insertPutActivityVisitHttpCode400() {
@@ -113,8 +111,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 400
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 400);
         // delete the test data from the data table
@@ -122,7 +118,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
+    // @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 401")
     @Test
     public void insertPutActivityVisitHttpCode401() {
@@ -162,8 +158,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 401
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 401);
         // delete the test data from the data table
@@ -171,7 +165,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
+    // @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 403")
     @Test
     public void insertPutActivityVisitHttpCode403() {
@@ -211,15 +205,13 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 403
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 403);
         // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
     }
 
-    @WithTag("In_Test")
+    // @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 404")
     @Test
     public void insertPutActivityVisitHttpCode404() {
@@ -259,15 +251,13 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 404
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 404);
         // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
     }
 
-    @WithTag("In_Test")
+    // @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 429")
     @Test
     public void insertPutActivityVisitHttpCode429() {
@@ -307,8 +297,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 429
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 429);
         // delete the test data from the data table
@@ -316,7 +304,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
+    // @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 500")
     @Test
     public void insertPutActivityVisitHttpCode500() {
@@ -356,8 +344,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(204);
         // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        // check the activity Id is recorded in the dispatcher log
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 500
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 500);
         // delete the test data from the data table

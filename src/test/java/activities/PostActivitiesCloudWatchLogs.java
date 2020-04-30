@@ -28,7 +28,7 @@ public class PostActivitiesCloudWatchLogs {
     ActivitiesGet.Builder activitiesData = ActivitiesData.buildActivitiesIdData();
 
 
-    @WithTag("In_Test")
+    // @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 202")
     @Test
     public void insertPostActivityVisitHttpCode202() {
@@ -69,13 +69,12 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 202);
         activitiesSteps.deleteActivity(randomId);
 
     }
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 400")
     @Test
     public void insertPostActivityVisitHttpCode400() {
@@ -116,13 +115,12 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 400);
         activitiesSteps.deleteActivity(randomId);
 
     }
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 401")
     @Test
     public void insertPostActivityVisitHttpCode401() {
@@ -163,13 +161,12 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 401);
         activitiesSteps.deleteActivity(randomId);
 
     }
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 403")
     @Test
     public void insertPostActivityVisitHttpCode403() {
@@ -211,13 +208,12 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 403);
         activitiesSteps.deleteActivity(randomId);
 
     }
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 404")
     @Test
     public void insertPostActivityVisitHttpCode404() {
@@ -258,7 +254,6 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 404);
         activitiesSteps.deleteActivity(randomId);
 
@@ -305,13 +300,12 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 429);
         activitiesSteps.deleteActivity(randomId);
 
     }
 
-    @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 500")
     @Test
     public void insertPostActivityVisitHttpCode500() {
@@ -352,7 +346,6 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 500);
         activitiesSteps.deleteActivity(randomId);
 

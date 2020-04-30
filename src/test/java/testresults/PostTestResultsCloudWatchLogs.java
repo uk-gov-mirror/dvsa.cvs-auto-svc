@@ -53,8 +53,6 @@ public class PostTestResultsCloudWatchLogs {
 
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 202);
     }
 
@@ -91,8 +89,6 @@ public class PostTestResultsCloudWatchLogs {
         // Check the logs for the http code
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 400);
 
     }
@@ -130,8 +126,6 @@ public class PostTestResultsCloudWatchLogs {
         // Check the logs for the http code
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 401);
 
     }
@@ -169,8 +163,6 @@ public class PostTestResultsCloudWatchLogs {
         // Check the logs for the http code
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 403);
 
     }
@@ -208,8 +200,6 @@ public class PostTestResultsCloudWatchLogs {
         // Check the logs for the http code
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 404);
 
     }
@@ -247,8 +237,6 @@ public class PostTestResultsCloudWatchLogs {
         // Check the logs for the http code
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 429);
 
     }
@@ -284,10 +272,8 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.statusCodeShouldBe(201);
         testResultsSteps.validateData("Test records created");
         // Check the logs for the http code
-//        testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
-//        testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
-//        testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
-//        testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
+        testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
+        testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 500);
 
     }
