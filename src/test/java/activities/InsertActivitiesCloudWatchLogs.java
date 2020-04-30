@@ -67,6 +67,9 @@ public class InsertActivitiesCloudWatchLogs {
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
         activitiesSteps.statusCodeShouldBe(200);
+        activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 202);
         activitiesSteps.deleteActivity(randomId);
 
     }

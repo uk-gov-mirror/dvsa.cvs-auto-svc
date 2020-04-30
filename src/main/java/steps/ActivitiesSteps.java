@@ -217,4 +217,19 @@ public class ActivitiesSteps {
     public void deleteActivity(String id) {
         activitiesClient.deleteActivity(id);
     }
+
+    public void checkAwsDispatcherLogContains(String id, String randomId) {
+
+    }
+
+    public void checkAwsMarshallerLogContains(String key, String value) {
+        String keyValuePair = key+": { S: '" + value + "' }";
+        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-marshaller", keyValuePair)).isTrue();
+    }
+
+    public void checkAwsDispatcherLogStatusCodeForSystemNumber(String id, int httpCode) {
+        String keyValuePair1 = "\"id\":\"" + id + "\"";
+        String keyValuePair2 = "statusCode: " + httpCode;
+        assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2)).isTrue();
+    }
 }
