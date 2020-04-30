@@ -66,7 +66,7 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 403);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 202);
         activitiesSteps.deleteActivity(randomId);
 
     }
