@@ -54,6 +54,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 202);
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
     @WithTag("In_Test")
@@ -90,7 +91,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 400);
-
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
     @WithTag("In_Test")
@@ -127,7 +128,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 401);
-
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
     @WithTag("In_Test")
@@ -164,7 +165,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 403);
-
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
     @WithTag("In_Test")
@@ -201,7 +202,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 404);
-
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
     @WithTag("In_Test")
@@ -238,7 +239,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 429);
-
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
     @WithTag("In_Test")
@@ -275,7 +276,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 500);
-
+        testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
 }

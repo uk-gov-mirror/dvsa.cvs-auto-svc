@@ -25,6 +25,8 @@ import java.util.*;
 public class PostActivitiesCloudWatchLogs {
     @Steps
     ActivitiesSteps activitiesSteps;
+    ActivitiesGet.Builder activitiesData = ActivitiesData.buildActivitiesIdData();
+
 
      @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 202")
@@ -46,6 +48,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -59,6 +63,7 @@ public class PostActivitiesCloudWatchLogs {
                 alterationStartTime,
                 alterationEndTime,
                 alterationTesterStaffId));
+
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
@@ -89,6 +94,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -109,7 +116,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 400);
-
+        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -133,6 +140,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -153,7 +162,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 401);
-
+        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -177,6 +186,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -198,7 +209,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 403);
-
+        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -222,6 +233,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -242,7 +255,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 404);
-
+        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -266,6 +279,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -286,7 +301,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 429);
-
+        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -310,6 +325,8 @@ public class PostActivitiesCloudWatchLogs {
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
         String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
 
+        // generate endTime
+
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -330,7 +347,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 500);
-
+        activitiesSteps.deleteActivity(randomId);
 
     }
 
