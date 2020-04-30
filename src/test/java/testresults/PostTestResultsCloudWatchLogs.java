@@ -54,7 +54,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.checkAwsMarshallerLogContains("vin", randomVin);
         testResultsSteps.checkAwsDispatcherLogContains("systemNumber", randomSystemNumber);
         testResultsSteps.checkAwsDispatcherLogContains("vin", randomVin);
-        testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 403);
+        testResultsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomSystemNumber, 202);
     }
 
 
