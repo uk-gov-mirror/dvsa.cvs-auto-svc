@@ -241,6 +241,7 @@ public class ActivitiesSteps {
     public void checkAwsDispatcherLogStatusCodeForSystemNumber(String httpMethod, String id, int httpCode) {
         String keyValuePair1 = "\"id\":\"" + id + "\"";
         String keyValuePair2 = "statusCode: " + httpCode;
-        assertThat(AwsUtil.checkDispatcherLogsForData(httpMethod, keyValuePair1, keyValuePair2)).isTrue();
+        String keyValuePair3 = "method: '" + httpMethod +"'";
+        assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2, keyValuePair3)).isTrue();
     }
 }
