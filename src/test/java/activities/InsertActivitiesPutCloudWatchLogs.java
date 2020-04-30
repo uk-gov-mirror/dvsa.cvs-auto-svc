@@ -26,7 +26,7 @@ public class InsertActivitiesPutCloudWatchLogs {
     ActivitiesSteps activitiesSteps;
 
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 202")
     @Test
     public void insertPutActivityVisitHttpCode202() {
@@ -42,8 +42,6 @@ public class InsertActivitiesPutCloudWatchLogs {
         String startTime = startTimestamp.toInstant().toString();
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
 
-        // generate endTime
-
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
@@ -56,22 +54,26 @@ public class InsertActivitiesPutCloudWatchLogs {
                 alterationStartTime,
                 alterationTesterStaffId));
 
-
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        // check the inserted activity was inserted correctly
         activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
-
+        // end the inserted activity (PUT to /activities/{id}/end)
         activitiesSteps.putActivitiesEnd(randomId);
         activitiesSteps.statusCodeShouldBe(204);
-
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 202
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 202);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
 
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 400")
     @Test
     public void insertPutActivityVisitHttpCode400() {
@@ -84,36 +86,38 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         DateTime startTimestamp = currentTimestamp;
-        DateTime endTimestamp = currentTimestamp.plusHours(1);
         String startTime = startTimestamp.toInstant().toString();
-        String endTime = endTimestamp.toInstant().toString();
-
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
-        String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
-
-        // generate endTime
 
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
                 randomTesterStaffId,"","REPLACE");
         JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime",startTime ,"","REPLACE");
-        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime", endTime,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationId,
                 alterationStartTime,
-                alterationEndTime,
                 alterationTesterStaffId));
 
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        // check the inserted activity was inserted correctly
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
+        // end the inserted activity (PUT to /activities/{id}/end)
+        activitiesSteps.putActivitiesEnd(randomId);
+        activitiesSteps.statusCodeShouldBe(204);
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 400);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 400
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 400);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
 
     }
@@ -131,36 +135,38 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         DateTime startTimestamp = currentTimestamp;
-        DateTime endTimestamp = currentTimestamp.plusHours(1);
         String startTime = startTimestamp.toInstant().toString();
-        String endTime = endTimestamp.toInstant().toString();
-
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
-        String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
-
-        // generate endTime
 
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
                 randomTesterStaffId,"","REPLACE");
         JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime",startTime ,"","REPLACE");
-        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime", endTime,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationId,
                 alterationStartTime,
-                alterationEndTime,
                 alterationTesterStaffId));
 
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        // check the inserted activity was inserted correctly
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
+        // end the inserted activity (PUT to /activities/{id}/end)
+        activitiesSteps.putActivitiesEnd(randomId);
+        activitiesSteps.statusCodeShouldBe(204);
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 401);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 401
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 401);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
 
     }
@@ -178,39 +184,39 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         DateTime startTimestamp = currentTimestamp;
-        DateTime endTimestamp = currentTimestamp.plusHours(1);
         String startTime = startTimestamp.toInstant().toString();
-        String endTime = endTimestamp.toInstant().toString();
-
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
-        String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
-
-        // generate endTime
 
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
                 randomTesterStaffId,"","REPLACE");
         JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime",startTime ,"","REPLACE");
-        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime", endTime,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationId,
                 alterationStartTime,
-                alterationEndTime,
                 alterationTesterStaffId));
 
-
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        // check the inserted activity was inserted correctly
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
+        // end the inserted activity (PUT to /activities/{id}/end)
+        activitiesSteps.putActivitiesEnd(randomId);
+        activitiesSteps.statusCodeShouldBe(204);
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 403);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 403
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 403);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
-
     }
 
 //    @WithTag("In_Test")
@@ -226,38 +232,39 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         DateTime startTimestamp = currentTimestamp;
-        DateTime endTimestamp = currentTimestamp.plusHours(1);
         String startTime = startTimestamp.toInstant().toString();
-        String endTime = endTimestamp.toInstant().toString();
-
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
-        String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
-
-        // generate endTime
 
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
                 randomTesterStaffId,"","REPLACE");
         JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime",startTime ,"","REPLACE");
-        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime", endTime,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationId,
                 alterationStartTime,
-                alterationEndTime,
                 alterationTesterStaffId));
 
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        // check the inserted activity was inserted correctly
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
+        // end the inserted activity (PUT to /activities/{id}/end)
+        activitiesSteps.putActivitiesEnd(randomId);
+        activitiesSteps.statusCodeShouldBe(204);
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 404);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 404
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 404);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
-
     }
 
 //    @WithTag("In_Test")
@@ -273,36 +280,38 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         DateTime startTimestamp = currentTimestamp;
-        DateTime endTimestamp = currentTimestamp.plusHours(1);
         String startTime = startTimestamp.toInstant().toString();
-        String endTime = endTimestamp.toInstant().toString();
-
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
-        String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
-
-        // generate endTime
 
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
                 randomTesterStaffId,"","REPLACE");
         JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime",startTime ,"","REPLACE");
-        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime", endTime,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationId,
                 alterationStartTime,
-                alterationEndTime,
                 alterationTesterStaffId));
 
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        // check the inserted activity was inserted correctly
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
+        // end the inserted activity (PUT to /activities/{id}/end)
+        activitiesSteps.putActivitiesEnd(randomId);
+        activitiesSteps.statusCodeShouldBe(204);
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 429);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 429
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 429);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
 
     }
@@ -320,36 +329,38 @@ public class InsertActivitiesPutCloudWatchLogs {
 
         DateTime currentTimestamp = DateTime.now().withZone(DateTimeZone.UTC);
         DateTime startTimestamp = currentTimestamp;
-        DateTime endTimestamp = currentTimestamp.plusHours(1);
         String startTime = startTimestamp.toInstant().toString();
-        String endTime = endTimestamp.toInstant().toString();
-
         String startTimeGet = startTimestamp.minusSeconds(1).toInstant().toString();
-        String endTimeGet = endTimestamp.plusSeconds(1).toInstant().toString();
-
-        // generate endTime
 
         // create alterations
         JsonPathAlteration alterationId = new JsonPathAlteration("$.id", randomId,"","REPLACE");
         JsonPathAlteration alterationTesterStaffId = new JsonPathAlteration("$.testerStaffId",
                 randomTesterStaffId,"","REPLACE");
         JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime",startTime ,"","REPLACE");
-        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime", endTime,"","REPLACE");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationId,
                 alterationStartTime,
-                alterationEndTime,
                 alterationTesterStaffId));
 
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
+        // inserting a new open visit
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet, endTimeGet);
+        // check the inserted activity was inserted correctly
+        activitiesSteps.getActivities("visit", randomTesterStaffId, null, startTimeGet , null);
         activitiesSteps.statusCodeShouldBe(200);
+        // end the inserted activity (PUT to /activities/{id}/end)
+        activitiesSteps.putActivitiesEnd(randomId);
+        activitiesSteps.statusCodeShouldBe(204);
+        // check the activity Id is recorded in the marshaller log
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
+        // check the activity Id is recorded in the dispatcher log
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 500);
+        // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 500
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 500);
+        // delete the test data from the data table
         activitiesSteps.deleteActivity(randomId);
 
     }
