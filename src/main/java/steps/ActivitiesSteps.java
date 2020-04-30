@@ -218,8 +218,9 @@ public class ActivitiesSteps {
         activitiesClient.deleteActivity(id);
     }
 
-    public void checkAwsDispatcherLogContains(String id, String randomId) {
-
+    public void checkAwsDispatcherLogContains(String id, String value) {
+        String keyValuePair = "\""+id+"\"" + ":{\"S\":\"" + value + "\"}";
+        assertThat(AwsUtil.checkLogsFor("/aws/lambda/edh-dispatcher", keyValuePair)).isTrue();
     }
 
     public void checkAwsMarshallerLogContains(String key, String value) {

@@ -69,7 +69,7 @@ public class InsertActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(200);
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         activitiesSteps.checkAwsDispatcherLogContains("id", randomId);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 202);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(randomId, 403);
         activitiesSteps.deleteActivity(randomId);
 
     }
