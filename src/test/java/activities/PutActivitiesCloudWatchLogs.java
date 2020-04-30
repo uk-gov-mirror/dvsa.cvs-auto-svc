@@ -113,8 +113,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 400
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 400);
-        // delete the test data from the data table
-        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -160,8 +158,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 401
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 401);
-        // delete the test data from the data table
-        activitiesSteps.deleteActivity(randomId);
+
 
     }
 
@@ -207,8 +204,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 403
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 403);
-        // delete the test data from the data table
-        activitiesSteps.deleteActivity(randomId);
+
     }
 
      @WithTag("In_Test")
@@ -253,8 +249,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 404
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 404);
-        // delete the test data from the data table
-        activitiesSteps.deleteActivity(randomId);
+
     }
 
      @WithTag("In_Test")
@@ -299,8 +294,6 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 429
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 429);
-        // delete the test data from the data table
-        activitiesSteps.deleteActivity(randomId);
 
     }
 
@@ -346,8 +339,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.checkAwsMarshallerLogContains("id", randomId);
         // check the dispatcher log events for method: 'PUT', id: {id} and statusCode: 500
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomId, 500);
-        // delete the test data from the data table
-        activitiesSteps.deleteActivity(randomId);
+
 
     }
 
