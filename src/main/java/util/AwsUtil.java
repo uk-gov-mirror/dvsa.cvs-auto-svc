@@ -476,7 +476,7 @@ public class AwsUtil {
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
         String logGroup = "/aws/lambda/edh-dispatcher-"+System.getProperty("BRANCH");
 
-        for (int times = 0; times < 15; times++) {
+        logStreamLoop:for (int times = 0; times < 15; times++) {
 
             System.out.println("... " + times + " ...");
             DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
@@ -495,29 +495,31 @@ public class AwsUtil {
 
             GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
 
-            eventLoop:for (OutputLogEvent event : result.getEvents()) {
-                    System.out.println("\n----------------------------------------------------------------------");
+            eventLoop:
+            for (OutputLogEvent event : result.getEvents()) {
+                System.out.println("\n----------------------------------------------------------------------");
 //                    System.out.println("# event: " + event.getMessage());
 //                    System.out.println("Looking for: " + keyValuePairs[0] + " and " + keyValuePairs[1]);
 
-                    for (String keyValuePair : keyValuePairs) {
-                        System.out.println("searching inside event for: " + keyValuePair);
-                        if (!event.getMessage().contains(keyValuePair)) {
-                            System.out.println("########################## " + keyValuePair + " NOT FOUND in event: \n" + event.getMessage() + "\n ##########################");
-                            continue eventLoop;
-                        }
+                for (String keyValuePair : keyValuePairs) {
+                    System.out.println("searching inside event for: " + keyValuePair);
+                    if (!event.getMessage().contains(keyValuePair)) {
+                        System.out.println("########################## " + keyValuePair + " NOT FOUND in event: \n" + event.getMessage() + "\n ##########################");
+                        continue eventLoop;
                     }
-                        System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
-                        System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
-                        return true;
                 }
+                System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+                System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
+                return true;
             }
+
             try {
+                System.out.println("waiting 2 seconds");
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+        }
 
         return false;
 
