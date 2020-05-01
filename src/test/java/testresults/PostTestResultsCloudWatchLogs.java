@@ -57,7 +57,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 400")
     public void testResults_CloudWatch_Logs_HGV_400() {
@@ -94,7 +94,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 401")
     public void testResults_CloudWatch_Logs_HGV_401() {
@@ -131,7 +131,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 403")
     public void testResults_CloudWatch_Logs_HGV_403() {
@@ -168,7 +168,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 404")
     public void testResults_CloudWatch_Logs_HGV_404() {
@@ -205,7 +205,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC3 - http status code: 429")
     public void testResults_CloudWatch_Logs_HGV_429() {
@@ -242,7 +242,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC3 - http status code: 500")
     public void testResults_CloudWatch_Logs_HGV_500() {
