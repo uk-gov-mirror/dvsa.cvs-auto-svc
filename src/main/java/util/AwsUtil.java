@@ -474,16 +474,17 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSessionToken());
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
-        String logGroup = "/aws/lambda/edh-dispatcher-"+System.getProperty("BRANCH");
+        String logGroup = "/aws/lambda/edh-dispatcher-" + System.getProperty("BRANCH");
 
-        logStreamLoop:for (int times = 0; times < 20; times++) {
+        logStreamLoop:
+        for (int times = 0; times < 20; times++) {
 
             System.out.println("... " + times + " ...");
             DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                     .withLogGroupName(logGroup)
                     .withOrderBy("LastEventTime")
                     .withDescending(true)
-                    .withLimit(10);
+                    .withLimit(20);
             DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
 
             LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
@@ -498,9 +499,6 @@ public class AwsUtil {
             eventLoop:
             for (OutputLogEvent event : result.getEvents()) {
                 System.out.println("\n----------------------------------------------------------------------");
-//                    System.out.println("# event: " + event.getMessage());
-//                    System.out.println("Looking for: " + keyValuePairs[0] + " and " + keyValuePairs[1]);
-
                 for (String keyValuePair : keyValuePairs) {
                     System.out.println("searching inside event for: " + keyValuePair);
                     if (!event.getMessage().contains(keyValuePair)) {
@@ -514,13 +512,13 @@ public class AwsUtil {
             }
 
             try {
-                System.out.println("waiting 2 seconds");
-                Thread.sleep(1000);
+                System.out.println("########################## " + keyValuePairs + " NOT FOUND in log stream: \n" + logStream.getLogStreamName() + "\n ##########################");
+                System.out.println("waiting another 2 seconds");
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
         return false;
 
     }
