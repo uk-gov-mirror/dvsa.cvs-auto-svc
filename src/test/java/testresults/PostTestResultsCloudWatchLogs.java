@@ -36,17 +36,20 @@ public class PostTestResultsCloudWatchLogs {
         String randomVin = GenericData.generateRandomVin();
         String randomTestResultId = UUID.randomUUID().toString();
         String testResult = "abandoned";
+        String reasonForAbandoning = "test purposes";
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
         JsonPathAlteration alterationTestResultId = new JsonPathAlteration("$.testResultId", randomTestResultId, "", "REPLACE");
         JsonPathAlteration alterationTestResult = new JsonPathAlteration("$.testTypes[0].testResult", testResult, "", "REPLACE");
+        JsonPathAlteration alterationReasonForAbandoning = new JsonPathAlteration("$.testTypes[0].reasonForAbandoning", reasonForAbandoning, "", "REPLACE");
 
         // Collate the list of alterations.
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
                 alterationVin,
                 alterationSystemNumber,
                 alterationTestResultId,
-                alterationTestResult
+                alterationTestResult,
+                alterationReasonForAbandoning
         ));
 
         // Post the results, together with any alterations, and verify that they are accepted.
