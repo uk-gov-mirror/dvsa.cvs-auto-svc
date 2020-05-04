@@ -175,7 +175,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 404")
     public void testResults_CloudWatch_Logs_HGV_404() {
@@ -212,7 +212,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC3 - http status code: 429")
     public void testResults_CloudWatch_Logs_HGV_429() {
