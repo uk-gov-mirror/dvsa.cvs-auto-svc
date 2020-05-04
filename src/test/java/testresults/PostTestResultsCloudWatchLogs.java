@@ -35,7 +35,7 @@ public class PostTestResultsCloudWatchLogs {
         String randomSystemNumber = GenericData.generateRandomSystemNumber();
         String randomVin = GenericData.generateRandomVin();
         String randomTestResultId = UUID.randomUUID().toString();
-        String testResult = "prs";
+        String testResult = "fail";
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
         JsonPathAlteration alterationTestResultId = new JsonPathAlteration("$.testResultId", randomTestResultId, "", "REPLACE");

@@ -478,13 +478,13 @@ public class AwsUtil {
 
         logStreamLoop:
         for (int times = 0; times < 20; times++) {
-
             System.out.println("... " + times + " ...");
             DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                     .withLogGroupName(logGroup)
                     .withOrderBy("LastEventTime")
                     .withDescending(true)
-                    .withLimit(20);
+                    .withLimit(30);
+
             DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
 
             LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
