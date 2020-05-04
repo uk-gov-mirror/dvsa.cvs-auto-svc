@@ -71,7 +71,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-     @WithTag("In_Test")
+//     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 400")
     @Test
     public void insertPutActivityVisitHttpCode400() {
@@ -118,7 +118,7 @@ public class PutActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 401")
     @Test
     public void insertPutActivityVisitHttpCode401() {
