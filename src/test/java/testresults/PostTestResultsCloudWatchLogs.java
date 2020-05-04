@@ -23,7 +23,7 @@ public class PostTestResultsCloudWatchLogs {
     @Steps
     TestResultsSteps testResultsSteps;
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC1 - http status code: 202")
     public void testResults_CloudWatch_Logs_HGV_202() {
@@ -36,6 +36,7 @@ public class PostTestResultsCloudWatchLogs {
         String randomVin = GenericData.generateRandomVin();
         String randomTestResultId = UUID.randomUUID().toString();
         String testResult = "pass";
+        // only change this when testResults = "abandoned"
         String reasonForAbandoning = null;
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
@@ -100,7 +101,7 @@ public class PostTestResultsCloudWatchLogs {
         testResultsSteps.cleanUpTestResultsOfTestTypeId(randomTestResultId);
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Test
     @Title("CVSB-10773 - CVS to EDH (Completed Tests) - AC2 - http status code: 401")
     public void testResults_CloudWatch_Logs_HGV_401() {
