@@ -74,7 +74,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-     @WithTag("In_Test")
+//     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 400")
     @Test
     public void insertPostActivityVisitHttpCode400() {
@@ -120,7 +120,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 401")
     @Test
     public void insertPostActivityVisitHttpCode401() {
