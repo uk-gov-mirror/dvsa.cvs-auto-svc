@@ -26,7 +26,7 @@ public class PutActivitiesCloudWatchLogs {
     ActivitiesSteps activitiesSteps;
 
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 202")
     @Test
     public void insertPutActivityVisitHttpCode202() {
