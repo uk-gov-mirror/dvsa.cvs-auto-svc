@@ -211,7 +211,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(randomId);
     }
 
-     @WithTag("In_Test")
+//     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 404")
     @Test
     public void insertPutActivityVisitHttpCode404() {
@@ -257,7 +257,7 @@ public class PutActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(randomId);
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) PUT - AC1 - http status code 429")
     @Test
     public void insertPutActivityVisitHttpCode429() {
