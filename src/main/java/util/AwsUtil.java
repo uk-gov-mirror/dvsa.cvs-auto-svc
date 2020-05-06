@@ -477,13 +477,13 @@ public class AwsUtil {
         String logGroup = "/aws/lambda/edh-dispatcher-" + System.getProperty("BRANCH");
 
         logStreamLoop:
-        for (int times = 0; times < 300; times++) {
+        for (int times = 0; times < 50; times++) {
             System.out.println("... " + times + " ...");
             DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
                     .withLogGroupName(logGroup)
                     .withOrderBy("LastEventTime")
                     .withDescending(true)
-//                    .withLimit(50)
+                    .withLimit(20)
                     ;
 
             DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
@@ -514,8 +514,8 @@ public class AwsUtil {
 
             try {
                 System.out.println("########################## " + keyValuePairs + " NOT FOUND in log stream: \n" + logStream.getLogStreamName() + "\n ##########################");
-                System.out.println("waiting another second");
-                Thread.sleep(1000);
+                System.out.println("waiting 2 seconds");
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
