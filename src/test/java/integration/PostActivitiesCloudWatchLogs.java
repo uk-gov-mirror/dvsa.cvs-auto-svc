@@ -28,7 +28,7 @@ public class PostActivitiesCloudWatchLogs {
     ActivitiesGet.Builder activitiesData = ActivitiesData.buildActivitiesIdData();
 
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 202")
     @Test
     public void insertPostActivityVisitHttpCode202() {
@@ -74,7 +74,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 400")
     @Test
     public void insertPostActivityVisitHttpCode400() {
@@ -120,7 +120,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 401")
     @Test
     public void insertPostActivityVisitHttpCode401() {
@@ -166,7 +166,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 403")
     @Test
     public void insertPostActivityVisitHttpCode403() {
@@ -213,7 +213,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 404")
     @Test
     public void insertPostActivityVisitHttpCode404() {
@@ -259,7 +259,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 429")
     @Test
     public void insertPostActivityVisitHttpCode429() {
@@ -305,7 +305,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//     @WithTag("In_Test")
+     @WithTag("In_Test")
     @Title("CVSB-10767 CVS to EDH (Open Site Visits) POST - AC1 - http status code 500")
     @Test
     public void insertPostActivityVisitHttpCode500() {
