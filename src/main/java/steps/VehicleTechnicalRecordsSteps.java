@@ -435,4 +435,10 @@ public class VehicleTechnicalRecordsSteps {
     public void deleteRecords(String systemNumber) {
         AwsUtil.deleteVehicleById(systemNumber);
     }
+
+
+    @Step
+    public void insertVehicleWithAlterations(String requestBody, List<JsonPathAlteration> alterations) {
+        vehicleTechnicalRecordsClient.insertVehicle(requestBody, alterations);
+    }
 }

@@ -652,4 +652,43 @@ public class AwsUtil {
         }
 
     }
+
+    public static void insertVehicle(String jsonBody) {
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-technical-records";
+
+        Table table = dynamoDB.getTable(tableName);
+
+        String sysNo = GenericData.getValueFromJsonPath(jsonBody, "$.systemNumber");
+
+        try {
+            Item item = Item.fromJSON(jsonBody);
+            System.out.println("Adding a new item...");
+            PutItemOutcome outcome = table
+                    .putItem(item);
+            System.out.println("PutItem succeeded:\n" + item.toJSONPretty());
+
+        } catch (Exception e) {
+            System.err.println("Unable to add item with systemNumber: " + sysNo);
+            System.err.println(e);
+        }
+    }
 }
