@@ -62,7 +62,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP Error code 400")
     @Test
     public void testVehiclePostHttpCode400() {
@@ -91,11 +91,40 @@ public class PostVehicleCloudWatchLogs {
 
         //TEST
         vehicleTechnicalRecordsSteps.insertVehicleWithAlterations(requestBody, alterations);
-//        vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomSystemNumber);
-//        vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
-//        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
-//        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].systemNumber", randomSystemNumber);
         vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", randomSystemNumber, 400);
+        vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
+    }
+
+    @WithTag("In_Test")
+    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP Error code 401")
+    @Test
+    public void testVehiclePostHttpCode401() {
+        // TEST SETUP
+        // generate random systemNumber
+        String randomSystemNumber = "e4404400-7e57-c0de-e400-e4404c0de400";
+        // generate random Vin
+        String randomVin = GenericData.generateRandomVin();
+        // generate random Vrm
+        String randomVrm = GenericData.generateRandomVrm();
+
+        // read post request body from file
+        String requestBody = GenericData.readJsonValueFromFile("technical-records_hgv_insert_10775.json", "$");
+
+        // create alterations to change attributes
+        JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
+        JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", randomVrm, "", "REPLACE");
+        JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
+
+        // initialize the alterations list
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
+                alterationVin,
+                alterationVrm,
+                alterationSystemNumber
+        ));
+
+        //TEST
+        vehicleTechnicalRecordsSteps.insertVehicleWithAlterations(requestBody, alterations);
+        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", randomSystemNumber, 401);
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
