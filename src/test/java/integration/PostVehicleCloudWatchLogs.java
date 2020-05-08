@@ -194,7 +194,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP Error code 429")
     @Test
     public void testVehiclePostHttpCode429() {
@@ -227,7 +227,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP Error code 500")
     @Test
     public void testVehiclePostHttpCode500() {
