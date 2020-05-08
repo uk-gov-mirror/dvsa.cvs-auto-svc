@@ -55,7 +55,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].systemNumber", randomSystemNumber);
-        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomSystemNumber, 202);
+        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", randomSystemNumber, 202);
         // Validate AC1 + AC2
 //        JsonPathAlteration alterationAddAdrDetails = new JsonPathAlteration("$.techRecord[0]", adrDetails,"adrDetails","ADD_FIELD");
 //        alterations.add(alterationAddAdrDetails);
