@@ -322,6 +322,8 @@ public class PostVehicleCloudWatchLogs {
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
         JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", randomVrm, "", "REPLACE");
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
+        // read the adr details from the file used for put request body with battery adr details
+        String adrDetails = GenericData.readJsonValueFromFile("technical-records_adr_details_other_nulls.json","$.techRecord[0].adrDetails");
 
         // initialize the alterations list
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
@@ -333,13 +335,19 @@ public class PostVehicleCloudWatchLogs {
         //TEST
         vehicleTechnicalRecordsSteps.insertVehicleWithAlterations(requestBody, alterations);
         vehicleTechnicalRecordsSteps.waitForVehicleTechRecordsToBeUpdated(randomVin, 10);
-        // read the adr details from the file used for put request body with battery adr details
-        String adrDetails = GenericData.readJsonValueFromFile("technical-records_adr_details_tank_nulls.json", "$.techRecord[0].adrDetails");
+
         JsonPathAlteration alterationAddAdrDetails = new JsonPathAlteration("$.techRecord[0]", adrDetails,"adrDetails","ADD_FIELD");
         alterations.add(alterationAddAdrDetails);
+
         vehicleTechnicalRecordsSteps.putVehicleTechnicalRecordsForVehicleWithAlterations(randomVin, requestBody, alterations);
+        vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
+        vehicleTechnicalRecordsSteps.validateResponseContainsJson("techRecord[1].adrDetails", adrDetails);
         vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomSystemNumber, 400);
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
+
+
+
+
     }
 
 }
