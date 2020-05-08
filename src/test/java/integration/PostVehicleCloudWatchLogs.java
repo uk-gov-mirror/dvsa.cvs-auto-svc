@@ -260,7 +260,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC4 - AC4 - PUT request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePutHttpCode202() {
@@ -332,6 +332,7 @@ public class PostVehicleCloudWatchLogs {
 
         //TEST
         vehicleTechnicalRecordsSteps.insertVehicleWithAlterations(requestBody, alterations);
+        vehicleTechnicalRecordsSteps.waitForVehicleTechRecordsToBeUpdated(randomVin, 2);
         vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomVin);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);

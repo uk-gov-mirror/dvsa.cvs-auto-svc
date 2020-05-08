@@ -441,4 +441,5 @@ public class VehicleTechnicalRecordsSteps {
     public void insertVehicleWithAlterations(String requestBody, List<JsonPathAlteration> alterations) {
         vehicleTechnicalRecordsClient.insertVehicle(requestBody, alterations);
     }
+
 }
