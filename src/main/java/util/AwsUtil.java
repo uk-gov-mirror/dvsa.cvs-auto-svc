@@ -627,24 +627,28 @@ public class AwsUtil {
         DynamoDB dynamoDB = new DynamoDB(client);
         String tableName = "cvs-" + System.getProperty("BRANCH") + "-technical-records";
 
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
+        expressionAttributeValues.put(":system_no", new AttributeValue().withS(systemNumber));
+
+        ScanRequest scanRequest = new ScanRequest()
+                .withTableName(tableName)
+                .withFilterExpression("systemNumber = :system_no")
+                .withProjectionExpression("vin, systemNumber")
+                .withExpressionAttributeValues(expressionAttributeValues);
+        ScanResult result = client.scan(scanRequest);
+        System.out.println("result.toString: " + result.toString());
+        System.out.println("result.getCount: " + result.getCount());
+        System.out.println("result.getItems:" + result.getItems());
+
         Table table = dynamoDB.getTable(tableName);
 
-        try {
-
-            System.out.println("deleting vehicle with id: " + systemNumber + " ....");
+        for (Map<String, AttributeValue> item : result.getItems()) {
+            System.out.println("item.size: " + item.size());
+            System.out.println("item.values: " + item.values());
+            System.out.println("item.get(systemNumber).getS(): " + item.get("systemNumber").getS());
             DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                    .withPrimaryKey("systemNumber", systemNumber);
-//                    .withConditionExpression("#ip = :val")
-//                    .withNameMap(new NameMap()
-//                            .with("#ip", "InProduction"))
-//                    .withValueMap(new ValueMap()
-//                            .withBoolean(":val", false))
-//                    .withReturnValues(ReturnValue.ALL_OLD);
+                    .withPrimaryKey("systemNumber", systemNumber, "vin", item.get("vin").getS());
             DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
-            System.out.println("Printing item that was deleted...");
-        } catch (Exception e) {
-            System.err.println("Error deleting item in " + tableName);
-            System.err.println(e.getMessage());
         }
 
     }
