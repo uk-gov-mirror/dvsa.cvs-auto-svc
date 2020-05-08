@@ -765,6 +765,7 @@ public class TestResultsSteps {
         assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2)).isTrue();
     }
 
+    @Step
     public void cleanUpTestResultsOfTestTypeId(String testResultId) {
         AwsUtil.deleteTestResultId(testResultId);
     }
