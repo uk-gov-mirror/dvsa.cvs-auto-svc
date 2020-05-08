@@ -28,6 +28,7 @@ public class PostVehicleCloudWatchLogs {
     String randomSystemNumber;
 
     @BeforeClass
+    @Test
     public void initialize(){
         randomSystemNumber = AwsUtil.getNextSystemNumberInSequence();
     }
