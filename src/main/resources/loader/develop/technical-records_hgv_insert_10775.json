@@ -1,0 +1,311 @@
+{
+  "partialVin": "230001",
+  "primaryVrm": "CT70001",
+  "secondaryVrms": [
+    "CT98000"
+  ],
+  "systemNumber": "11000034",
+  "techRecord": [
+    {
+      "axles": [
+        {
+          "axleNumber": 1,
+          "tyres": {
+            "dataTrAxles": 345,
+            "fitmentCode": "single",
+            "plyRating": "AB",
+            "speedCategorySymbol": "a7",
+            "tyreCode": 1234,
+            "tyreSize": "295/80-22.5"
+          },
+          "weights": {
+            "designWeight": 1800,
+            "gbWeight": 1400
+          }
+        },
+        {
+          "axleNumber": 2,
+          "tyres": {
+            "dataTrAxles": 345,
+            "fitmentCode": "single",
+            "plyRating": "AB",
+            "speedCategorySymbol": "a7",
+            "tyreCode": 5678,
+            "tyreSize": "295/80-22.5"
+          },
+          "weights": {
+            "designWeight": 1900,
+            "gbWeight": 1600
+          }
+        }
+      ],
+      "bodyType": {
+        "code": "x",
+        "description": null
+      },
+      "brakeCode": "178202",
+      "brakes": {
+        "antilockBrakingSystem": true,
+        "brakeCode": "123",
+        "brakeCodeOriginal": "12412",
+        "brakeForceWheelsNotLocked": {
+          "parkingBrakeForceA": 2332,
+          "secondaryBrakeForceA": 2512,
+          "serviceBrakeForceA": 6424
+        },
+        "brakeForceWheelsUpToHalfLocked": {
+          "parkingBrakeForceB": 3512,
+          "secondaryBrakeForceB": 2512,
+          "serviceBrakeForceB": 5521
+        },
+        "dataTrBrakeOne": "None",
+        "dataTrBrakeThree": "None",
+        "dataTrBrakeTwo": "None",
+        "dtpNumber": "1240",
+        "loadSensingValve": true,
+        "retarderBrakeOne": "electric",
+        "retarderBrakeTwo": "exhaust"
+      },
+      "conversionRefNo": "7891234",
+      "createdAt": "2019-06-24T09:26:54.903Z",
+      "createdByName": "dvsa3",
+      "dimensions": {
+        "length": 7500,
+        "width": 2200
+      },
+      "drawbarCouplingFitted": true,
+      "euroStandard": "  ",
+      "frontAxleTo5thWheelCouplingMax": 1900,
+      "frontAxleTo5thWheelCouplingMin": 1700,
+      "frontAxleTo5thWheelMax": 1500,
+      "frontAxleTo5thWheelMin": 1200,
+      "functionCode": "A",
+      "grossKerbWeight": 2500,
+      "grossLadenWeight": 3000,
+      "lastUpdatedAt": "2019-06-24T10:26:54.903Z",
+      "make": "Isuzu",
+      "manufactureYear": 2012,
+      "maxTrainDesignWeight": 500,
+      "maxTrainGbWeight": 1000,
+      "model": "FM",
+      "noOfAxles": 1,
+      "notes": "test note",
+      "ntaNumber": "123452",
+      "numberOfWheelsDriven": null,
+      "reasonForCreation": "new vehicle",
+      "recordCompleteness": "complete",
+      "regnDate": "2019-06-30",
+      "roadFriendly": true,
+      "speedLimiterMrk": true,
+      "statusCode": "archived",
+      "tachoExemptMrk": true,
+      "trainDesignWeight": 2000,
+      "trainGbWeight": 1500,
+      "tyreUseCode": "2B",
+      "vehicleClass": {
+        "code": "v",
+        "description": "heavy goods vehicle"
+      },
+      "vehicleConfiguration": "semi-car transporter",
+      "vehicleSubclass": [
+        "string"
+      ],
+      "vehicleType": "hgv"
+    },
+    {
+      "axles": [
+        {
+          "axleNumber": 1,
+          "tyres": {
+            "dataTrAxles": 345,
+            "fitmentCode": "single",
+            "plyRating": "AB",
+            "speedCategorySymbol": "a7",
+            "tyreCode": 1234,
+            "tyreSize": "295/80-22.5"
+          },
+          "weights": {
+            "designWeight": 1800,
+            "gbWeight": 1400
+          }
+        },
+        {
+          "axleNumber": 2,
+          "tyres": {
+            "dataTrAxles": 345,
+            "fitmentCode": "single",
+            "plyRating": "AB",
+            "speedCategorySymbol": "a7",
+            "tyreCode": 5678,
+            "tyreSize": "295/80-22.5"
+          },
+          "weights": {
+            "designWeight": 1900,
+            "gbWeight": 1600
+          }
+        }
+      ],
+      "bodyType": {
+        "code": "x",
+        "description": "other"
+      },
+      "brakeCode": "178202",
+      "brakes": {
+        "antilockBrakingSystem": true,
+        "brakeCode": "123",
+        "brakeCodeOriginal": "12412",
+        "brakeForceWheelsNotLocked": {
+          "parkingBrakeForceA": 2332,
+          "secondaryBrakeForceA": 2512,
+          "serviceBrakeForceA": 6424
+        },
+        "brakeForceWheelsUpToHalfLocked": {
+          "parkingBrakeForceB": 3512,
+          "secondaryBrakeForceB": 2512,
+          "serviceBrakeForceB": 5521
+        },
+        "dataTrBrakeOne": "None",
+        "dataTrBrakeThree": "None",
+        "dataTrBrakeTwo": "None",
+        "dtpNumber": "1241",
+        "loadSensingValve": true,
+        "retarderBrakeOne": "electric",
+        "retarderBrakeTwo": "exhaust"
+      },
+      "conversionRefNo": "7891234",
+      "createdAt": "2019-06-25T08:26:54.903Z",
+      "createdByName": "dvsa4",
+      "dimensions": {
+        "length": 7500,
+        "width": 2200
+      },
+      "drawbarCouplingFitted": false,
+      "euroStandard": "4",
+      "frontAxleTo5thWheelCouplingMax": 1900,
+      "frontAxleTo5thWheelCouplingMin": 1700,
+      "frontAxleTo5thWheelMax": 1500,
+      "frontAxleTo5thWheelMin": 1200,
+      "functionCode": "A",
+      "grossKerbWeight": 2500,
+      "grossLadenWeight": 3000,
+      "lastUpdatedAt": "2019-06-24T10:26:54.903Z",
+      "make": "Isuzu",
+      "manufactureYear": 2011,
+      "maxTrainDesignWeight": 500,
+      "maxTrainGbWeight": 1000,
+      "model": "FM",
+      "noOfAxles": 1,
+      "notes": "test note",
+      "ntaNumber": "123453",
+      "numberOfWheelsDriven": null,
+      "reasonForCreation": "new vehicle",
+      "recordCompleteness": "complete",
+      "regnDate": "2019-06-23",
+      "roadFriendly": true,
+      "speedLimiterMrk": true,
+      "statusCode": "archived",
+      "tachoExemptMrk": true,
+      "trainDesignWeight": 2000,
+      "trainGbWeight": 1500,
+      "tyreUseCode": "2B",
+      "vehicleClass": {
+        "code": "v",
+        "description": "heavy goods vehicle"
+      },
+      "vehicleConfiguration": "  ",
+      "vehicleType": "hgv"
+    },
+    {
+      "axles": [
+        {
+          "axleNumber": 1,
+          "parkingBrakeMrk": true,
+          "tyres": {
+            "dataTrAxles": 345,
+            "fitmentCode": "  ",
+            "plyRating": "  ",
+            "speedCategorySymbol": "a7",
+            "tyreCode": 1234,
+            "tyreSize": "  "
+          },
+          "weights": {
+            "designWeight": 1800,
+            "gbWeight": 1400
+          }
+        }
+      ],
+      "bodyType": {
+        "code": "x",
+        "description": null
+      },
+      "brakeCode": "178202",
+      "brakes": {
+        "antilockBrakingSystem": true,
+        "brakeCode": "123",
+        "brakeCodeOriginal": "12412",
+        "brakeForceWheelsNotLocked": {
+          "parkingBrakeForceA": 2332,
+          "secondaryBrakeForceA": 2512,
+          "serviceBrakeForceA": 6424
+        },
+        "brakeForceWheelsUpToHalfLocked": {
+          "parkingBrakeForceB": 3512,
+          "secondaryBrakeForceB": 2512,
+          "serviceBrakeForceB": 5521
+        },
+        "dataTrBrakeOne": "None",
+        "dataTrBrakeThree": "None",
+        "dataTrBrakeTwo": "None",
+        "dtpNumber": "  ",
+        "loadSensingValve": true,
+        "retarderBrakeOne": "electric",
+        "retarderBrakeTwo": "exhaust"
+      },
+      "conversionRefNo": "  ",
+      "createdAt": "2019-06-23T10:26:54.903Z",
+      "createdByName": "  ",
+      "dimensions": {
+        "length": 7500,
+        "width": 2500
+      },
+      "drawbarCouplingFitted": false,
+      "euroStandard": "  ",
+      "frontAxleTo5thWheelCouplingMax": 1900,
+      "frontAxleTo5thWheelCouplingMin": 1700,
+      "frontAxleTo5thWheelMax": 1500,
+      "frontAxleTo5thWheelMin": 1200,
+      "functionCode": "  ",
+      "grossDesignWeight": 1900,
+      "grossGbWeight": 1400,
+      "grossKerbWeight": 2500,
+      "grossLadenWeight": 3000,
+      "lastUpdatedAt": "2019-06-24T10:26:54.903Z",
+      "make": "  ",
+      "manufactureYear": 2013,
+      "maxTrainDesignWeight": 500,
+      "maxTrainGbWeight": 1000,
+      "model": "  ",
+      "noOfAxles": 1,
+      "notes": "  ",
+      "ntaNumber": "  ",
+      "numberOfWheelsDriven": null,
+      "reasonForCreation": "  ",
+      "recordCompleteness": "complete",
+      "regnDate": "  ",
+      "roadFriendly": false,
+      "speedLimiterMrk": false,
+      "statusCode": "archived",
+      "tachoExemptMrk": false,
+      "trainDesignWeight": 2000,
+      "trainGbWeight": 1500,
+      "tyreUseCode": "  ",
+      "vehicleClass": {
+        "code": "v",
+        "description": "  "
+      },
+      "vehicleConfiguration": "  ",
+      "vehicleType": "hgv"
+    }
+  ],
+  "vin": "P012301230001"
+}
