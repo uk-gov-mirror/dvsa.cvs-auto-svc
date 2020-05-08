@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+@WithTag("In_Test")
 @RunWith(SerenityRunner.class)
 public class PostVehicleCloudWatchLogs {
 
@@ -27,6 +27,7 @@ public class PostVehicleCloudWatchLogs {
     // generate random systemNumber
     String randomSystemNumber;
 
+    @WithTag("In_Test")
     @BeforeClass
     @Test
     public void initialize(){
@@ -75,6 +76,7 @@ public class PostVehicleCloudWatchLogs {
 
     }
 
+    @WithTag("In_Test")
     @AfterClass
     @Test
     public void cleanUp(){
