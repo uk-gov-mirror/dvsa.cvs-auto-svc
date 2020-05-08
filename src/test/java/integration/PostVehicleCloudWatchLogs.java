@@ -5,6 +5,8 @@ import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Title;
 import net.thucydides.core.annotations.WithTag;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import steps.VehicleTechnicalRecordsSteps;
@@ -22,6 +24,14 @@ public class PostVehicleCloudWatchLogs {
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
+    // generate random systemNumber
+    String randomSystemNumber;
+
+    @BeforeClass
+    public void initialize(){
+        randomSystemNumber = AwsUtil.getNextSystemNumberInSequence();
+    }
+
     @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
@@ -31,8 +41,7 @@ public class PostVehicleCloudWatchLogs {
         String randomVin = GenericData.generateRandomVin();
         // generate random Vrm
         String randomVrm = GenericData.generateRandomVrm();
-        // generate random systemNumber
-        String randomSystemNumber = AwsUtil.getNextSystemNumberInSequence();
+
         // read post request body from file
         String requestBody = GenericData.readJsonValueFromFile("technical-records_integration_hgv_10775.json", "$");
 
@@ -63,5 +72,11 @@ public class PostVehicleCloudWatchLogs {
 //        vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
 //        vehicleTechnicalRecordsSteps.validateResponseContainsJson("techRecord[1].adrDetails", adrDetails);
 
+    }
+
+    @AfterClass
+    @Test
+    public void cleanUp(){
+        vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 }

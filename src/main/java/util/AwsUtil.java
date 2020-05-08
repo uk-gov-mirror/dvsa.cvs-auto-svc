@@ -47,7 +47,7 @@ public class AwsUtil {
         }
     }
 
-    public static boolean isCertificateCreated(String uuid, String vin){
+    public static boolean isCertificateCreated(String uuid, String vin) {
 
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
@@ -70,19 +70,19 @@ public class AwsUtil {
         String bucketName = loader.getS3Bucket();
 
         String fileName = uuid + "_" + vin + "_1.pdf";
-        String key =  loader.getBranchName()+ "/" + fileName;
+        String key = loader.getBranchName() + "/" + fileName;
 
         AmazonS3 s3Client = new AmazonS3Client(temporaryCredentials);
 
         System.out.println("Waiting on file " + key + " to be created... on bucket: " + bucketName);
 
-        for(int i = 0; i < 45 ; i++) {
+        for (int i = 0; i < 45; i++) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(s3Client.doesObjectExist(bucketName, key)){
+            if (s3Client.doesObjectExist(bucketName, key)) {
                 return s3Client.doesObjectExist(bucketName, key);
             }
             System.out.println("waited for: " + i + " seconds...");
@@ -92,7 +92,7 @@ public class AwsUtil {
     }
 
     /**
-     * @deprecated  replaced by #insertJsonInTable(java.lang.String, java.lang.String, java.lang.String)()
+     * @deprecated replaced by #insertJsonInTable(java.lang.String, java.lang.String, java.lang.String)()
      */
     @Deprecated
     public static void insertJsonInTable(String json, String tableName) {
@@ -126,8 +126,7 @@ public class AwsUtil {
                     .putItem(item);
             System.out.println("PutItem succeeded:\n" + item.toJSONPretty());
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Unable to add item with vin: " + vin);
             System.err.println(e);
         }
@@ -164,8 +163,7 @@ public class AwsUtil {
                     .putItem(item);
             System.out.println("PutItem succeeded:\n" + item.toJSONPretty());
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Unable to add item with " + primaryKey + ": " + valueForPrimaryKey);
             e.printStackTrace();
         }
@@ -199,7 +197,7 @@ public class AwsUtil {
         QuerySpec spec = new QuerySpec()
                 .withKeyConditionExpression("testerStaffId = :staff_id")
                 .withValueMap(new ValueMap()
-                        .withString(":staff_id",testerName));
+                        .withString(":staff_id", testerName));
 
         ItemCollection<QueryOutcome> items = index.query(spec);
         for (Item item : items) {
@@ -210,54 +208,6 @@ public class AwsUtil {
         }
     }
 
-    public static void deleteTestResultId(String testResultId) {
-        System.out.println("deleting the test-result: " + testResultId);
-        Regions clientRegion = Regions.EU_WEST_1;
-        AWSSecurityTokenService stsClient =
-                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
-        String uuid = String.valueOf(UUID.randomUUID());
-        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
-                .withRoleArn(System.getProperty("AWS_ROLE"))
-                .withDurationSeconds(3600)
-                .withRoleSessionName(uuid);
-        AssumeRoleResult assumeResult =
-                stsClient.assumeRole(assumeRequest);
-
-        BasicSessionCredentials temporaryCredentials =
-                new BasicSessionCredentials(
-                        assumeResult.getCredentials().getAccessKeyId(),
-                        assumeResult.getCredentials().getSecretAccessKey(),
-                        assumeResult.getCredentials().getSessionToken());
-        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
-        client.setRegion(Region.getRegion(clientRegion));
-        DynamoDB dynamoDB = new DynamoDB(client);
-        String tableName = "cvs-" + System.getProperty("BRANCH") + "-test-results";
-
-        Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
-        expressionAttributeValues.put(":result_id", new AttributeValue().withS(testResultId));
-
-        ScanRequest scanRequest = new ScanRequest()
-                .withTableName(tableName)
-                .withFilterExpression("testResultId = :result_id")
-                .withProjectionExpression("vin, testResultId")
-                .withExpressionAttributeValues(expressionAttributeValues);
-        ScanResult result = client.scan(scanRequest);
-        System.out.println("result.toString: " + result.toString());
-        System.out.println("result.getCount: " + result.getCount());
-        System.out.println("result.getItems:" + result.getItems());
-
-        Table table = dynamoDB.getTable(tableName);
-
-        for(Map<String, AttributeValue> item : result.getItems()){
-            System.out.println("item.size: " + item.size());
-            System.out.println("item.values: " + item.values());
-            System.out.println("item.get(vin).getS(): " + item.get("vin").getS());
-            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
-                    .withPrimaryKey("vin", item.get("vin").getS(), "testResultId", testResultId);
-            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
-        }
-
-    }
 
     public static String getNextSystemNumberInSequence() {
         Regions clientRegion = Regions.EU_WEST_1;
@@ -285,7 +235,7 @@ public class AwsUtil {
                 "systemNumber", // ProjectionExpression
                 null, // ExpressionAttributeNames - not used in this example
                 null // ExpressionAttributeValues - not used in this example
-                );
+        );
 
         System.out.println("Scan of " + tableName + " for items with systemNumber not null");
         Iterator<Item> iterator = items.iterator();
@@ -296,8 +246,7 @@ public class AwsUtil {
         if (lastSystemNumberUsed != null) {
             int nextSystemNumberInSequence = Integer.parseInt(lastSystemNumberUsed) + 1;
             return Integer.toString(nextSystemNumberInSequence);
-        }
-        else {
+        } else {
             throw new AutomationException("No value found for last used systemNumber");
         }
     }
@@ -341,8 +290,7 @@ public class AwsUtil {
         if (lastTrailerSequenceNumberUsed != 0 && trailerLetter != null) {
             int nextTrailerNumberInSequence = lastTrailerSequenceNumberUsed + 1;
             return trailerLetter + nextTrailerNumberInSequence;
-        }
-        else {
+        } else {
             throw new AutomationException("No value found for last used sequence number or trailer letter");
         }
     }
@@ -381,8 +329,7 @@ public class AwsUtil {
             UpdateItemOutcome outcome = table.updateItem(updateItemSpec);
             System.out.println("UpdateItem succeeded:\n" + outcome.getItem().toJSONPretty());
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Unable to update item: primaryKeyValue");
             System.err.println(e.getMessage());
         }
@@ -410,50 +357,50 @@ public class AwsUtil {
                         assumeResult.getCredentials().getSessionToken());
 
         AWSLogs logsClient = new AWSLogsClient(temporaryCredentials).withRegion(clientRegion);
-        String logGroup = log +"-"+System.getProperty("BRANCH");
+        String logGroup = log + "-" + System.getProperty("BRANCH");
 
-            for (int times = 0; times < 15; times++) {
+        for (int times = 0; times < 15; times++) {
 
-                System.out.println("... " + times + " ...");
-                DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
-                        .withLogGroupName(logGroup)
-                        .withOrderBy("LastEventTime")
-                        .withDescending(true)
-                        .withLimit(1);
-                DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
+            System.out.println("... " + times + " ...");
+            DescribeLogStreamsRequest describeLogStreamsRequest = new DescribeLogStreamsRequest()
+                    .withLogGroupName(logGroup)
+                    .withOrderBy("LastEventTime")
+                    .withDescending(true)
+                    .withLimit(1);
+            DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
 
-                LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
-                GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
+            LogStream logStream = describeLogStreamsResult.getLogStreams().get(0);
+            GetLogEventsRequest getLogEventsRequest = new GetLogEventsRequest()
 //                    .withStartTime(currentTimestamp.getMillis())
 //                    .withEndTime(currentTimestamp.plusMinutes(1).getMillis())
-                        .withLogGroupName(logGroup)
-                        .withLogStreamName(logStream.getLogStreamName());
+                    .withLogGroupName(logGroup)
+                    .withLogStreamName(logStream.getLogStreamName());
 
-                GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
-                for (OutputLogEvent event : result.getEvents()) {
+            GetLogEventsResult result = logsClient.getLogEvents(getLogEventsRequest);
+            for (OutputLogEvent event : result.getEvents()) {
                 System.out.println("*****************************");
                 System.out.println("# event: " + event.getMessage());
 
-                    System.out.println("Looking for: " + keyValuePair);
+                System.out.println("Looking for: " + keyValuePair);
 
-                    if (event.getMessage().contains(keyValuePair)) {
-                        System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
-                        System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
-                        return true;
-                    }
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (event.getMessage().contains(keyValuePair)) {
+                    System.out.println("!!!!!!!!!!!!!!!###### FOUND !!! ######!!!!!!!!!!!!!!!");
+                    System.out.println("$$$$$$$$$$$   " + logStream.getLogStreamName() + "   $$$$$$$$$$$");
+                    return true;
                 }
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         return false;
 
     }
 
-    public static boolean checkDispatcherLogsForData(String ...keyValuePairs) {
+    public static boolean checkDispatcherLogsForData(String... keyValuePairs) {
         Regions clientRegion = Regions.EU_WEST_1;
         AWSSecurityTokenService stsClient =
                 AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
@@ -483,8 +430,7 @@ public class AwsUtil {
                     .withLogGroupName(logGroup)
                     .withOrderBy("LastEventTime")
                     .withDescending(true)
-                    .withLimit(20)
-                    ;
+                    .withLimit(20);
 
             DescribeLogStreamsResult describeLogStreamsResult = logsClient.describeLogStreams(describeLogStreamsRequest);
 
@@ -559,8 +505,7 @@ public class AwsUtil {
                     .putItem(item);
             System.out.println("PutItem succeeded:\n" + item.toJSONPretty());
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Unable to add item with id: " + id);
             System.err.println(e);
         }
@@ -603,8 +548,101 @@ public class AwsUtil {
 //                    .withReturnValues(ReturnValue.ALL_OLD);
             DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
             System.out.println("Printing item that was deleted...");
+        } catch (Exception e) {
+            System.err.println("Error deleting item in " + tableName);
+            System.err.println(e.getMessage());
         }
-        catch (Exception e) {
+
+    }
+
+    public static void deleteTestResultId(String testResultId) {
+        System.out.println("deleting the test-result: " + testResultId);
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-test-results";
+
+        Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
+        expressionAttributeValues.put(":result_id", new AttributeValue().withS(testResultId));
+
+        ScanRequest scanRequest = new ScanRequest()
+                .withTableName(tableName)
+                .withFilterExpression("testResultId = :result_id")
+                .withProjectionExpression("vin, testResultId")
+                .withExpressionAttributeValues(expressionAttributeValues);
+        ScanResult result = client.scan(scanRequest);
+        System.out.println("result.toString: " + result.toString());
+        System.out.println("result.getCount: " + result.getCount());
+        System.out.println("result.getItems:" + result.getItems());
+
+        Table table = dynamoDB.getTable(tableName);
+
+        for (Map<String, AttributeValue> item : result.getItems()) {
+            System.out.println("item.size: " + item.size());
+            System.out.println("item.values: " + item.values());
+            System.out.println("item.get(vin).getS(): " + item.get("vin").getS());
+            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                    .withPrimaryKey("vin", item.get("vin").getS(), "testResultId", testResultId);
+            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
+        }
+
+    }
+
+    public static void deleteVehicleById(String systemNumber) {
+        System.out.println("deleting the vehicle: " + systemNumber);
+        Regions clientRegion = Regions.EU_WEST_1;
+        AWSSecurityTokenService stsClient =
+                AWSSecurityTokenServiceClientBuilder.standard().withRegion(clientRegion).build();
+        String uuid = String.valueOf(UUID.randomUUID());
+        AssumeRoleRequest assumeRequest = new AssumeRoleRequest()
+                .withRoleArn(System.getProperty("AWS_ROLE"))
+                .withDurationSeconds(3600)
+                .withRoleSessionName(uuid);
+        AssumeRoleResult assumeResult =
+                stsClient.assumeRole(assumeRequest);
+
+        BasicSessionCredentials temporaryCredentials =
+                new BasicSessionCredentials(
+                        assumeResult.getCredentials().getAccessKeyId(),
+                        assumeResult.getCredentials().getSecretAccessKey(),
+                        assumeResult.getCredentials().getSessionToken());
+        AmazonDynamoDBClient client = new AmazonDynamoDBClient(temporaryCredentials);
+        client.setRegion(Region.getRegion(clientRegion));
+        DynamoDB dynamoDB = new DynamoDB(client);
+        String tableName = "cvs-" + System.getProperty("BRANCH") + "-technical-records";
+
+        Table table = dynamoDB.getTable(tableName);
+
+        try {
+
+            System.out.println("deleting vehicle with id: " + systemNumber + " ....");
+            DeleteItemSpec deleteItemSpec = new DeleteItemSpec()
+                    .withPrimaryKey("systemNumber", systemNumber);
+//                    .withConditionExpression("#ip = :val")
+//                    .withNameMap(new NameMap()
+//                            .with("#ip", "InProduction"))
+//                    .withValueMap(new ValueMap()
+//                            .withBoolean(":val", false))
+//                    .withReturnValues(ReturnValue.ALL_OLD);
+            DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);
+            System.out.println("Printing item that was deleted...");
+        } catch (Exception e) {
             System.err.println("Error deleting item in " + tableName);
             System.err.println(e.getMessage());
         }

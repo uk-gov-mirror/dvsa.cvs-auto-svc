@@ -430,4 +430,9 @@ public class VehicleTechnicalRecordsSteps {
         String keyValuePair3 = "method: '" + httpMethod +"'";
         assertThat(AwsUtil.checkDispatcherLogsForData(keyValuePair1, keyValuePair2, keyValuePair3)).isTrue();
     }
+
+    @Step
+    public void deleteRecords(String systemNumber) {
+        AwsUtil.deleteVehicleById(systemNumber);
+    }
 }
