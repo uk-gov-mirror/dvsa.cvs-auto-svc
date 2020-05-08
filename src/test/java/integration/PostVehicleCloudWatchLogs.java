@@ -54,7 +54,7 @@ public class PostVehicleCloudWatchLogs {
         //TEST
         vehicleTechnicalRecordsSteps.postVehicleTechnicalRecordsWithAlterations(requestBody, alterations);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(201);
-        vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomVin);
+        vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomSystemNumber);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].systemNumber", randomSystemNumber);
@@ -63,7 +63,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
     @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
+    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP Error code 400")
     @Test
     public void testVehiclePostHttpCode400() {
         // TEST SETUP
@@ -91,10 +91,10 @@ public class PostVehicleCloudWatchLogs {
 
         //TEST
         vehicleTechnicalRecordsSteps.insertVehicleWithAlterations(requestBody, alterations);
-        vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomSystemNumber);
-        vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
-        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
-        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].systemNumber", randomSystemNumber);
+//        vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomSystemNumber);
+//        vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
+//        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
+//        vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].systemNumber", randomSystemNumber);
         vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", randomSystemNumber, 400);
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
