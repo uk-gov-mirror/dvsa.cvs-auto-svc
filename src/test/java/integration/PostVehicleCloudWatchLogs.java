@@ -17,22 +17,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@WithTag("In_Test")
+
 @RunWith(SerenityRunner.class)
 public class PostVehicleCloudWatchLogs {
 
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
-    // generate random systemNumber
-    String randomSystemNumber = AwsUtil.getNextSystemNumberInSequence();
-
     @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePostHttpCode202() {
         // TEST SETUP
-
+        // generate random systemNumber
+        String randomSystemNumber = AwsUtil.getNextSystemNumberInSequence();
         // generate random Vin
         String randomVin = GenericData.generateRandomVin();
         // generate random Vrm
@@ -70,10 +68,4 @@ public class PostVehicleCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
-    @AfterClass
-    @Test
-    public void cleanUp(){
-        vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
-    }
 }
