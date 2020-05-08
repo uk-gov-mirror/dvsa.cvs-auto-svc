@@ -91,7 +91,6 @@ public class PostVehicleCloudWatchLogs {
 
         //TEST
         vehicleTechnicalRecordsSteps.insertVehicleWithAlterations(requestBody, alterations);
-        vehicleTechnicalRecordsSteps.statusCodeShouldBe(201);
         vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomVin);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
