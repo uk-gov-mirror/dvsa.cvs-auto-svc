@@ -197,6 +197,7 @@ public class ActivitiesClient {
         Response response = given().filters(new BasePathFilter())
                 .contentType(ContentType.JSON)
                 .pathParam("id", id)
+                .log().method().log().uri().log().body()
                 .put("/activities/{id}/end");
 
         return response;
@@ -207,6 +208,7 @@ public class ActivitiesClient {
         Response response = given().filters(new BasePathFilter())
                 .contentType(ContentType.JSON)
                 .body("[" + object + "]")
+                .log().method().log().uri().log().body()
                 .put("/activities/update");
 
         return response;

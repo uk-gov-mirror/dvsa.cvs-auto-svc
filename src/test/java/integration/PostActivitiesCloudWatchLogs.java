@@ -623,9 +623,17 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(201);
         activitiesSteps.responseShouldContainId();
         String id =  activitiesSteps.checkAndGetResponseId();
+
         ArrayList<String> reason = new ArrayList<String>();
+
         reason.add("getting drunk");
-        activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData().setId(id).setWaitReason(reason).build());
+
+        activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData()
+                .setId(id)
+                .setWaitReason(reason)
+                .setNotes("updated")
+                .build()
+        );
         activitiesSteps.statusCodeShouldBe(204);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", id, 202);
         activitiesSteps.deleteActivity(parentId);
