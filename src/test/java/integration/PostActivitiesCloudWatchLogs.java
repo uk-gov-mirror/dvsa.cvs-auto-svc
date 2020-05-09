@@ -406,7 +406,7 @@ public class PostActivitiesCloudWatchLogs {
         JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
                 "","REPLACE");
-        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
