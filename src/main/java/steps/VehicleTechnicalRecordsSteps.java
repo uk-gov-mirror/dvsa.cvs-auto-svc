@@ -310,7 +310,7 @@ public class VehicleTechnicalRecordsSteps {
 
                 System.out.println(" for vehicle [" + j + "] status is: " + status + " and number of records: " + recordsNumber);
 
-                if (status == 200 && recordsNumber < 1) {
+                if (status == 200 && recordsNumber > 1) {
                     try {
                         Thread.sleep(2500);
                     } catch (InterruptedException e) {
