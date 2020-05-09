@@ -273,7 +273,7 @@ public class PostVehicleCloudWatchLogs {
         String randomVrm = GenericData.generateRandomVrm();
 
         // read post request body from file
-        String insertBody = GenericData.readJsonValueFromFile("technical-records_hgv_insert_10775.json", "$");
+        String insertBody = GenericData.readJsonValueFromFile("technical-records_integration_hgv_10775.json", "$");
         String requestBody = GenericData.readJsonValueFromFile("technical-records_integration_hgv_10775.json", "$");
 
         // create alterations to change attributes
