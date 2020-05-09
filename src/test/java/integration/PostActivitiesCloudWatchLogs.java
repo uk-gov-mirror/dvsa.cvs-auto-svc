@@ -595,7 +595,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC1 - http status code 202")
     @Test
     public void insertPutActivityTimeHttpCode202() {
@@ -669,10 +669,21 @@ public class PostActivitiesCloudWatchLogs {
                 alterationEndTime, alterationTestStationPNumber, alterationId));
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 400);
+
+        ArrayList<String> reason = new ArrayList<String>();
+
+        reason.add("Waiting for vehicle");
+
+        activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData()
+                .setId(id)
+                .setWaitReason(reason)
+                .setNotes("updated")
+                .build()
+        );
+        activitiesSteps.statusCodeShouldBe(204);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", id, 400);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
-
     }
 
     //    @WithTag("In_test")
