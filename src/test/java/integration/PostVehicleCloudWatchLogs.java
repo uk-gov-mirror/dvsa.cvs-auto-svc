@@ -542,7 +542,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.putVehicleTechnicalRecordsForVehicleWithAlterations(randomVin, requestBody, alterations);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.validateResponseContainsJson("techRecord[1].adrDetails", adrDetails);
-        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomSystemNumber, 404);
+        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomSystemNumber, 429);
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
 
     }
