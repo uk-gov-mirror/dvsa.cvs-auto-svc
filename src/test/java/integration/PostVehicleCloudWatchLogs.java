@@ -24,7 +24,7 @@ public class PostVehicleCloudWatchLogs {
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePostHttpCode202() {
@@ -260,7 +260,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC4 - AC4 - PUT request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePutHttpCode202() {
@@ -273,12 +273,15 @@ public class PostVehicleCloudWatchLogs {
         String randomVrm = GenericData.generateRandomVrm();
 
         // read post request body from file
+        String insertBody = GenericData.readJsonValueFromFile("technical-records_hgv_insert_10775.json", "$");
         String requestBody = GenericData.readJsonValueFromFile("technical-records_integration_hgv_10775.json", "$");
 
         // create alterations to change attributes
         JsonPathAlteration alterationVin = new JsonPathAlteration("$.vin", randomVin, "", "REPLACE");
         JsonPathAlteration alterationVrm = new JsonPathAlteration("$.primaryVrm", randomVrm, "", "REPLACE");
         JsonPathAlteration alterationSystemNumber = new JsonPathAlteration("$.systemNumber", randomSystemNumber, "", "REPLACE");
+        // read the adr details from the file used for put request body with battery adr details
+        String adrDetails = GenericData.readJsonValueFromFile("technical-records_adr_details_other_nulls.json","$.techRecord[0].adrDetails");
 
         // initialize the alterations list
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(
@@ -288,18 +291,19 @@ public class PostVehicleCloudWatchLogs {
         ));
 
         //TEST
-        vehicleTechnicalRecordsSteps.postVehicleTechnicalRecordsWithAlterations(requestBody, alterations);
-        vehicleTechnicalRecordsSteps.statusCodeShouldBe(201);
+        vehicleTechnicalRecordsSteps.postVehicleTechnicalRecordsWithAlterations(insertBody, alterations);
         vehicleTechnicalRecordsSteps.getVehicleTechnicalRecords(randomVin);
         vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("techRecord.size()", 1);
         vehicleTechnicalRecordsSteps.valueForFieldInPathShouldBe("[0].systemNumber", randomSystemNumber);
-        // read the adr details from the file used for put request body with battery adr details
-        String adrDetails = GenericData.readJsonValueFromFile("technical-records_adr_details_tank_nulls.json", "$.techRecord[0].adrDetails");
+
         JsonPathAlteration alterationAddAdrDetails = new JsonPathAlteration("$.techRecord[0]", adrDetails,"adrDetails","ADD_FIELD");
         alterations.add(alterationAddAdrDetails);
+
         vehicleTechnicalRecordsSteps.putVehicleTechnicalRecordsForVehicleWithAlterations(randomVin, requestBody, alterations);
-        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomSystemNumber, 202);
+        vehicleTechnicalRecordsSteps.statusCodeShouldBe(200);
+        vehicleTechnicalRecordsSteps.validateResponseContainsJson("techRecord[1].adrDetails", adrDetails);
+        vehicleTechnicalRecordsSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", randomSystemNumber, 400);
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
