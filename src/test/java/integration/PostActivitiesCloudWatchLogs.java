@@ -384,7 +384,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(id);
     }
 
-//    @WithTag("In_test")
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC2 - http status code 400")
     @Test
     public void insertPostActivityTimeHttpCode400() {
