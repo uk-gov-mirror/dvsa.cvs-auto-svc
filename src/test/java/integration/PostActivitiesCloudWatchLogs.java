@@ -686,7 +686,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(id);
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 401")
     @Test
     public void insertPutActivityTimeHttpCode401() {
@@ -734,7 +734,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_test")
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 403")
     @Test
     public void insertPutActivityTimeHttpCode403() {
@@ -775,7 +775,7 @@ public class PostActivitiesCloudWatchLogs {
         );
         activitiesSteps.statusCodeShouldBe(204);
 
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 403);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", id, 403);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
 
