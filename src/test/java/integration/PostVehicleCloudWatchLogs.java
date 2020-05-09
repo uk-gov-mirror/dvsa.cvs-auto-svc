@@ -403,7 +403,7 @@ public class PostVehicleCloudWatchLogs {
 
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 403")
     @Test
     public void testVehiclePutHttpCode403() {
@@ -451,7 +451,7 @@ public class PostVehicleCloudWatchLogs {
 
     }
 
-    //    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 404")
     @Test
     public void testVehiclePutHttpCode404() {
