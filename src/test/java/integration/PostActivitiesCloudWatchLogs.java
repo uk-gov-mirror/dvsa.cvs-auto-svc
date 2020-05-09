@@ -351,4 +351,33 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
+    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC1 - http status code 202")
+    @Test
+    public void insertPostActivityTimeHttpCode200() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber));
+        activitiesSteps.postActivitiesParentIdWithAlterations(postRequestBody, alterations);
+        activitiesSteps.statusCodeShouldBe(201);
+        activitiesSteps.responseShouldContainId();
+    }
+
 }
