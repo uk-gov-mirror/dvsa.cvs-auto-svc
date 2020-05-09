@@ -351,7 +351,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_test")
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC1 - http status code 202")
     @Test
     public void insertPostActivityTimeHttpCode200() {
@@ -378,14 +378,19 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.postActivitiesParentIdWithAlterations(postRequestBody, alterations);
         activitiesSteps.statusCodeShouldBe(201);
         activitiesSteps.responseShouldContainId();
+        String id =  activitiesSteps.checkAndGetResponseId();
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(id, 202);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC2 - http status code 400")
     @Test
     public void insertPostActivityTimeHttpCode400() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
         String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404400-7e57-c0de-e400-e4404c0de400";
         // read post request body from file
         String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
         // create alteration to change parentId
@@ -401,15 +406,17 @@ public class PostActivitiesCloudWatchLogs {
         JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
                 "","REPLACE");
-        JsonPathAlteration alterationId = new JsonPathAlteration("$","e4404400-7e57-c0de-e400-e4404c0de400" ,"id","ADD");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD");
 
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
                 alterationEndTime, alterationTestStationPNumber, alterationId));
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody,alterations);
-        activitiesSteps.statusCodeShouldBe(201);
-        activitiesSteps.responseShouldContainId();
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(id, 202);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
     }
 
 }
