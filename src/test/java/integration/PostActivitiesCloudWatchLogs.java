@@ -4,6 +4,7 @@ import data.ActivitiesData;
 import data.GenericData;
 import model.activities.Activities;
 import model.activities.ActivitiesGet;
+import model.activities.ActivitiesPut;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.core.annotations.Title;
@@ -354,7 +355,7 @@ public class PostActivitiesCloudWatchLogs {
 //    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC1 - http status code 202")
     @Test
-    public void insertPostActivityTimeHttpCode200() {
+    public void insertPostActivityTimeHttpCode202() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
         String parentId =  activitiesSteps.checkAndGetResponseId();
         // read post request body from file
@@ -418,7 +419,6 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(id);
 
     }
-
 
 //    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC2 - http status code 401")
@@ -560,10 +560,257 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC3 - http status code 500")
     @Test
     public void insertPostActivityTimeHttpCode500() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404500-7e57-c0de-e500-e4404c0de500";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 500);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC1 - http status code 202")
+    @Test
+    public void insertPutActivityTimeHttpCode202() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber));
+        activitiesSteps.postActivitiesParentIdWithAlterations(postRequestBody, alterations);
+        activitiesSteps.statusCodeShouldBe(201);
+        activitiesSteps.responseShouldContainId();
+        String id =  activitiesSteps.checkAndGetResponseId();
+        ArrayList<String> reason = new ArrayList<String>();
+        reason.add("getting drunk");
+        activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData().setId(id).setWaitReason(reason).build());
+        activitiesSteps.statusCodeShouldBe(204);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", id, 202);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+    }
+
+    //    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 400")
+    @Test
+    public void insertPutActivityTimeHttpCode400() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404400-7e57-c0de-e400-e4404c0de400";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 400);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    //    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 401")
+    @Test
+    public void insertPutActivityTimeHttpCode401() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404401-7e57-c0de-e401-e4404c0de401";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 401);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    //    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 403")
+    @Test
+    public void insertPutActivityTimeHttpCode403() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404403-7e57-c0de-e403-e4404c0de403";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 403);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    //    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 404")
+    @Test
+    public void insertPutActivityTimeHttpCode404() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404404-7e57-c0de-e404-e4404c0de404";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 404);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    //    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC3 - http status code 429")
+    @Test
+    public void insertPutActivityTimeHttpCode429() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404429-7e57-c0de-e429-e4404c0de429";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 429);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC3 - http status code 500")
+    @Test
+    public void insertPutActivityTimeHttpCode500() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
         String parentId =  activitiesSteps.checkAndGetResponseId();
         String id =  "e4404500-7e57-c0de-e500-e4404c0de500";
