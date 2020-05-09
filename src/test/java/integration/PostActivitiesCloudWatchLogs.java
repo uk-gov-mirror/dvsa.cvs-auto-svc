@@ -640,7 +640,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(id);
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 400")
     @Test
     public void insertPutActivityTimeHttpCode400() {
@@ -686,7 +686,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.deleteActivity(id);
     }
 
-    //    @WithTag("In_test")
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 401")
     @Test
     public void insertPutActivityTimeHttpCode401() {
@@ -715,13 +715,26 @@ public class PostActivitiesCloudWatchLogs {
                 alterationEndTime, alterationTestStationPNumber, alterationId));
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 401);
+
+        ArrayList<String> reason = new ArrayList<String>();
+
+        reason.add("Waiting for vehicle");
+
+        activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData()
+                .setId(id)
+                .setWaitReason(reason)
+                .setNotes("updated")
+                .build()
+        );
+        activitiesSteps.statusCodeShouldBe(204);
+
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("PUT", id, 401);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
 
     }
 
-    //    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 403")
     @Test
     public void insertPutActivityTimeHttpCode403() {
@@ -750,6 +763,18 @@ public class PostActivitiesCloudWatchLogs {
                 alterationEndTime, alterationTestStationPNumber, alterationId));
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        ArrayList<String> reason = new ArrayList<String>();
+
+        reason.add("Waiting for vehicle");
+
+        activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData()
+                .setId(id)
+                .setWaitReason(reason)
+                .setNotes("updated")
+                .build()
+        );
+        activitiesSteps.statusCodeShouldBe(204);
+
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 403);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
