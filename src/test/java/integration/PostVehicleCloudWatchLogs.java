@@ -24,7 +24,7 @@ public class PostVehicleCloudWatchLogs {
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
-//    @WithTag("In_Test")
+    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePostHttpCode202() {
@@ -303,7 +303,7 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-    @WithTag("In_Test")
+//    @WithTag("In_Test")
     @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 400")
     @Test
     public void testVehiclePutHttpCode400() {
