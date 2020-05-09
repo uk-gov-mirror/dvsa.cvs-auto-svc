@@ -490,7 +490,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC2 - http status code 404")
     @Test
     public void insertPostActivityTimeHttpCode404() {
@@ -520,6 +520,41 @@ public class PostActivitiesCloudWatchLogs {
 
         activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
         activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 404);
+        activitiesSteps.deleteActivity(parentId);
+        activitiesSteps.deleteActivity(id);
+
+    }
+
+    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC3 - http status code 429")
+    @Test
+    public void insertPostActivityTimeHttpCode429() {
+        activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
+        String parentId =  activitiesSteps.checkAndGetResponseId();
+        String id =  "e4404429-7e57-c0de-e429-e4404c0de429";
+        // read post request body from file
+        String postRequestBody = GenericData.readJsonValueFromFile("activities_parent_id.json","$");
+        // create alteration to change parentId
+        JsonPathAlteration alterationParentId = new JsonPathAlteration("$.parentId", parentId,"","REPLACE");
+        // create alteration to change testStationPNumber
+        JsonPathAlteration alterationTestStationPNumber = new JsonPathAlteration("$.testStationPNumber",
+                "35-7138320","","REPLACE");
+        Date date  = new Date();
+        // create alteration to change startTime
+        JsonPathAlteration alterationStartTime = new JsonPathAlteration("$.startTime", new SimpleDateFormat
+                ("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(date),"","REPLACE");
+        // create alteration to change endTime
+        JsonPathAlteration alterationEndTime = new JsonPathAlteration("$.endTime",
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(DateUtils.addMinutes(date, 6)),
+                "","REPLACE");
+        JsonPathAlteration alterationId = new JsonPathAlteration("$", id,"id","ADD_FIELD");
+
+        // initialize the alterations list with both declared alteration
+        List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
+                alterationEndTime, alterationTestStationPNumber, alterationId));
+
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 429);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
 
