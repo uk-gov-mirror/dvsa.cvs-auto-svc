@@ -626,7 +626,7 @@ public class PostActivitiesCloudWatchLogs {
 
         ArrayList<String> reason = new ArrayList<String>();
 
-        reason.add("getting drunk");
+        reason.add("Waiting for vehicle");
 
         activitiesSteps.putActivitiesUpdate(ActivitiesData.buildActivitiesUpdateData()
                 .setId(id)
