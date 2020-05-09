@@ -351,7 +351,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC1 - http status code 202")
     @Test
     public void insertPostActivityTimeHttpCode200() {
@@ -379,7 +379,7 @@ public class PostActivitiesCloudWatchLogs {
         activitiesSteps.statusCodeShouldBe(201);
         activitiesSteps.responseShouldContainId();
         String id =  activitiesSteps.checkAndGetResponseId();
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(id, 202);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 202);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
     }
@@ -412,8 +412,8 @@ public class PostActivitiesCloudWatchLogs {
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
                 alterationEndTime, alterationTestStationPNumber, alterationId));
 
-        activitiesSteps.insertActivityWithAlterations(postRequestBody,alterations);
-        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber(id, 202);
+        activitiesSteps.insertActivityWithAlterations(postRequestBody, alterations);
+        activitiesSteps.checkAwsDispatcherLogStatusCodeForSystemNumber("POST", id, 400);
         activitiesSteps.deleteActivity(parentId);
         activitiesSteps.deleteActivity(id);
 
