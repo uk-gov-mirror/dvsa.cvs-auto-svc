@@ -357,7 +357,7 @@ public class PostActivitiesCloudWatchLogs {
 
 
 
-//    @WithTag("In_test")
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC1 - http status code 202")
     @Test
     public void insertPostActivityTimeHttpCode202() {
@@ -601,7 +601,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC4 - http status code 202")
     @Test
     public void insertPutActivityTimeHttpCode202() {
