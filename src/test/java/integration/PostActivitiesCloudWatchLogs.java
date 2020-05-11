@@ -595,7 +595,11 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_test")
+
+
+
+
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC1 - http status code 202")
     @Test
     public void insertPutActivityTimeHttpCode202() {
@@ -619,6 +623,7 @@ public class PostActivitiesCloudWatchLogs {
         // initialize the alterations list with both declared alteration
         List<JsonPathAlteration> alterations = new ArrayList<>(Arrays.asList(alterationParentId, alterationStartTime,
                 alterationEndTime, alterationTestStationPNumber));
+
         activitiesSteps.postActivitiesParentIdWithAlterations(postRequestBody, alterations);
         activitiesSteps.statusCodeShouldBe(201);
         activitiesSteps.responseShouldContainId();
@@ -873,7 +878,7 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-    @WithTag("In_test")
+//    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC3 - http status code 500")
     @Test
     public void insertPutActivityTimeHttpCode500() {
