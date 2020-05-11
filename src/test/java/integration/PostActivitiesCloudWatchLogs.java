@@ -352,7 +352,12 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-//    @WithTag("In_test")
+
+
+
+
+
+    @WithTag("In_test")
     @Title("CVSB-10779 - CVS to EDH (Wait times) POST - AC1 - http status code 202")
     @Test
     public void insertPostActivityTimeHttpCode202() {
@@ -595,12 +600,8 @@ public class PostActivitiesCloudWatchLogs {
 
     }
 
-
-
-
-
-    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC1 - http status code 202")
+//    @WithTag("In_test")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC4 - http status code 202")
     @Test
     public void insertPutActivityTimeHttpCode202() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
@@ -646,7 +647,7 @@ public class PostActivitiesCloudWatchLogs {
     }
 
 //    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 400")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC5 - http status code 400")
     @Test
     public void insertPutActivityTimeHttpCode400() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
@@ -692,7 +693,7 @@ public class PostActivitiesCloudWatchLogs {
     }
 
 //    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 401")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC5 - http status code 401")
     @Test
     public void insertPutActivityTimeHttpCode401() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
@@ -740,7 +741,7 @@ public class PostActivitiesCloudWatchLogs {
     }
 
 //    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 403")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC5 - http status code 403")
     @Test
     public void insertPutActivityTimeHttpCode403() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
@@ -787,7 +788,7 @@ public class PostActivitiesCloudWatchLogs {
     }
 
 //    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC2 - http status code 404")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC5 - http status code 404")
     @Test
     public void insertPutActivityTimeHttpCode404() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
@@ -833,7 +834,7 @@ public class PostActivitiesCloudWatchLogs {
     }
 
 //    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC3 - http status code 429")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC6 - http status code 429")
     @Test
     public void insertPutActivityTimeHttpCode429() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
@@ -879,7 +880,7 @@ public class PostActivitiesCloudWatchLogs {
     }
 
 //    @WithTag("In_test")
-    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC3 - http status code 500")
+    @Title("CVSB-10779 - CVS to EDH (Wait times) PUT - AC6 - http status code 500")
     @Test
     public void insertPutActivityTimeHttpCode500() {
         activitiesSteps.postActivities(ActivitiesData.buildActivitiesIdData().setActivityType("visit").build());
