@@ -22,8 +22,8 @@ public class PostVehicleCloudWatchLogs {
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
-//    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
+    @WithTag("In_Test")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC1 - AC1 - POST request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePostHttpCode202() {
         // TEST SETUP
@@ -61,7 +61,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 400")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 400")
     @Test
     public void testVehiclePostHttpCode400() {
         // TEST SETUP
@@ -94,7 +94,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 401")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 401")
     @Test
     public void testVehiclePostHttpCode401() {
         // TEST SETUP
@@ -127,7 +127,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 403")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 403")
     @Test
     public void testVehiclePostHttpCode403() {
         // TEST SETUP
@@ -160,7 +160,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 404")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC2 - AC2 - POST request is made and EDH responds back with HTTP Error code 404")
     @Test
     public void testVehiclePostHttpCode404() {
         // TEST SETUP
@@ -193,7 +193,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC3 - AC3 - POST request is made and EDH responds back with HTTP Error code 429")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC3 - AC3 - POST request is made and EDH responds back with HTTP Error code 429")
     @Test
     public void testVehiclePostHttpCode429() {
         // TEST SETUP
@@ -226,7 +226,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC3 - AC3 - POST request is made and EDH responds back with HTTP Error code 500")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC3 - AC3 - POST request is made and EDH responds back with HTTP Error code 500")
     @Test
     public void testVehiclePostHttpCode500() {
         // TEST SETUP
@@ -258,8 +258,8 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
     }
 
-    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC4 - AC4 - PUT request is made and EDH responds back with HTTP 202 Accepted status")
+//    @WithTag("In_Test")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC4 - AC4 - PUT request is made and EDH responds back with HTTP 202 Accepted status")
     @Test
     public void testVehiclePutHttpCode202() {
         // TEST SETUP
@@ -306,7 +306,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 400")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 400")
     @Test
     public void testVehiclePutHttpCode400() {
         // TEST SETUP
@@ -354,7 +354,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 401")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 401")
     @Test
     public void testVehiclePutHttpCode401() {
         // TEST SETUP
@@ -402,7 +402,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 403")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 403")
     @Test
     public void testVehiclePutHttpCode403() {
         // TEST SETUP
@@ -450,7 +450,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 404")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC5 - AC5 - PUT request is made and EDH responds back with HTTP Error code 404")
     @Test
     public void testVehiclePutHttpCode404() {
         // TEST SETUP
@@ -498,7 +498,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC6 - AC6 - PUT request is made and EDH responds back with HTTP Error code 429")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC6 - AC6 - PUT request is made and EDH responds back with HTTP Error code 429")
     @Test
     public void testVehiclePutHttpCode429() {
         // TEST SETUP
@@ -546,7 +546,7 @@ public class PostVehicleCloudWatchLogs {
     }
 
 //    @WithTag("In_Test")
-    @Title("CVSB-17775 - CVS to EDH (Technical records) - TC6 - AC6 - PUT request is made and EDH responds back with HTTP Error code 500")
+    @Title("CVSB-10775 - CVS to EDH (Technical records) - TC6 - AC6 - PUT request is made and EDH responds back with HTTP Error code 500")
     @Test
     public void testVehiclePutHttpCode500() {
         // TEST SETUP
@@ -592,6 +592,5 @@ public class PostVehicleCloudWatchLogs {
         vehicleTechnicalRecordsSteps.deleteRecords(randomSystemNumber);
 
     }
-
 
 }
