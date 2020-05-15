@@ -545,7 +545,6 @@ public class PostVehicleCloudWatchLogs {
 
     }
 
-//    @WithTag("In_Test")
     @Title("CVSB-10775 - CVS to EDH (Technical records) - TC6 - AC6 - PUT request is made and EDH responds back with HTTP Error code 500")
     @Test
     public void testVehiclePutHttpCode500() {
