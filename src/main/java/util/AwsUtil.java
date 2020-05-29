@@ -350,7 +350,7 @@ public class AwsUtil {
 
         } catch (Exception e) {
             System.err.println("Unable to add item with vin: " + vin);
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -427,7 +427,7 @@ public class AwsUtil {
 
         } catch (Exception e) {
             System.err.println("Unable to add item with id: " + id);
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -466,7 +466,7 @@ public class AwsUtil {
 
         } catch (Exception e) {
             System.err.println("Unable to add item with systemNumber: " + sysNo);
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
