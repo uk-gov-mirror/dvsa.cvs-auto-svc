@@ -8,7 +8,6 @@ import net.thucydides.core.annotations.WithTag;
 import net.thucydides.junit.annotations.UseTestDataFrom;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import steps.TestResultsSteps;
@@ -19,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@WithTag("In_Test")
+@WithTag("expiry_dates")
 @RunWith(SerenityParameterizedRunner.class)
 @UseTestDataFrom(value="loader/testdata/test_data_expiry_date_annual_trl_5862.csv")
 public class PostTestResultsPreservationExpiryDateTrl_5862 {
@@ -68,7 +67,7 @@ public class PostTestResultsPreservationExpiryDateTrl_5862 {
         isAnnualWithCertificate = annualWithCertificate;
     }
 
-    @Ignore
+    @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - TRL - Today is more than 2 months before previous expiryDate (Early for test)")
     @Test
     public void testResultsFirstTestExpiryTrlTodayMoreThanTwoMonthsBeforePreviousExpiry() {
@@ -210,7 +209,7 @@ public class PostTestResultsPreservationExpiryDateTrl_5862 {
 
     }
 
-    @WithTag("In_Test")
+    @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - TRL - Today is within one month before previous expiryDate")
     @Test
     public void testResultsFirstTestExpiryTrlTodayMoreThanOneMonthBeforePreviousExpiry() {
@@ -352,7 +351,7 @@ public class PostTestResultsPreservationExpiryDateTrl_5862 {
 
     }
 
-    @WithTag("In_Test")
+    @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - TRL - Today is within the month of previous expiryDate")
     @Test
     public void testResultsFirstTestExpiryTrlTodayIsWithinTheMonthsOfPreviousExpiry() {
@@ -493,7 +492,7 @@ public class PostTestResultsPreservationExpiryDateTrl_5862 {
         testResultsSteps.valueForFieldInPathShouldStartWith("[0].testTypes[0].testExpiryDate", testExpiryDate.substring(0, 10));
     }
 
-    @Ignore
+    @WithTag("expiry_dates")
     @Title("CVSB-5862 - Expiry and anniversary dates for HGV & TRL certificates - TRL - Today is after the previous expiryDate")
     @Test
     public void testResultsFirstTestExpiryTrlTodayIsAfterThePreviousExpiry() {
