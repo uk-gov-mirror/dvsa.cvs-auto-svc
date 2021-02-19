@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@WithTag("In_Test")
 @RunWith(SerenityRunner.class)
 public class PostTestResultsRoadworthiness {
 
@@ -27,7 +26,6 @@ public class PostTestResultsRoadworthiness {
     @Steps
     VehicleTechnicalRecordsSteps vehicleTechnicalRecordsSteps;
 
-    @WithTag("In_Test")
     @Title("CVSB-7675 - TC1 - AC1 - ROADWORTHINESS certificate number generated (HGV) - PASS")
     @Test
     public void testResults_Roadworthiness_HGV_Pass_Certificate_Number() {
@@ -66,7 +64,6 @@ public class PostTestResultsRoadworthiness {
         testResultsSteps.validateCertificateIsGenerated(testNumber,randomVin);
     }
 
-    @WithTag("In_Test")
     @Title("CVSB-7675 - TC2 - AC1 - ROADWORTHINESS certificate number generated (TRL) - PASS")
     @Test
     public void testResults_Roadworthiness_TRL_Pass_Certificate_Number() {
@@ -105,7 +102,6 @@ public class PostTestResultsRoadworthiness {
         testResultsSteps.validateCertificateIsGenerated(testNumber,randomVin);
     }
 
-    @WithTag("In_Test")
     @Title("CVSB-7675 - TC3 - Negative (HGV) - FAIL")
     @Test
     public void testResults_Roadworthiness_HGV_Fail_Certificate_Number() {
@@ -164,7 +160,6 @@ public class PostTestResultsRoadworthiness {
         testResultsSteps.validateCertificateIsGenerated(testNumber,randomVin);
     }
 
-    @WithTag("In_Test")
     @Title("CVSB-7675 - TC4 - Negative (TRL) - FAIL")
     @Test
     public void testResults_Roadworthiness_TRL_Fail_Certificate_Number() {
