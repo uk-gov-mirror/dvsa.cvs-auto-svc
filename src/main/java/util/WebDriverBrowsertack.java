@@ -110,7 +110,7 @@ public class WebDriverBrowsertack {
                 ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='loginfmt']")),
                 ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[name='loginfmt']"))
         ));
-        driver.findElement(By.cssSelector("input[name='loginfmt']")).sendKeys(loader.getEmailUserName());
+        driver.findElement(By.cssSelector("input[name='loginfmt']")).sendKeys("cvs.test2@dvsagov.onmicrosoft.com");
         driver.findElement(By.cssSelector("#idSIButton9")).click();
 
         System.out.println("Filling in password");
@@ -119,7 +119,7 @@ public class WebDriverBrowsertack {
                     ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("input[name='passwd']")),
                     ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("input[name='passwd']"))
             ));
-            driver.findElement(By.cssSelector("input[name='passwd']")).sendKeys(loader.getEmailPass());
+            driver.findElement(By.cssSelector("input[name='passwd']")).sendKeys("CvsTester@5");
             driver.findElement(By.cssSelector("#idSIButton9")).click();
         } catch (StaleElementReferenceException e) {
             wait.until(ExpectedConditions.and(

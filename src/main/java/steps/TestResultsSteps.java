@@ -312,14 +312,6 @@ public class TestResultsSteps {
         response.then().body("[" + record +"].testTypes[0]", hasKey("lastUpdatedAt"));
         response.then().body("[" + record +"].testTypes[0]", hasKey("testCode"));
         response.then().body("[" + record +"].testTypes[0]", hasKey("testNumber"));
-
-
-        // TODO: separate Tests for below properties
-        //        response.then().body("[0].testTypes[0]", hasKey("certificateLink"));
-//        response.then().body("testTypes.certificateLink", hasItem(contains(certificateLink.toArray())));
-//        response.then().body("testTypes.certificateNumber", hasItem(contains(certificateNumber.toArray())));
-
-
         response.then().body("testTypes.testTypeName", hasItem(contains(testTypeName.toArray())));
         response.then().body("testTypes.testTypeId", hasItem(contains(testTypeId.toArray())));
         // Commenting this out as the number of fields for tech record is constantly changing
