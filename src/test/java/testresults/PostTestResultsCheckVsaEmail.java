@@ -61,7 +61,10 @@ public class PostTestResultsCheckVsaEmail {
         JsonPathAlteration alterationTestTypeId = new JsonPathAlteration("$.testTypes[0].testTypeId", "95","","REPLACE");
         JsonPathAlteration alterationTestTypeName = new JsonPathAlteration("$.testTypes[0].testTypeName", testName,"","REPLACE");
         JsonPathAlteration alterationTesterName = new JsonPathAlteration("$.testerName", "VSA Email Check","","REPLACE");
-        JsonPathAlteration alterationTesterEmailAddress = new JsonPathAlteration("$.testerEmailAddress", "cvs.test2@dvsagov.onmicrosoft.com","","REPLACE");
+
+        String emailAddress = testResultsSteps.getOutlookEmailAddress();
+        //JsonPathAlteration alterationTesterEmailAddress = new JsonPathAlteration("$.testerEmailAddress", "cvs.test2@dvsagov.onmicrosoft.com","","REPLACE");
+        JsonPathAlteration alterationTesterEmailAddress = new JsonPathAlteration("$.testerEmailAddress",emailAddress ,"","REPLACE");
 
         // Collate the list of alterations.
         List<JsonPathAlteration> alterationsTr = new ArrayList<>(Arrays.asList(
