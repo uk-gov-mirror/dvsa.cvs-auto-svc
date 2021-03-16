@@ -1,4 +1,4 @@
-package VOTT;
+package vott;
 
 import static io.restassured.RestAssured.given;
 
