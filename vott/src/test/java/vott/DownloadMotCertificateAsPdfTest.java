@@ -195,6 +195,28 @@ public class DownloadMotCertificateAsPdfTest {
 
         //TODO add control chars test i.e. ctrl+c etc.
     }
+
+    @Test
+    public void DownloadTestCertificateNoAPIKey() {
+
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
+
+        System.out.println("Valid access token " + token);
+                
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("content-type", "application/pdf")
+                .queryParam("testNumber", "W01A00229")
+                .queryParam("vinNumber", "T12765432").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
+    }
 }
-
-
