@@ -6,6 +6,7 @@ import static io.restassured.RestAssured.given;
 import java.time.Duration;
 import java.time.Instant;
 
+<<<<<<< HEAD
 /*
 
 TokenService returns a new JWT token when called.
@@ -13,6 +14,8 @@ It also checks if another token was generated recently.
 Returns new token only if previous token expired.
 
 */
+=======
+>>>>>>> a3bb426 (Adding initial test cert retrieval tests)
 
 public class TokenService {
 
@@ -40,7 +43,7 @@ public class TokenService {
         RestAssured.baseURI = "https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/token";
 
         String response =
-                given()//.log().all()
+                given()//log().all().
                         .formParam("grant_type", "password")
                         .formParam("userName", "cvs.automation1@dvsagov.onmicrosoft.com")
                         .formParam("password", "*7vU4EWuJPwues_nGKBMaaNYVC3434")
