@@ -17,6 +17,7 @@ import java.util.Base64;
 public class DownloadMotCertificateAsPdfTest {
 
     private String token;
+    private String APIKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156";
 
     @Before
     public void Setup() {
@@ -34,7 +35,7 @@ public class DownloadMotCertificateAsPdfTest {
         byte[] pdf =
             given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("x-api-key", APIKey)
                 .header("content-type", "application/pdf")
                 .queryParam("vinNumber", "T12765432")
                 .queryParam("testNumber", "W01A00229").
@@ -83,7 +84,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token + 1)
-            .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+            .header("x-api-key", APIKey)
             .header("content-type", "application/pdf")
             .queryParam("vinNumber", "T12765432")
             .queryParam("testNumber", "W01A00229").
@@ -108,7 +109,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("x-api-key", APIKey)
                 .header("content-type", "application/pdf")
                 .queryParam("testNumber", "W01A00229").
 
@@ -131,7 +132,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("x-api-key", APIKey)
                 .header("content-type", "application/pdf")
                 .queryParam("vinNumber", "T12765432").
 
@@ -154,7 +155,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("x-api-key", APIKey)
                 .header("content-type", "application/pdf")
                 .queryParam("vinNumber", "T12765432")
                 .queryParam("testNumber", "W01A00222").
@@ -179,7 +180,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("x-api-key", APIKey)
                 .header("content-type", "application/pdf")
                 .queryParam("vinNumber", "T12765431")
                 .queryParam("testNumber", "W01A00229").
@@ -206,6 +207,31 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
+                .header("content-type", "application/pdf")
+                .queryParam("testNumber", "W01A00229")
+                .queryParam("vinNumber", "T12765432").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
+    }
+
+    @Test
+    public void DownloadTestCertificateInvalidAPIKey() {
+
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
+
+        System.out.println("Valid access token " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", APIKey + "badkey")
                 .header("content-type", "application/pdf")
                 .queryParam("testNumber", "W01A00229")
                 .queryParam("vinNumber", "T12765432").
