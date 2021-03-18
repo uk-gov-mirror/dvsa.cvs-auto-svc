@@ -2,6 +2,8 @@ package vott;
 
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+
 import org.junit.Before;
 import org.junit.Test;
 import java.io.File;
@@ -22,7 +24,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Access token:" + token);
+        System.out.println("Valid access token" + token);
 
         //Retrieve and save test certificate (pdf) as byteArray
         byte[] pdf =
@@ -61,7 +63,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Access token wrong token:" + token);
+        System.out.println("Using invalid token" + token);
 
         given()//.log().all()
             .header("authorization", "Bearer " + token + 1)
@@ -77,9 +79,7 @@ public class DownloadMotCertificateAsPdfTest {
         //verification
         then().//log().all().
             statusCode(403).
-            extract().response().asByteArray();
-            //assert "message": "User is not authorized to access this resource with an explicit deny"
-
+            body("message", equalTo("User is not authorized to access this resource with an explicit deny"));
     }
 }
 
