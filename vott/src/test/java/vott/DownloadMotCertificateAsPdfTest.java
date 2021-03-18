@@ -35,12 +35,12 @@ public class DownloadMotCertificateAsPdfTest {
 
         //Retrieve and save test certificate (pdf) as byteArray
         byte[] pdf =
-                given()//.log().all()
-                        .header("authorization", "Bearer " + token)
-                        .header("x-api-key", APIKey)
-                        .header("content-type", "application/pdf")
-                        .queryParam("vinNumber", "T12765432")
-                        .queryParam("testNumber", "W01A00229").
+            given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", APIKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765432")
+                .queryParam("testNumber", "W01A00229").
 
             //send request
             when().//log().all().
@@ -63,7 +63,7 @@ public class DownloadMotCertificateAsPdfTest {
             e.printStackTrace();
         }
 
-        //Open downloaded pdf file in system default app
+        //Open downloaded pdf file in system default pdf viewer
         if (Desktop.isDesktopSupported()) {
             try {
                 File myFile = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
@@ -106,18 +106,18 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf")
-                .queryParam("testNumber", "W01A00229").
+            .header("authorization", "Bearer " + token)
+            .header("x-api-key", APIKey)
+            .header("content-type", "application/pdf")
+            .queryParam("testNumber", "W01A00229").
 
         //send request
         when().//log().all().
-                get().
+            get().
 
         //verification
         then().//log().all().
-                statusCode(400);
+            statusCode(400);
     }
 
     @Test
@@ -127,18 +127,18 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765432").
+            .header("authorization", "Bearer " + token)
+            .header("x-api-key", APIKey)
+            .header("content-type", "application/pdf")
+            .queryParam("vinNumber", "T12765432").
 
         //send request
         when().//log().all().
-                get().
+            get().
 
         //verification
         then().//log().all().
-                statusCode(400);
+            statusCode(400);
     }
 
     @Test
@@ -148,19 +148,19 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("content-type", "application/pdf")
-                .queryParam("testNumber", "W01A00229")
-                .queryParam("vinNumber", "T12765432").
+            .header("authorization", "Bearer " + token)
+            .header("content-type", "application/pdf")
+            .queryParam("testNumber", "W01A00229")
+            .queryParam("vinNumber", "T12765432").
 
-                //send request
-                        when().//log().all().
-                get().
+        //send request
+        when().//log().all().
+            get().
 
-                //verification
-                        then().//log().all().
-                statusCode(403).
-                body("message", equalTo("Forbidden"));
+        //verification
+        then().//log().all().
+            statusCode(403).
+            body("message", equalTo("Forbidden"));
     }
 
     @Test
@@ -170,20 +170,20 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey + "badkey")
-                .header("content-type", "application/pdf")
-                .queryParam("testNumber", "W01A00229")
-                .queryParam("vinNumber", "T12765432").
+            .header("authorization", "Bearer " + token)
+            .header("x-api-key", APIKey + "badkey")
+            .header("content-type", "application/pdf")
+            .queryParam("testNumber", "W01A00229")
+            .queryParam("vinNumber", "T12765432").
 
-                //send request
-                        when().//log().all().
-                get().
+        //send request
+        when().//log().all().
+            get().
 
-                //verification
-                        then().//log().all().
-                statusCode(403).
-                body("message", equalTo("Forbidden"));
+        //verification
+            then().//log().all().
+            statusCode(403).
+            body("message", equalTo("Forbidden"));
     }
 
     @Test
@@ -193,20 +193,20 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765432")
-                .queryParam("testNumber", "W01A00222").
+            .header("authorization", "Bearer " + token)
+            .header("x-api-key", APIKey)
+            .header("content-type", "application/pdf")
+            .queryParam("vinNumber", "T12765432")
+            .queryParam("testNumber", "W01A00222").
 
         //send request
         when().//log().all().
-                get().
+            get().
 
         //verification
         then().//log().all().
-                statusCode(404).
-                body(equalTo("NoSuchKey"));
+            statusCode(404).
+            body(equalTo("NoSuchKey"));
     }
 
     @Test
@@ -216,20 +216,20 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
-                .queryParam("testNumber", "W01A00229").
+            .header("authorization", "Bearer " + token)
+            .header("x-api-key", APIKey)
+            .header("content-type", "application/pdf")
+            .queryParam("vinNumber", "T12765431")
+            .queryParam("testNumber", "W01A00229").
 
         //send request
         when().//log().all().
-                get().
+            get().
 
         //verification
         then().//log().all().
-                statusCode(404).
-                body(equalTo("NoSuchKey"));
+            statusCode(404).
+            body(equalTo("NoSuchKey"));
 
         //TODO add control chars test i.e. ctrl+c etc.
     }
