@@ -28,25 +28,25 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token: " + token);
 
         //Retrieve and save test certificate (pdf) as byteArray
         byte[] pdf =
-                given().log().all()
-                        .header("authorization", "Bearer " + token)
-                        .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
-                        .header("content-type", "application/pdf")
-                        .queryParam("vinNumber", "T12765432")
-                        .queryParam("testNumber", "W01A00229").
+            given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765432")
+                .queryParam("testNumber", "W01A00229").
 
-                //send request
-                when().//log().all().
-                        get().
+            //send request
+            when().//log().all().
+                get().
 
-                //verification
-                then().//log().all().
-                        statusCode(200).
-                        extract().response().asByteArray();
+            //verification
+            then().//log().all().
+                statusCode(200).
+                extract().response().asByteArray();
 
         //Save file in resources folder
         File file = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
@@ -78,7 +78,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Using invalid token" + token);
+        System.out.println("Using invalid token: " + token);
 
         //prep request
         given()//.log().all()
@@ -103,7 +103,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token: " + token);
 
         //prep request
         given()//.log().all()
@@ -126,7 +126,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token: " + token);
 
         //prep request
         given()//.log().all()
@@ -149,7 +149,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token: " + token);
 
         //prep request
         given()//.log().all()
@@ -174,7 +174,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token: " + token);
 
         //prep request
         given()//.log().all()
@@ -192,6 +192,8 @@ public class DownloadMotCertificateAsPdfTest {
         then().//log().all().
                 statusCode(404).
                 body(equalTo("NoSuchKey"));
+
+        //TODO add control chars test i.e. ctrl+c etc.
     }
 }
 
