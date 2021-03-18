@@ -28,7 +28,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token " + token);
 
         //Retrieve and save test certificate (pdf) as byteArray
         byte[] pdf =
@@ -63,7 +63,7 @@ public class DownloadMotCertificateAsPdfTest {
         //Open downloaded pdf file in system default app
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File("src/test/resources/DownloadedMotTestCertificate/TestCert.pdf");
+                File myFile = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
                 Desktop.getDesktop().open(myFile);
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found" + ex.getMessage());
@@ -78,7 +78,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Using invalid token" + token);
+        System.out.println("Using invalid token " + token);
 
         //prep request
         given()//.log().all()
@@ -103,7 +103,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token " + token);
 
         //prep request
         given()//.log().all()
@@ -126,7 +126,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
-        System.out.println("Valid access token" + token);
+        System.out.println("Valid access token " + token);
 
         //prep request
         given()//.log().all()
@@ -142,6 +142,30 @@ public class DownloadMotCertificateAsPdfTest {
         //verification
         then().//log().all().
                 statusCode(400);
+    }
+
+    @Test
+    public void DownloadTestCertificateNoAPIKey() {
+
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
+
+        System.out.println("Valid access token " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("content-type", "application/pdf")
+                .queryParam("testNumber", "W01A00229")
+                .queryParam("vinNumber", "T12765432").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
     }
 }
 
