@@ -47,8 +47,7 @@ public class DownloadMotCertificateAsPdfTest {
         //Save file in resources folder
         File file = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
 
-        //Downloaded pdfs are encoded in b64
-        //b64 decoder
+        //Decode downloaded pdf
         try (FileOutputStream fos = new FileOutputStream(file)) {
             byte[] decoder = Base64.getDecoder().decode(pdf);
             fos.write(decoder);
@@ -65,6 +64,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         System.out.println("Using invalid token" + token);
 
+        //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token + 1)
             .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
@@ -72,7 +72,7 @@ public class DownloadMotCertificateAsPdfTest {
             .queryParam("vinNumber", "T12765432")
             .queryParam("testNumber", "W01A00229").
 
-            //send request
+        //send request
         when().//log().all().
             get().
 
