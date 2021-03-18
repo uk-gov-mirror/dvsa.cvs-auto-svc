@@ -2,6 +2,10 @@ package vott;
 
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
+import org.junit.Before;
+import org.junit.Test;
+import java.io.File;
+import java.io.FileOutputStream;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 import net.thucydides.core.annotations.Title;

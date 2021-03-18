@@ -6,13 +6,6 @@ import static io.restassured.RestAssured.given;
 import java.time.Duration;
 import java.time.Instant;
 
-/*
-
-TokenService returns a new JWT token when called.
-It also checks if another token was generated recently.
-Returns new token only if previous token expired.
-
-*/
 
 public class TokenService {
 
@@ -32,15 +25,15 @@ public class TokenService {
 
     private void refreshToken() {
         this.lastRefreshed = Instant.now();
-        this.cachedToken = getTokenPassword();
+        this.cachedToken = getToken();
     }
 
-    public AccessToken getTokenPassword() {
+    public AccessToken getToken() {
 
         RestAssured.baseURI = "https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/token";
 
         String response =
-                given()//.log().all()
+                given()//log().all().
                         .formParam("grant_type", "password")
                         .formParam("userName", "cvs.automation1@dvsagov.onmicrosoft.com")
                         .formParam("password", "*7vU4EWuJPwues_nGKBMaaNYVC3434")
@@ -54,8 +47,7 @@ public class TokenService {
                 //verification
                 then().//log().all().
                         statusCode(200).
-                        extract().response()
-                        .asString();
+                        extract().response().asString();
 
         JsonPath js = new JsonPath(response);
         AccessToken accessToken = new AccessToken();
