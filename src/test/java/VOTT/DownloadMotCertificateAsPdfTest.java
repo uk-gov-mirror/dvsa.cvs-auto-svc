@@ -63,7 +63,7 @@ public class DownloadMotCertificateAsPdfTest {
         //Open downloaded pdf file in system default app
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File("src/test/resources/DownloadedMotTestCertificate/TestCert.pdf");
+                File myFile = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
                 Desktop.getDesktop().open(myFile);
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found" + ex.getMessage());
@@ -142,6 +142,56 @@ public class DownloadMotCertificateAsPdfTest {
         //verification
         then().//log().all().
                 statusCode(400);
+    }
+
+    @Test
+    public void DownloadTestCertificateTestNumberDoesntExist() {
+
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
+
+        System.out.println("Valid access token" + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765432")
+                .queryParam("testNumber", "W01A00222").
+
+        //send request
+        when().//log().all().
+                get().
+
+        //verification
+        then().//log().all().
+                statusCode(404).
+                body(equalTo("NoSuchKey"));
+    }
+
+    @Test
+    public void DownloadTestCertificateVinNumberDoesntExist() {
+
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
+
+        System.out.println("Valid access token" + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156")
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765431")
+                .queryParam("testNumber", "W01A00229").
+
+        //send request
+        when().//log().all().
+                get().
+
+        //verification
+        then().//log().all().
+                statusCode(404).
+                body(equalTo("NoSuchKey"));
     }
 }
 
