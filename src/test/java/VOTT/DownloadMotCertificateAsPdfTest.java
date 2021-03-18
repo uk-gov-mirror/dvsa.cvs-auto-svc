@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,13 +21,14 @@ public class DownloadMotCertificateAsPdfTest {
 
     @Before
     public void Setup() {
+
         this.token = new TokenService().getBearerToken();
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
     }
 
+    @Title("CVSB-19156 - Happy Path for document retrieval API")
     @Test
     public void DownloadTestCertificate() {
-
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
         System.out.println("Valid access token: " + token);
 
@@ -76,8 +78,6 @@ public class DownloadMotCertificateAsPdfTest {
     @Test
     public void DownloadTestCertificateBadJwtToken() {
 
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
-
         System.out.println("Using invalid token: " + token);
 
         //prep request
@@ -101,8 +101,6 @@ public class DownloadMotCertificateAsPdfTest {
     @Test
     public void DownloadTestCertificateNoVinNumber() {
 
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
-
         System.out.println("Valid access token: " + token);
 
         //prep request
@@ -123,8 +121,6 @@ public class DownloadMotCertificateAsPdfTest {
 
     @Test
     public void DownloadTestCertificateNoTestNumber() {
-
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
         System.out.println("Valid access token: " + token);
 
@@ -147,8 +143,6 @@ public class DownloadMotCertificateAsPdfTest {
     @Test
     public void DownloadTestCertificateNoAPIKey() {
 
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
-
         System.out.println("Valid access token " + token);
 
         //prep request
@@ -170,8 +164,6 @@ public class DownloadMotCertificateAsPdfTest {
 
     @Test
     public void DownloadTestCertificateInvalidAPIKey() {
-
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
         System.out.println("Valid access token " + token);
 
@@ -196,8 +188,6 @@ public class DownloadMotCertificateAsPdfTest {
     @Test
     public void DownloadTestCertificateTestNumberDoesntExist() {
 
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
-
         System.out.println("Valid access token: " + token);
 
         //prep request
@@ -220,8 +210,6 @@ public class DownloadMotCertificateAsPdfTest {
 
     @Test
     public void DownloadTestCertificateVinNumberDoesntExist() {
-
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
 
         System.out.println("Valid access token: " + token);
 
