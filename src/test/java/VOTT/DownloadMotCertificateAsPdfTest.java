@@ -17,8 +17,14 @@ import java.util.Base64;
 
 public class DownloadMotCertificateAsPdfTest {
 
+    // Variable + Constant Test Data Setup
     private String token;
     private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156";
+    private final String validVINNumber = "T12765432";
+    private final String validTestNumber = "W01A00229";
+
+    private final String invalidVINNumber = "T12765431";
+    private final String invalidTestNumber = "W01A00222";
 
     @Before
     public void Setup() {
@@ -39,8 +45,8 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765432")
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
             //send request
             when().//log().all().
@@ -86,8 +92,8 @@ public class DownloadMotCertificateAsPdfTest {
             .header("authorization", "Bearer " + token + 1)
             .header("x-api-key", APIKey)
             .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765432")
-            .queryParam("testNumber", "W01A00229").
+            .queryParam("vinNumber", validVINNumber)
+            .queryParam("testNumber", validTestNumber).
 
         //send request
         when().//log().all().
@@ -106,8 +112,8 @@ public class DownloadMotCertificateAsPdfTest {
         given()//.log().all()
                 .header("x-api-key", APIKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765432")
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
                         when().//log().all().
@@ -129,7 +135,7 @@ public class DownloadMotCertificateAsPdfTest {
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
             .header("content-type", "application/pdf")
-            .queryParam("testNumber", "W01A00229").
+            .queryParam("testNumber", validTestNumber).
 
         //send request
         when().//log().all().
@@ -150,7 +156,7 @@ public class DownloadMotCertificateAsPdfTest {
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
             .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765432").
+            .queryParam("vinNumber", validVINNumber).
 
         //send request
         when().//log().all().
@@ -170,8 +176,8 @@ public class DownloadMotCertificateAsPdfTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("content-type", "application/pdf")
-            .queryParam("testNumber", "W01A00229")
-            .queryParam("vinNumber", "T12765432").
+            .queryParam("testNumber", validTestNumber)
+            .queryParam("vinNumber", validVINNumber).
 
         //send request
         when().//log().all().
@@ -193,8 +199,8 @@ public class DownloadMotCertificateAsPdfTest {
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey + "badkey")
             .header("content-type", "application/pdf")
-            .queryParam("testNumber", "W01A00229")
-            .queryParam("vinNumber", "T12765432").
+            .queryParam("testNumber", validTestNumber)
+            .queryParam("vinNumber", validVINNumber).
 
         //send request
         when().//log().all().
@@ -216,8 +222,8 @@ public class DownloadMotCertificateAsPdfTest {
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
             .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765432")
-            .queryParam("testNumber", "W01A00222").
+            .queryParam("vinNumber", validVINNumber)
+            .queryParam("testNumber", invalidTestNumber).
 
         //send request
         when().//log().all().
@@ -227,6 +233,31 @@ public class DownloadMotCertificateAsPdfTest {
         then().//log().all().
             statusCode(404).
             body(equalTo("NoSuchKey"));
+    }
+
+    //todo what is the standard error for when data is provided in the wrong format
+    //todo what are the acceptable formats of VIN and Test numbers
+    @Test
+    public void DownloadTestCertificateNumericTestNumberTest() {
+
+        System.out.println("Using valid token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", "123456789").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body("message", equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
@@ -239,8 +270,8 @@ public class DownloadMotCertificateAsPdfTest {
             .header("authorization", "Bearer " + token)
             .header("x-api-key", APIKey)
             .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765431")
-            .queryParam("testNumber", "W01A00229").
+            .queryParam("vinNumber", invalidVINNumber)
+            .queryParam("testNumber", validTestNumber).
 
         //send request
         when().//log().all().
@@ -252,6 +283,30 @@ public class DownloadMotCertificateAsPdfTest {
             body(equalTo("NoSuchKey"));
 
         //TODO add control chars test i.e. ctrl+c etc.
+    }
+
+    //todo Doesnt return the same status code or message as numeric test number - line 242
+    @Test
+    public void DownloadTestCertificateNumericVINNumberTest() {
+
+        System.out.println("Using valid token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "123456789")
+                .queryParam("testNumber", validTestNumber).
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body("message", equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
@@ -290,8 +345,8 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
                         when().//log().all().
@@ -314,8 +369,8 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
                         when().//log().all().
@@ -337,8 +392,8 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
                         when().//log().all().
@@ -359,8 +414,8 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
                         when().//log().all().
