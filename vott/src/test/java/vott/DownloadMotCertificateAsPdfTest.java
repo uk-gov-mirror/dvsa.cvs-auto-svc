@@ -18,7 +18,7 @@ import java.util.Base64;
 public class DownloadMotCertificateAsPdfTest {
 
     private String token;
-    private String APIKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156";
+    private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156";
 
     @Before
     public void Setup() {
@@ -37,7 +37,7 @@ public class DownloadMotCertificateAsPdfTest {
         byte[] pdf =
             given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
+                .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
                 .queryParam("vinNumber", "T12765432")
                 .queryParam("testNumber", "W01A00229").
@@ -84,7 +84,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token + 1)
-            .header("x-api-key", APIKey)
+            .header("x-api-key", xApiKey)
             .header("content-type", "application/pdf")
             .queryParam("vinNumber", "T12765432")
             .queryParam("testNumber", "W01A00229").
@@ -107,7 +107,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token)
-            .header("x-api-key", APIKey)
+            .header("x-api-key", xApiKey)
             .header("content-type", "application/pdf")
             .queryParam("testNumber", "W01A00229").
 
@@ -128,7 +128,7 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token)
-            .header("x-api-key", APIKey)
+            .header("x-api-key", xApiKey)
             .header("content-type", "application/pdf")
             .queryParam("vinNumber", "T12765432").
 
@@ -233,4 +233,30 @@ public class DownloadMotCertificateAsPdfTest {
                 statusCode(403).
                 body("message", equalTo("Forbidden"));
     }
+
+    @Test
+    public void DownloadTestCertificateVinNumberNonPrintableChars() {
+
+        System.out.println("Valid access token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765431")
+                .queryParam("testNumber", "W01A00229").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(404).
+                body(equalTo("NoSuchKey"));
+
+        //TODO add control chars test i.e. ctrl+c etc.
+    }
+
 }
