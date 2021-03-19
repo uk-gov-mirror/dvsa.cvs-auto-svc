@@ -104,7 +104,7 @@ public class DownloadMotCertificateAsPdfTest {
 
         //prep request
         given()//.log().all()
-                .header("x-api-key", APIKey)
+                .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
                 .queryParam("vinNumber", "T12765432")
                 .queryParam("testNumber", "W01A00229").
@@ -264,11 +264,11 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
+                .queryParam("vinNumber", "T12765431") //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
                 .queryParam("testNumber", "W01A00229").
 
                 //send request
-                        when().//log().all().
+                        when().log().all().
                 get().
 
                 //verification
@@ -280,6 +280,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
+    //todo Ask about error contents -> currently returns 403 with the token contained in the message
     public void CertificateRetrievalPostRequestTest() {
 
         System.out.println("Valid access token " + token);
@@ -287,8 +288,10 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf").
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765431")
+                .queryParam("testNumber", "W01A00229").
 
                 //send request
                         when().//log().all().
@@ -300,6 +303,8 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
+    //Todo verify message contents -> current message returns xml related to invalid bucket name
+    //todo verify status code -> 400 rather than 403
     public void CertificateRetrievalPutRequestTest() {
 
         System.out.println("Valid access token " + token);
@@ -307,15 +312,17 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf").
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765431")
+                .queryParam("testNumber", "W01A00229").
 
                 //send request
                         when().//log().all().
                 put().
                 //verification
                         then().//log().all().
-                statusCode(403).
+                statusCode(400).
                 body("message", equalTo("Forbidden"));
     }
 
@@ -327,8 +334,10 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf").
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765431")
+                .queryParam("testNumber", "W01A00229").
 
                 //send request
                         when().//log().all().
@@ -347,8 +356,10 @@ public class DownloadMotCertificateAsPdfTest {
         //prep request
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
-                .header("x-api-key", APIKey)
-                .header("content-type", "application/pdf").
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765431")
+                .queryParam("testNumber", "W01A00229").
 
                 //send request
                         when().//log().all().
