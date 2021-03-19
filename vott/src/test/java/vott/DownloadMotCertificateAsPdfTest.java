@@ -239,6 +239,31 @@ public class DownloadMotCertificateAsPdfTest {
             body(equalTo("NoSuchKey"));
     }
 
+    //todo what is the standard error for when data is provided in the wrong format
+    //todo what are the acceptable formats of VIN and Test numbers
+    @Test
+    public void DownloadTestCertificateNumericTestNumberTest() {
+
+        System.out.println("Using valid token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", "123456789").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body("message", equalTo("Certificate number is in incorrect format"));
+    }
+
     @Test
     public void DownloadTestCertificateNumericTestNumberTest() {
 
@@ -283,6 +308,30 @@ public class DownloadMotCertificateAsPdfTest {
         then().//log().all().
             statusCode(404).
             body(equalTo("NoSuchKey"));
+    }
+
+    //todo Doesnt return the same status code or message as numeric test number - line 242
+    @Test
+    public void DownloadTestCertificateNumericVINNumberTest() {
+
+        System.out.println("Using valid token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "123456789")
+                .queryParam("testNumber", validTestNumber).
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body("message", equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
