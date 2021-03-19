@@ -29,7 +29,7 @@ public class DownloadMotCertificateAsPdfTest {
 
     @Title("CVSB-19156 - Happy Path for document retrieval API")
     @Test
-    public void DownloadTestCertificate() {
+    public void DownloadTestCertificateTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -77,7 +77,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateBadJwtToken() {
+    public void DownloadTestCertificateBadJwtTokenTest() {
 
         System.out.println("Using invalid token: " + token);
 
@@ -100,7 +100,27 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateNoVinNumber() {
+    public void DownloadTestCertificateNoJwtTokenTest() {
+
+        //prep request
+        given()//.log().all()
+                .header("x-api-key", APIKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", "T12765432")
+                .queryParam("testNumber", "W01A00229").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Missing Authentication Token"));
+    }
+
+    @Test
+    public void DownloadTestCertificateNoVinNumberTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -121,7 +141,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateNoTestNumber() {
+    public void DownloadTestCertificateNoTestNumberTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -142,7 +162,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateNoAPIKey() {
+    public void DownloadTestCertificateNoAPIKeyTest() {
 
         System.out.println("Valid access token " + token);
 
@@ -164,7 +184,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateInvalidAPIKey() {
+    public void DownloadTestCertificateInvalidAPIKeyTest() {
 
         System.out.println("Valid access token " + token);
 
@@ -187,7 +207,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateTestNumberDoesntExist() {
+    public void DownloadTestCertificateTestNumberDoesntExistTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -210,7 +230,7 @@ public class DownloadMotCertificateAsPdfTest {
     }
 
     @Test
-    public void DownloadTestCertificateVinNumberDoesntExist() {
+    public void DownloadTestCertificateVinNumberDoesntExistTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -232,6 +252,86 @@ public class DownloadMotCertificateAsPdfTest {
             body(equalTo("NoSuchKey"));
 
         //TODO add control chars test i.e. ctrl+c etc.
+    }
+
+    @Test
+    public void CertificateRetrievalPostRequestTest() {
+
+        System.out.println("Valid access token " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", APIKey)
+                .header("content-type", "application/pdf").
+
+                //send request
+                        when().//log().all().
+                post().
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
+    }
+
+    @Test
+    public void CertificateRetrievalPutRequestTest() {
+
+        System.out.println("Valid access token " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", APIKey)
+                .header("content-type", "application/pdf").
+
+                //send request
+                        when().//log().all().
+                put().
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
+    }
+
+    @Test
+    public void CertificateRetrievalPatchRequestTest() {
+
+        System.out.println("Valid access token " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", APIKey)
+                .header("content-type", "application/pdf").
+
+                //send request
+                        when().//log().all().
+                patch().
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
+    }
+
+    @Test
+    public void CertificateRetrievalDeleteRequestTest() {
+
+        System.out.println("Valid access token " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", APIKey)
+                .header("content-type", "application/pdf").
+
+                //send request
+                        when().//log().all().
+                delete().
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
     }
 }
 
