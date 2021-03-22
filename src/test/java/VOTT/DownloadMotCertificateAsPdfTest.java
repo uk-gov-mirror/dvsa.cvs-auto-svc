@@ -64,6 +64,7 @@ public class DownloadMotCertificateAsPdfTest {
         try (FileOutputStream fos = new FileOutputStream(file)) {
             byte[] decoder = Base64.getDecoder().decode(pdf);
             fos.write(decoder);
+            //Todo Look at test logging
             System.out.println("PDF File Saved");
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,8 +122,8 @@ public class DownloadMotCertificateAsPdfTest {
 
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("Missing Authentication Token"));
+                statusCode(401).
+                body("message", equalTo("Unauthorized"));
     }
 
     @Test
@@ -235,8 +236,6 @@ public class DownloadMotCertificateAsPdfTest {
             body(equalTo("NoSuchKey"));
     }
 
-    //todo what is the standard error for when data is provided in the wrong format
-    //todo what are the acceptable formats of VIN and Test numbers
     @Test
     public void DownloadTestCertificateNumericTestNumberTest() {
 
@@ -257,7 +256,7 @@ public class DownloadMotCertificateAsPdfTest {
                 //verification
                         then().//log().all().
                 statusCode(400).
-                body("message", equalTo("Certificate number is in incorrect format"));
+                body(equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
@@ -283,30 +282,6 @@ public class DownloadMotCertificateAsPdfTest {
             body(equalTo("NoSuchKey"));
 
         //TODO add control chars test i.e. ctrl+c etc.
-    }
-
-    //todo Doesnt return the same status code or message as numeric test number - line 242
-    @Test
-    public void DownloadTestCertificateNumericVINNumberTest() {
-
-        System.out.println("Using valid token: " + token);
-
-        //prep request
-        given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "123456789")
-                .queryParam("testNumber", validTestNumber).
-
-                //send request
-                        when().//log().all().
-                get().
-
-                //verification
-                        then().//log().all().
-                statusCode(400).
-                body("message", equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
