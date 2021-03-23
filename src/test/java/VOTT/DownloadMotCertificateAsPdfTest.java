@@ -279,12 +279,10 @@ public class DownloadMotCertificateAsPdfTest {
         then().//log().all().
             statusCode(404).
             body(equalTo("NoSuchKey"));
-
-        //TODO add control chars test i.e. ctrl+c etc.
     }
 
     @Test
-    public void DownloadTestCertificateVinNumberNonPrintableChars() {
+    public void DownloadTestCertificateVinNumberSpecialCharsTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -293,8 +291,8 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431") //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", "T12765@!'") //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
                         when().//log().all().
@@ -302,10 +300,31 @@ public class DownloadMotCertificateAsPdfTest {
 
                 //verification
                         then().//log().all().
-                statusCode(404).
-                body(equalTo("NoSuchKey"));
+                statusCode(400).
+                body(equalTo("VIN not supplied"));
+    }
 
-        //TODO add control chars test i.e. ctrl+c etc.
+    @Test
+    public void DownloadTestCertificateTestNumberSpecialCharsTest() {
+
+        System.out.println("Valid access token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber) //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
+                .queryParam("testNumber", "123Abc@!/").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body(equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
@@ -395,6 +414,56 @@ public class DownloadMotCertificateAsPdfTest {
                 statusCode(403).
                 body("message", equalTo("'"+ token + "' not a valid key=value pair (missing equal-sign) in Authorization header: 'Bearer " + token + "'.")); //todo change message assert, returned by authoriser it's not getting to lambda
     }
+
+    public void DownloadTestCertificateClientCredsTest() {
+
+        this.token = new TokenService().getTokenClientCredentials();
+
+        System.out.println("Valid access token: " + token);
+
+        //Retrieve and save test certificate (pdf) as byteArray
+        byte[] pdf =
+                given()//.log().all()
+                        .header("authorization", "Bearer " + token)
+                        .header("x-api-key", xApiKey)
+                        .header("content-type", "application/pdf")
+                        .queryParam("vinNumber", validVINNumber)
+                        .queryParam("testNumber", validTestNumber).
+
+                        //send request
+                                when().//log().all().
+                        get().
+
+                        //verification
+                                then().//log().all().
+                        statusCode(200).
+                        extract().response().asByteArray();
+
+        //Save file in resources folder
+        File file = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
+
+        //Decode downloaded pdf
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            byte[] decoder = Base64.getDecoder().decode(pdf);
+            fos.write(decoder);
+            System.out.println("PDF File Saved");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Open downloaded pdf file in system default pdf viewer
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (FileNotFoundException ex) {
+                System.out.println("File not found" + ex.getMessage());
+            } catch (IOException ex) {
+                System.out.println("No application registered for PDFs" + ex.getMessage());
+            }
+        }
+    }
+
 }
 
 
