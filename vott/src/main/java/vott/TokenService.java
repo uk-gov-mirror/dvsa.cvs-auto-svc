@@ -32,10 +32,10 @@ public class TokenService {
 
     private void refreshToken() {
         this.lastRefreshed = Instant.now();
-        this.cachedToken = getToken();
+        this.cachedToken = getTokenPassword();
     }
 
-    public AccessToken getToken() {
+    public AccessToken getTokenPassword() {
 
         RestAssured.baseURI = "https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/token";
 
@@ -54,7 +54,8 @@ public class TokenService {
                 //verification
                 then().//log().all().
                         statusCode(200).
-                        extract().response().asString();
+                        extract().response()
+                        .asString();
 
         JsonPath js = new JsonPath(response);
         AccessToken accessToken = new AccessToken();
