@@ -280,13 +280,10 @@ public class DownloadMotCertificateAsPdfTest {
         then().//log().all().
             statusCode(404).
             body(equalTo("NoSuchKey"));
-
-        //TODO add control chars test i.e. ctrl+c etc.
     }
 
     @Test
-    //todo To be picked up by Emanuel
-    public void DownloadTestCertificateVinNumberNonPrintableChars() {
+    public void DownloadTestCertificateVinNumberSpecialCharsTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -295,23 +292,44 @@ public class DownloadMotCertificateAsPdfTest {
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
                 .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431") //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
-                .queryParam("testNumber", "W01A00229").
+                .queryParam("vinNumber", "T12765@!'") //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
+                .queryParam("testNumber", validTestNumber).
 
                 //send request
-                        when().log().all().
+                        when().//log().all().
                 get().
 
                 //verification
                         then().//log().all().
-                statusCode(404).
-                body(equalTo("NoSuchKey"));
-
-        //TODO add control chars test i.e. ctrl+c etc.
+                statusCode(400).
+                body(equalTo("VIN not supplied"));
     }
 
     @Test
-    public void CertificateRetrievalPostRequestTest() {
+    public void DownloadTestCertificateTestNumberSpecialCharsTest() {
+
+        System.out.println("Valid access token: " + token);
+
+        //prep request
+        given()//.log().all()
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber) //https://www.oreilly.com/library/view/java-cookbook/0596001703/ch03s12.html
+                .queryParam("testNumber", "123Abc@!/").
+
+                //send request
+                        when().//log().all().
+                get().
+
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body(equalTo("Certificate number is in incorrect format"));
+    }
+
+    @Test
+    public void DownloadTestCertificatePostRequestTest() {
 
         System.out.println("Valid access token " + token);
 

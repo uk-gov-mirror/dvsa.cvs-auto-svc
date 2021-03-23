@@ -32,10 +32,10 @@ public class TokenService {
 
     private void refreshToken() {
         this.lastRefreshed = Instant.now();
-        this.cachedToken = getToken();
+        this.cachedToken = getTokenPassword();
     }
 
-    public AccessToken getToken() {
+    public AccessToken getTokenPassword() {
 
         RestAssured.baseURI = "https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/token";
 
@@ -54,12 +54,38 @@ public class TokenService {
                 //verification
                 then().//log().all().
                         statusCode(200).
-                        extract().response().asString();
+                        extract().response()
+                        .asString();
 
         JsonPath js = new JsonPath(response);
         AccessToken accessToken = new AccessToken();
         accessToken.setAccessToken(js.get("access_token"));
         accessToken.setExpiresIn(Duration.ofSeconds(Long.parseLong(js.get("expires_in"))));
+        return accessToken;
+    }
+
+    public String getTokenClientCredentials() {
+
+        RestAssured.baseURI = "https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/v2.0/token";
+
+        String response =
+                given()//.log().all()
+                        .formParam("grant_type", "client_credentials")
+                        .formParam("scope", "https://dev.vta.dvsatest-cloud.uk/.default")
+                        .formParam("client_secret", "eU9QK2.WixG5Io-17-~Pv_RJ3cZkCm_kke")
+                        .formParam("client_id", "8b897993-7cb9-48f2-a66f-5cb6092d2d80").
+
+                        //send request
+                                when().
+                        post().
+
+                        //verification
+                                then().//log().all().
+                        statusCode(200).
+                        extract().response().asString();
+
+        JsonPath js = new JsonPath(response);
+        String accessToken = js.get("access_token");
         return accessToken;
     }
 }
