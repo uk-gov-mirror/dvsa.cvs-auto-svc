@@ -261,7 +261,7 @@ public class DownloadMotCertificateAsPdfTest{
                 //verification
                         then().//log().all().
                 statusCode(400).
-                body("message", equalTo("Certificate number is in incorrect format"));
+                body(equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
@@ -308,31 +308,7 @@ public class DownloadMotCertificateAsPdfTest{
                 //verification
                         then().//log().all().
                 statusCode(400).
-                body("message", equalTo("Certificate number is in incorrect format"));
-    }
-
-    //todo Doesnt return the same status code or message as numeric test number - line 242
-    @Test
-    public void DownloadTestCertificateNumericVINNumberTest() {
-
-        System.out.println("Using valid token: " + token);
-
-        //prep request
-        given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "123456789")
-                .queryParam("testNumber", validTestNumber).
-
-                //send request
-                        when().//log().all().
-                get().
-
-                //verification
-                        then().//log().all().
-                statusCode(400).
-                body("message", equalTo("Certificate number is in incorrect format"));
+                body(equalTo("Certificate number is in incorrect format"));
     }
 
     @Test

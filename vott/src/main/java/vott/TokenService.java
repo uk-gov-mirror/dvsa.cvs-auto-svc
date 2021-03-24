@@ -6,17 +6,6 @@ import static io.restassured.RestAssured.given;
 import java.time.Duration;
 import java.time.Instant;
 
-<<<<<<< HEAD
-/*
-
-TokenService returns a new JWT token when called.
-It also checks if another token was generated recently.
-Returns new token only if previous token expired.
-
-*/
-=======
->>>>>>> a3bb426 (Adding initial test cert retrieval tests)
-
 public class TokenService {
 
     private Instant lastRefreshed;
