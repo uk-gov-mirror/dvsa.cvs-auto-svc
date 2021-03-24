@@ -19,7 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 
-public class DownloadMotCertificateAsPdfTest {
+public class DownloadMotCertificateAsPdfTest{
 
     // Variable + Constant Test Data Setup
     private String token;
@@ -262,29 +262,6 @@ public class DownloadMotCertificateAsPdfTest {
                         then().//log().all().
                 statusCode(400).
                 body("message", equalTo("Certificate number is in incorrect format"));
-    }
-
-    @Test
-    public void DownloadTestCertificateNumericTestNumberTest() {
-
-        System.out.println("Using valid token: " + token);
-
-        //prep request
-        given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", validVINNumber)
-                .queryParam("testNumber", "123456789").
-
-                //send request
-                        when().//log().all().
-                get().
-
-                //verification
-                        then().//log().all().
-                statusCode(400).
-                body(equalTo("Certificate number is in incorrect format"));
     }
 
     @Test
