@@ -1,13 +1,6 @@
 package vott;
 
 import io.restassured.RestAssured;
-import static io.restassured.RestAssured.given;
-import org.junit.Before;
-import org.junit.Test;
-import java.io.File;
-import java.io.FileOutputStream;
-import static org.hamcrest.CoreMatchers.equalTo;
-
 import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +11,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class DownloadMotCertificateAsPdfTest{
 

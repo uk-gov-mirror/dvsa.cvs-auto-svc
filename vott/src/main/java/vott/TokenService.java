@@ -50,8 +50,7 @@ public class TokenService {
                 //verification
                 then().//log().all().
                         statusCode(200).
-                        extract().response()
-                        .asString();
+                        extract().response().asString();
 
         JsonPath js = new JsonPath(response);
         AccessToken accessToken = new AccessToken();
