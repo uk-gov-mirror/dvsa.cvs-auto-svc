@@ -261,7 +261,7 @@ public class DownloadMotCertificateAsPdfTest{
                 //verification
                         then().//log().all().
                 statusCode(400).
-                body(equalTo("Certificate number is in incorrect format"));
+                body(equalTo("Test number is in incorrect format"));
     }
 
     @Test
@@ -307,8 +307,8 @@ public class DownloadMotCertificateAsPdfTest{
 
                 //verification
                         then().//log().all().
-                statusCode(400).
-                body(equalTo("Certificate number is in incorrect format"));
+                statusCode(404).
+                body(equalTo("NoSuchKey"));
     }
 
     @Test
@@ -331,7 +331,7 @@ public class DownloadMotCertificateAsPdfTest{
                 //verification
                         then().//log().all().
                 statusCode(400).
-                body(equalTo("VIN not supplied"));
+                body(equalTo("VIN is in incorrect format"));
     }
 
     @Test
@@ -354,7 +354,7 @@ public class DownloadMotCertificateAsPdfTest{
                 //verification
                         then().//log().all().
                 statusCode(400).
-                body(equalTo("Certificate number is in incorrect format"));
+                body(equalTo("Test number is in incorrect format"));
     }
 
     @Test
@@ -404,7 +404,7 @@ public class DownloadMotCertificateAsPdfTest{
     @Test
     public void DownloadTestCertificatePatchRequestTest() {
 
-        System.out.println("Valid access token " + token);
+        System.out.println("Valid access token: " + token);
 
         //prep request
         given()//.log().all()
