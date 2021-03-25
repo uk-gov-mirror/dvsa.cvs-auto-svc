@@ -1,13 +1,6 @@
 package vott;
 
 import io.restassured.RestAssured;
-import static io.restassured.RestAssured.given;
-import org.junit.Before;
-import org.junit.Test;
-import java.io.File;
-import java.io.FileOutputStream;
-import static org.hamcrest.CoreMatchers.equalTo;
-
 import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +12,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 
-public class DownloadMotCertificateAsPdfTest{
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+
+public class DownloadMotCertificateClientCredentials {
 
     // Variable + Constant Test Data Setup
     private String token;
@@ -33,7 +29,7 @@ public class DownloadMotCertificateAsPdfTest{
     @Before
     public void Setup() {
 
-        this.token = new TokenService().getBearerToken("password");
+        this.token = new TokenService().getBearerToken("client_credentials");
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
     }
 
@@ -45,21 +41,21 @@ public class DownloadMotCertificateAsPdfTest{
 
         //Retrieve and save test certificate (pdf) as byteArray
         byte[] pdf =
-            given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", validVINNumber)
-                .queryParam("testNumber", validTestNumber).
+                given()//.log().all()
+                        .header("authorization", "Bearer " + token)
+                        .header("x-api-key", xApiKey)
+                        .header("content-type", "application/pdf")
+                        .queryParam("vinNumber", validVINNumber)
+                        .queryParam("testNumber", validTestNumber).
 
-            //send request
-            when().//log().all().
-                get().
+                        //send request
+                                when().//log().all().
+                        get().
 
-            //verification
-            then().//log().all().
-                statusCode(200).
-                extract().response().asByteArray();
+                        //verification
+                                then().//log().all().
+                        statusCode(200).
+                        extract().response().asByteArray();
 
         //Save file in resources folder
         File file = new File("src/test/resources/DownloadedMotTestCertificates/TestCert.pdf");
@@ -93,20 +89,20 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token + 1)
-            .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", validVINNumber)
-            .queryParam("testNumber", validTestNumber).
+                .header("authorization", "Bearer " + token + 1)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(403).
-            body("message", equalTo("User is not authorized to access this resource with an explicit deny"));
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("User is not authorized to access this resource with an explicit deny"));
     }
 
     @Test
@@ -136,18 +132,18 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("testNumber", validTestNumber).
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("testNumber", validTestNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(400);
+                //verification
+                        then().//log().all().
+                statusCode(400);
     }
 
     @Test
@@ -157,18 +153,18 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", validVINNumber).
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(400);
+                //verification
+                        then().//log().all().
+                statusCode(400);
     }
 
     @Test
@@ -178,19 +174,19 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("content-type", "application/pdf")
-            .queryParam("testNumber", validTestNumber)
-            .queryParam("vinNumber", validVINNumber).
+                .header("authorization", "Bearer " + token)
+                .header("content-type", "application/pdf")
+                .queryParam("testNumber", validTestNumber)
+                .queryParam("vinNumber", validVINNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(403).
-            body("message", equalTo("Forbidden"));
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
     }
 
     @Test
@@ -200,20 +196,20 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("x-api-key", xApiKey + "badkey")
-            .header("content-type", "application/pdf")
-            .queryParam("testNumber", validTestNumber)
-            .queryParam("vinNumber", validVINNumber).
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey + "badkey")
+                .header("content-type", "application/pdf")
+                .queryParam("testNumber", validTestNumber)
+                .queryParam("vinNumber", validVINNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-            then().//log().all().
-            statusCode(403).
-            body("message", equalTo("Forbidden"));
+                //verification
+                        then().//log().all().
+                statusCode(403).
+                body("message", equalTo("Forbidden"));
     }
 
     @Test
@@ -223,20 +219,20 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", validVINNumber)
-            .queryParam("testNumber", invalidTestNumber).
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("testNumber", invalidTestNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(404).
-            body(equalTo("NoSuchKey"));
+                //verification
+                        then().//log().all().
+                statusCode(404).
+                body(equalTo("NoSuchKey"));
     }
 
     //todo what is the standard error for when data is provided in the wrong format
@@ -271,20 +267,20 @@ public class DownloadMotCertificateAsPdfTest{
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", invalidVINNumber)
-            .queryParam("testNumber", validTestNumber).
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/pdf")
+                .queryParam("vinNumber", invalidVINNumber)
+                .queryParam("testNumber", validTestNumber).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(404).
-            body(equalTo("NoSuchKey"));
+                //verification
+                        then().//log().all().
+                statusCode(404).
+                body(equalTo("NoSuchKey"));
     }
 
     //todo Doesnt return the same status code or message as numeric test number - line 242
@@ -444,7 +440,4 @@ public class DownloadMotCertificateAsPdfTest{
                 statusCode(403).
                 body("message", equalTo("'"+ token + "' not a valid key=value pair (missing equal-sign) in Authorization header: 'Bearer " + token + "'.")); //todo change message assert, returned by authoriser it's not getting to lambda
     }
-
 }
-
-

@@ -11,9 +11,9 @@ public class TokenService {
     private Instant lastRefreshed;
     private AccessToken cachedToken;
 
-    public String getBearerToken() {
+    public String getBearerToken(String accessType) {
         if (lastRefreshed == null || tokenHasExpired()) {
-            refreshToken();
+            refreshToken(accessType);
         }
         return cachedToken.getAccessToken();
     }
@@ -22,9 +22,13 @@ public class TokenService {
         return Instant.now().isAfter(lastRefreshed.plus(cachedToken.getExpiresIn()));
     }
 
-    private void refreshToken() {
+    private void refreshToken(String accessType) {
         this.lastRefreshed = Instant.now();
-        this.cachedToken = getTokenPassword();
+        if (accessType == "password"){
+            this.cachedToken = getTokenPassword();
+        } else {
+            this.cachedToken = getTokenClientCredentials();
+        }
     }
 
     public AccessToken getTokenPassword() {
@@ -56,7 +60,7 @@ public class TokenService {
         return accessToken;
     }
 
-    public String getTokenClientCredentials() {
+    public AccessToken getTokenClientCredentials() {
 
         RestAssured.baseURI = "https://login.microsoftonline.com/6c448d90-4ca1-4caf-ab59-0a2aa67d7801/oauth2/v2.0/token";
 
@@ -77,8 +81,9 @@ public class TokenService {
                         extract().response().asString();
 
         JsonPath js = new JsonPath(response);
-        String accessToken = js.get("access_token");
-//        accessToken.setExpiresIn(Duration.ofSeconds(Long.parseLong(js.get("expires_in"))));
+        AccessToken accessToken = new AccessToken();
+        accessToken.setAccessToken(js.get("access_token"));
+        //accessToken.setExpiresIn(Duration.ofSeconds(Long.parseLong(js.get("expires_in"))));
         return accessToken;
     }
 }
