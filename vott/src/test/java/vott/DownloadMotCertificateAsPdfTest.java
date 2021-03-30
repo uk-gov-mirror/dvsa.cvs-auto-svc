@@ -371,8 +371,7 @@ public class DownloadMotCertificateAsPdfTest{
                 post().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("'"+ token + "' not a valid key=value pair (missing equal-sign) in Authorization header: 'Bearer " + token + "'.")); //todo change message assert, returned by authoriser it's not getting to lambda
+                statusCode(405);
     }
 
     @Test
@@ -393,8 +392,7 @@ public class DownloadMotCertificateAsPdfTest{
                 put().
                 //verification
                         then().//log().all().
-                statusCode(400).
-                body("message", equalTo("Forbidden")); //todo check why and where this xml message comes from as it is not from cert retrieval lambda
+                statusCode(405);
     }
 
     @Test
@@ -415,8 +413,7 @@ public class DownloadMotCertificateAsPdfTest{
                 patch().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("'"+ token + "' not a valid key=value pair (missing equal-sign) in Authorization header: 'Bearer " + token + "'.")); //todo change message assert, returned by authorizer it's not getting to lambda
+                statusCode(405);
     }
 
     @Test
@@ -437,8 +434,7 @@ public class DownloadMotCertificateAsPdfTest{
                 delete().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("'"+ token + "' not a valid key=value pair (missing equal-sign) in Authorization header: 'Bearer " + token + "'.")); //todo change message assert, returned by authoriser it's not getting to lambda
+                statusCode(405);
     }
 
 }
