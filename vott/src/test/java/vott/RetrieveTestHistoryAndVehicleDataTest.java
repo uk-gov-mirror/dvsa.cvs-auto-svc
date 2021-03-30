@@ -17,14 +17,20 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class RetrieveTestHistoryAndVehicleDataTest {
 
+    // Variable + Constant Test Data Setup
     private String token;
-    private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19222";
+    private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156";
+    private final String validVINNumber = "T12765432";
+    private final String validTestNumber = "W01A00229";
+
+    private final String invalidVINNumber = "T12765431";
+    private final String invalidTestNumber = "W01A00222";
 
     @Before
     public void Setup() {
 
-        this.token = new TokenService().getBearerToken();
-        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19222/v1/enquiry/vehicle";
+        this.token = new TokenService().getBearerToken("password");
+        RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
     }
 
     @Title("CVSB-19222 - Happy Path for vehicle data and test history retrieval")
