@@ -371,7 +371,8 @@ public class DownloadMotCertificateClientCredentials {
                 post().
                 //verification
                         then().//log().all().
-                statusCode(405);
+                statusCode(403).
+                body("message", equalTo("User is not authorized to access this resource"));
     }
 
     @Test
@@ -392,7 +393,8 @@ public class DownloadMotCertificateClientCredentials {
                 put().
                 //verification
                         then().//log().all().
-                statusCode(405);
+                statusCode(403).
+                body("message", equalTo("User is not authorized to access this resource"));
     }
 
     @Test
@@ -413,7 +415,8 @@ public class DownloadMotCertificateClientCredentials {
                 patch().
                 //verification
                         then().//log().all().
-                statusCode(405);
+                statusCode(403).
+                body("message", equalTo("User is not authorized to access this resource"));
     }
 
     @Test
@@ -434,6 +437,7 @@ public class DownloadMotCertificateClientCredentials {
                 delete().
                 //verification
                         then().//log().all().
-                statusCode(405);
+                statusCode(403).
+                body("message", equalTo("User is not authorized to access this resource"));
     }
 }
