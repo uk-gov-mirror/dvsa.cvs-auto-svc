@@ -5,17 +5,10 @@ import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Base64;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class RetrieveTestHistoryAndVehicleDataTest {
+public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
 
     // Variable + Constant Test Data Setup
     private String token;
@@ -29,7 +22,7 @@ public class RetrieveTestHistoryAndVehicleDataTest {
     @Before
     public void Setup() {
 
-        this.token = new TokenService().getBearerToken("password");
+        this.token = new TokenService().getBearerToken("client_credentials");
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19222/v1/enquiry/vehicle";
     }
 
