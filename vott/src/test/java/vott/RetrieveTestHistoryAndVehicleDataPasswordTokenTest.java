@@ -1,58 +1,90 @@
 package vott;
 
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Base64;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-public class RetrieveTestHistoryAndVehicleDataTest {
+public class RetrieveTestHistoryAndVehicleDataPasswordTokenTest {
 
     // Variable + Constant Test Data Setup
     private String token;
-    private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19156";
+    private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19222";
     private final String validVINNumber = "T12765432";
-    private final String validTestNumber = "W01A00229";
+    private final String validVehicleRegMark = "W01A00229";
 
     private final String invalidVINNumber = "T12765431";
-    private final String invalidTestNumber = "W01A00222";
+    private final String invalidVehicleRegMark = "W01A00222";
 
     @Before
     public void Setup() {
 
         this.token = new TokenService().getBearerToken("password");
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19222/v1/enquiry/vehicle";
+
+
     }
 
-    @Title("CVSB-19222 - Happy Path for vehicle data and test history retrieval")
+    @Title("CVSB-19222 - Happy Path for vehicle data and test history retrieval using valid Vin Number")
     @Test
-    public void RetrieveVehicleDataAndTestHistoryTest() {
+    public void RetrieveVehicleDataAndTestHistoryUsingVinTest() {
 
         System.out.println("Valid access token: " + token);
 
-        given()//.log().all()
-                .header("authorization", "Bearer " + token)
-                .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765432")
-                .queryParam("VehicleRegMark", "AB15XYZ").
+        String response =
+                given()//.log().all()
+                        .header("authorization", "Bearer " + token)
+                        .header("x-api-key", xApiKey)
+                        .header("content-type", "application/json")
+                        .queryParam("vinNumber", validVINNumber).
 
                 //send request
-                        when().//log().all().
-                get().
+                when().//log().all().
+                        get().
 
                 //verification
-                        then().//log().all().
-                statusCode(200);
+                then().//log().all().
+                        statusCode(200).
+                        extract().response().asString();
+
+        System.out.println(response);
+
+        JsonPath js = new JsonPath(response);
+        String vinReturnedInApiResponse = js.getString("Vehicle.vin");
+        System.out.println(vinReturnedInApiResponse);
+    }
+
+    @Title("CVSB-19222 - Happy Path for vehicle data and test history retrieval using valid Vrm")
+    @Test
+    public void RetrieveVehicleDataAndTestHistoryUsingVrmTest() {
+
+        System.out.println("Valid access token: " + token);
+
+        String response =
+                given()//.log().all()
+                        .header("authorization", "Bearer " + token)
+                        .header("x-api-key", xApiKey)
+                        .header("content-type", "application/json")
+                        .queryParam("VehicleRegMark", validVehicleRegMark).
+
+                //send request
+                when().//log().all().
+                        get().
+
+                //verification
+                then().//log().all().
+                        statusCode(200).
+                        extract().response().asString();
+
+        System.out.println(response);
+
+        JsonPath js = new JsonPath(response);
+        String vinReturnedInApiResponse = js.getString("Vehicle.vrm_trm");
+        System.out.println(vinReturnedInApiResponse);
     }
 
     @Test
@@ -64,9 +96,8 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token + 1)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765432")
-            .queryParam("VehicleRegMark", "AB15XYZ").
+            .header("content-type", "application/json")
+            .queryParam("VehicleRegMark", validVehicleRegMark).
 
         //send request
         when().//log().all().
@@ -79,7 +110,7 @@ public class RetrieveTestHistoryAndVehicleDataTest {
     }
 
     @Test
-    public void RetrieveVehicleDataAndTestHistoryNoVinNumberTest() {
+    public void RetrieveVehicleDataAndTestHistoryNoParamsTest() {
 
         System.out.println("Valid access token: " + token);
 
@@ -87,8 +118,7 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("VehicleRegMark", "AB15XYZ").
+            .header("content-type", "application/json").
 
         //send request
         when().//log().all().
@@ -100,24 +130,26 @@ public class RetrieveTestHistoryAndVehicleDataTest {
     }
 
     @Test
-    public void RetrieveVehicleDataAndTestHistoryNoVehicleRegMarkTest() {
+    public void RetrieveVehicleDataAndTestHistoryBothVinAndVrmTest() {
 
         System.out.println("Valid access token: " + token);
 
         //prep request
         given()//.log().all()
-            .header("authorization", "Bearer " + token)
-            .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765432").
+                .header("authorization", "Bearer " + token)
+                .header("x-api-key", xApiKey)
+                .header("content-type", "application/json")
+                .queryParam("vinNumber", validVINNumber)
+                .queryParam("VehicleRegMark", validVehicleRegMark).
 
-        //send request
-        when().//log().all().
-            get().
+                //send request
+                        when().//log().all().
+                get().
 
-        //verification
-        then().//log().all().
-            statusCode(400);
+                //verification
+                        then().//log().all().
+                statusCode(400).
+                body(equalTo("Too many parameters defined"));
     }
 
     @Test
@@ -128,9 +160,8 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token)
-            .header("content-type", "application/pdf")
-            .queryParam("VehicleRegMark", "AB15XYZ")
-            .queryParam("vinNumber", "T12765432").
+            .header("content-type", "application/json")
+            .queryParam("vinNumber", validVINNumber).
 
         //send request
         when().//log().all().
@@ -151,9 +182,8 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey + "badkey")
-            .header("content-type", "application/pdf")
-            .queryParam("VehicleRegMark", "AB15XYZ")
-            .queryParam("vinNumber", "T12765432").
+            .header("content-type", "application/json")
+            .queryParam("VehicleRegMark", "AB15XYZ").
 
         //send request
         when().//log().all().
@@ -174,9 +204,8 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765432")
-            .queryParam("VehicleRegMark", "AB15XYZ").
+            .header("content-type", "application/json")
+            .queryParam("VehicleRegMark", "AB15XYZ"). //todo send a vrm that doesn't exist in DB
 
         //send request
         when().//log().all().
@@ -197,9 +226,8 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
-            .queryParam("vinNumber", "T12765431")
-            .queryParam("VehicleRegMark", "AB15XYZ").
+            .header("content-type", "application/json")
+            .queryParam("vinNumber", invalidVINNumber). //todo send a vin that doesn't exist in DB
 
         //send request
         when().//log().all().
@@ -222,9 +250,8 @@ public class RetrieveTestHistoryAndVehicleDataTest {
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
-                .queryParam("vinNumber", "T12765431")
-                .queryParam("testNumber", "W01A00229").
+                .header("content-type", "application/json")
+                .queryParam("testNumber", validVehicleRegMark).
 
                 //send request
                         when().//log().all().
