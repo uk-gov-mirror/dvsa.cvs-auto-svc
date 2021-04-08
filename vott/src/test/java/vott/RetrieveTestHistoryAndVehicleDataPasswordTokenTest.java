@@ -6,8 +6,13 @@ import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
+import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
 
 public class RetrieveTestHistoryAndVehicleDataPasswordTokenTest {
 
@@ -15,17 +20,17 @@ public class RetrieveTestHistoryAndVehicleDataPasswordTokenTest {
     private String token;
     private final String xApiKey = "YTRasdsadADSDEQ01asdasdasbd67845FDGGDGvww-cvsb-19222";
     private final String validVINNumber = "T12765432";
-    private final String validVehicleRegMark = "W01A00229";
+    private final String validVehicleRegMark = "AB15XYZ";
 
     private final String invalidVINNumber = "T12765431";
-    private final String invalidVehicleRegMark = "W01A00222";
+    private final String invalidVehicleRegMark = "W01A00229";
 
     @Before
     public void Setup() {
 
         this.token = new TokenService().getBearerToken("password");
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19222/v1/enquiry/vehicle";
-
+        //we insert data here into db (Rob)
 
     }
 
@@ -54,8 +59,21 @@ public class RetrieveTestHistoryAndVehicleDataPasswordTokenTest {
         System.out.println(response);
 
         JsonPath js = new JsonPath(response);
-        String vinReturnedInApiResponse = js.getString("Vehicle.vin");
-        System.out.println(vinReturnedInApiResponse);
+        String idReturnedInApiResponse = js.getString("id");
+        String systemNumberReturnedInApiResponse = js.getString("system_number");
+        String vinReturnedInApiResponse = js.getString("vin");
+        String vrmTrmReturnedInApiResponse = js.getString("vrm_trm");
+        String trailerIdReturnedInApiResponse = js.getString("trailer_id");
+        String createdAtReturnedInApiResponse = js.getString("createdAt");
+
+        assertThat(vinReturnedInApiResponse).isEqualTo(validVINNumber);
+        System.out.println("ID returned in API response is: " + idReturnedInApiResponse);
+        System.out.println("System Number in API response is: " + systemNumberReturnedInApiResponse);
+        System.out.println("Vin number sent: " + validVINNumber + ". Returned vin in API response is: " + vinReturnedInApiResponse);
+        System.out.println("VRM TRM in API response is: " + vrmTrmReturnedInApiResponse);
+        System.out.println("Trailer ID in API response is: " + trailerIdReturnedInApiResponse);
+        System.out.println("Created at: " + createdAtReturnedInApiResponse);
+
     }
 
     @Title("CVSB-19222 - Happy Path for vehicle data and test history retrieval using valid Vrm")
@@ -76,15 +94,15 @@ public class RetrieveTestHistoryAndVehicleDataPasswordTokenTest {
                         get().
 
                 //verification
-                then().//log().all().
-                        statusCode(200).
+                then().log().all().
+                        statusCode(200).//time(lessThan(100L)).
                         extract().response().asString();
 
         System.out.println(response);
 
-        JsonPath js = new JsonPath(response);
-        String vinReturnedInApiResponse = js.getString("Vehicle.vrm_trm");
-        System.out.println(vinReturnedInApiResponse);
+        JsonPath js2 = new JsonPath(response);
+        String vrmTrmReturnedInApiResponse = js2.getString("vrm_trm");
+        System.out.println(vrmTrmReturnedInApiResponse);
     }
 
     @Test
@@ -126,7 +144,8 @@ public class RetrieveTestHistoryAndVehicleDataPasswordTokenTest {
 
         //verification
         then().//log().all().
-            statusCode(400);
+            statusCode(400).
+            body(equalTo("No parameter defined"));
     }
 
     @Test
