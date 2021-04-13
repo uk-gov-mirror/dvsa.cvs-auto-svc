@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package vott.model;
+package vott.dto;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;

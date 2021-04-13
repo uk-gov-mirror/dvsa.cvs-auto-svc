@@ -7,8 +7,8 @@ import io.restassured.path.json.JsonPath;
 import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
-import vott.model.TechnicalRecord;
-import vott.model.Vehicle;
+import vott.dto.TechnicalRecord;
+import vott.dto.Vehicle;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
