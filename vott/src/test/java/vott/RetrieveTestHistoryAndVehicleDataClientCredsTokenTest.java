@@ -22,7 +22,8 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
     @Before
     public void Setup() {
 
-        this.token = new TokenService().getBearerToken("client_credentials");
+        this.token = new TokenService(OAuthVersion.V2, GrantType.CLIENT_CREDENTIALS).getBearerToken();
+        //this.token = new TokenService().getBearerToken("client_credentials");
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19222/v1/enquiry/vehicle";
     }
 
@@ -35,7 +36,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
+                .header("content-type", "application/json")
                 .queryParam("vinNumber", "T12765432")
                 .queryParam("VehicleRegMark", "AB15XYZ").
 
@@ -57,7 +58,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token + 1)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("vinNumber", "T12765432")
             .queryParam("VehicleRegMark", "AB15XYZ").
 
@@ -80,7 +81,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("VehicleRegMark", "AB15XYZ").
 
         //send request
@@ -101,7 +102,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("vinNumber", "T12765432").
 
         //send request
@@ -121,7 +122,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         //prep request
         given()//.log().all()
             .header("authorization", "Bearer " + token)
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("VehicleRegMark", "AB15XYZ")
             .queryParam("vinNumber", "T12765432").
 
@@ -144,7 +145,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey + "badkey")
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("VehicleRegMark", "AB15XYZ")
             .queryParam("vinNumber", "T12765432").
 
@@ -167,7 +168,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("vinNumber", "T12765432")
             .queryParam("VehicleRegMark", "AB15XYZ").
 
@@ -190,7 +191,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
             .header("authorization", "Bearer " + token)
             .header("x-api-key", xApiKey)
-            .header("content-type", "application/pdf")
+            .header("content-type", "application/json")
             .queryParam("vinNumber", "T12765431")
             .queryParam("VehicleRegMark", "AB15XYZ").
 
@@ -215,7 +216,7 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
         given()//.log().all()
                 .header("authorization", "Bearer " + token)
                 .header("x-api-key", xApiKey)
-                .header("content-type", "application/pdf")
+                .header("content-type", "application/json")
                 .queryParam("vinNumber", "T12765431")
                 .queryParam("testNumber", "W01A00229").
 
