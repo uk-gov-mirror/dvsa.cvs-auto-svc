@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-package vott.model;
+package vott.dto;
 
 import java.util.ArrayList;
 import java.util.Objects;
