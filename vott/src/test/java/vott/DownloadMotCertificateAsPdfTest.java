@@ -29,7 +29,9 @@ public class DownloadMotCertificateAsPdfTest{
     @Before
     public void Setup() {
 
-        this.token = new TokenService().getBearerToken("password");
+//        this.token = new TokenService().getBearerToken("password");
+        this.token = new TokenService(OAuthVersion.V1, GrantType.IMPLICIT).getBearerToken();
+
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
     }
 
