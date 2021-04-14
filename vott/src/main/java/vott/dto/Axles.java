@@ -71,7 +71,7 @@ public class Axles {
   private BigDecimal leverLength = null;
 
   @SerializedName("springBrakeParking")
-  private Integer springBrakeParking = null;
+  private Boolean springBrakeParking = null;
 
   @SerializedName("tyres")
   private List<Tyre> tyres = null;
@@ -346,7 +346,7 @@ public class Axles {
     this.leverLength = leverLength;
   }
 
-  public Axles springBrakeParking(Integer springBrakeParking) {
+  public Axles springBrakeParking(Boolean springBrakeParking) {
     this.springBrakeParking = springBrakeParking;
     return this;
   }
@@ -355,11 +355,11 @@ public class Axles {
    * UNK
    * @return springBrakeParking
   **/
-    public Integer isSpringBrakeParking() {
+    public Boolean isSpringBrakeParking() {
     return springBrakeParking;
   }
 
-  public void setSpringBrakeParking(Integer springBrakeParking) {
+  public void setSpringBrakeParking(Boolean springBrakeParking) {
     this.springBrakeParking = springBrakeParking;
   }
 
