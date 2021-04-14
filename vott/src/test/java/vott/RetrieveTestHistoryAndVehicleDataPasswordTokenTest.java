@@ -8,8 +8,8 @@ import net.thucydides.core.annotations.Title;
 import org.junit.Before;
 import org.junit.Test;
 
-import vott.dto.enquiry.TechnicalRecord;
-import vott.dto.enquiry.Vehicle;
+import vott.models.dto.enquiry.TechnicalRecord;
+import vott.models.dto.enquiry.Vehicle;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
