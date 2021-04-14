@@ -28,8 +28,6 @@ public class DownloadMotCertificateClientCredentials {
 
     @Before
     public void Setup() {
-
-//        this.token = new TokenService().getBearerToken("client_credentials");
         this.token = new TokenService(OAuthVersion.V1, GrantType.IMPLICIT).getBearerToken();
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
     }
