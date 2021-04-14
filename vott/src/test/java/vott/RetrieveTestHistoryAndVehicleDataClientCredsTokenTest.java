@@ -21,10 +21,8 @@ public class RetrieveTestHistoryAndVehicleDataClientCredsTokenTest {
 
     @Before
     public void Setup() {
-
-        this.token = new TokenService(OAuthVersion.V2, GrantType.CLIENT_CREDENTIALS).getBearerToken();
-        //this.token = new TokenService().getBearerToken("client_credentials");
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19222/v1/enquiry/vehicle";
+        this.token = new TokenService(OAuthVersion.V2, GrantType.CLIENT_CREDENTIALS).getBearerToken();
     }
 
     @Title("CVSB-19222 - Happy Path for vehicle data and test history retrieval")
