@@ -29,7 +29,8 @@ public class DownloadMotCertificateClientCredentials {
     @Before
     public void Setup() {
 
-        this.token = new TokenService().getBearerToken("client_credentials");
+//        this.token = new TokenService().getBearerToken("client_credentials");
+        this.token = new TokenService(OAuthVersion.V1, GrantType.IMPLICIT).getBearerToken();
         RestAssured.baseURI = "https://api.develop.cvs.dvsacloud.uk/cvsb-19156/v1/document-retrieval";
     }
 
@@ -371,8 +372,7 @@ public class DownloadMotCertificateClientCredentials {
                 post().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("User is not authorized to access this resource"));
+                statusCode(405);
     }
 
     @Test
@@ -393,8 +393,7 @@ public class DownloadMotCertificateClientCredentials {
                 put().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("User is not authorized to access this resource"));
+                statusCode(405);
     }
 
     @Test
@@ -415,8 +414,7 @@ public class DownloadMotCertificateClientCredentials {
                 patch().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("User is not authorized to access this resource"));
+                statusCode(405);
     }
 
     @Test
@@ -437,7 +435,6 @@ public class DownloadMotCertificateClientCredentials {
                 delete().
                 //verification
                         then().//log().all().
-                statusCode(403).
-                body("message", equalTo("User is not authorized to access this resource"));
+                statusCode(405);
     }
 }
